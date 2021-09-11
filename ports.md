@@ -72,10 +72,6 @@ Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration f
 
 Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 1 files to the ports/tombraider1 folder." porter="Jetup13" locat="Tomb%20Raider%201.zip"
 
-Title="Tomb_Raider_2 ." Desc="An open source port of Tomb Raider 2 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 2 files to the ports/tombraider2 folder." porter="Jetup13" locat="Tomb%20Raider%202.zip"
-
-Title="Tomb_Raider_3 ." Desc="An open source port of Tomb Raider 3 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 3 files to the ports/tombraider3 folder." porter="Jetup13" locat="Tomb%20Raider%203.zip"
-
 Title="Undertale ." Desc="Undertale loader.  You must have a copy of Undertale Linux version assets copied to the ports/undertale/assets folder.  For more info on the setup needs, see https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information" porter="krishenriksen (kreal)" locat="Undertale.zip"
 
 Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="UQM.zip"
