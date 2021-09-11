@@ -17,3 +17,11 @@ If you don't have PortMaster there or need to install it manually, you can do th
 ## Do I have to use PortMaster to install ports?
 
 No.  You can simply go to the PortMaster repo (https://github.com/christianhaitian/PortMaster), find the .zip of the port you want, download it and unzip the contents of it to the /roms/ports folder.  NB : on the RG351V, if SD2 is being used for roms, unzip the port to the /roms2/ports folder instead.
+
+## If there are updates to Ports, how will that work?
+
+Just run PortMaster and reinstall the port.  This should install the latest port related files if they've been updated in PortMaster.  In most cases, it should not impact any existing game data you had to provide or existing saves unless the updated port made changes to the port backend that impacts previous saves.
+
+## How can I help add ports to PortMaster?
+
+See the packaging documentation [here](https://github.com/christianhaitian/PortMaster/blob/main/docs/packaging.md) for more info on this.  Once you're port packaging has met these minimum requirements, you can either submit a Pull Request of this port package with details about the port such as a description of it and how to add any gamefiles or assets if needed or contact me on the [RGHandhelds](https://discord.gg/Jd2azKX) discord for further review and advisement.
