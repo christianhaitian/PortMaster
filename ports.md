@@ -2,6 +2,8 @@ Title="2048 ." Desc="The 2048 puzzle game" porter="Christian_Haitian" locat="204
 
 Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip"
 
+Title="Blood ." Desc="Blood port based on EDuke32.  You'll need to add your own full version Blood 1.21 files to the ports/Blood folder." porter="romadu" locat="Blood.zip"
+
 Title="Blues_Brothers ." Desc="A rewrite of the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Amiga or Dos files to the ports/bluesbrothers/gamedata folder." porter="Jetup13" locat="Blues%20Brothers.zip"
 
 Title="Cave_Story_lr ." Desc="Cave Story using the Libretro Retroarch Nxengine core." porter="Christian_Haitian" locat="Cave%20Story.zip"
@@ -66,7 +68,7 @@ Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's 
 
 Title="Super_Mario_War ." Desc="Super Mario War is a fan-made multiplayer Super Mario Bros. style deathmatch game in which players try to beat one another in a variety of gameplay modes.  Great fun even in single player mode." porter="Christian_Haitian" locat="Super%20Mario%20War.zip"
 
-Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB download and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="Christian_Haitian" locat="SuperTux.zip"
+Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="Christian_Haitian" locat="SuperTux.zip"
 
 Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 1 files to the ports/tombraider1 folder." porter="Jetup13" locat="Tomb%20Raider%201.zip"
 
@@ -75,6 +77,8 @@ Title="Tomb_Raider_2 ." Desc="An open source port of Tomb Raider 2 using OpenLar
 Title="Tomb_Raider_3 ." Desc="An open source port of Tomb Raider 3 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 3 files to the ports/tombraider3 folder." porter="Jetup13" locat="Tomb%20Raider%203.zip"
 
 Title="Undertale ." Desc="Undertale loader.  You must have a copy of Undertale Linux version assets copied to the ports/undertale/assets folder.  For more info on the setup needs, see https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information" porter="krishenriksen (kreal)" locat="Undertale.zip"
+
+Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="UQM.zip"
 
 Title="VVVVVV ." Desc="VVVVVV is a 2010 puzzle-platform game created by Terry Cavanagh.  The free Make and Play Edition data.zip file is already included.  You can also add your own purchased copy of the data.zip from your VVVVVV into the ports/VVVVVV folder if you prefer that version instead." porter="Christian_Haitian" locat="VVVVVV.zip"
 
