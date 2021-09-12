@@ -6,10 +6,11 @@
 # various game ports that are available for RK3326 devices
 # using Ubuntu based distros such as ArkOS, TheRA, and RetroOZ.
 #
-sudo chmod 666 /dev/tty1
-export TERM=linux
+
+sudo chmod 666 /dev/tty0
+#export TERM=linux
 export XDG_RUNTIME_DIR=/run/user/$UID/
-printf "\033c" > /dev/tty1
+printf "\033c" > /dev/tty0
 dialog --clear
 
 hotkey="Select"
@@ -56,7 +57,7 @@ GW=`ip route | awk '/default/ { print $3 }'`
 if [ -z "$GW" ]; then
   dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
   --msgbox "\n\nYour network connection doesn't seem to be working. \
-  \nDid you make sure to configure your wifi connection?" $height $width 2>&1 > /dev/tty1
+  \nDid you make sure to configure your wifi connection?" $height $width 2>&1 > /dev/tty0
   sudo kill -9 $(pidof oga_controls)
   sudo systemctl restart oga_events &
   exit 0
@@ -96,23 +97,23 @@ UpdateCheck() {
 
   if [[ "$gitversion" != "$curversion" ]]; then
     wget -t 3 -T 60 -q --show-progress "${website}PortMaster.zip" -O /dev/shm/portmaster/PortMaster.zip 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog \
-          --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty1
-    unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
-	if [ $? -eq 0 ]; then
+          --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty0
+	if [ ${PIPESTATUS[0]} -eq 0 ]; then
+      unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
 	  if [[ $isitthera == *"TheRA"* ]]; then
 		sudo chmod -R 777 $toolsfolderloc/PortMaster
 	  fi
-	  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty1
+	  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty0
 	  sudo kill -9 $(pidof oga_controls)
 	  sudo rm -f /dev/shm/portmaster/PortMaster.zip
 	  sudo systemctl restart oga_events &
 	  exit 0
 	else
-	  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster failed to update." $height $width 2>&1 > /dev/tty1
+	  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster failed to update." $height $width 2>&1 > /dev/tty0
 	  sudo rm -f /dev/shm/portmaster/PortMaster.zip
 	fi
   else
-    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nNo update needed." $height $width 2>&1 > /dev/tty1
+    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nNo update needed." $height $width 2>&1 > /dev/tty0
   fi
 }
 
@@ -121,6 +122,7 @@ wget -t 3 -T 60 --no-check-certificate "$website"ports.md -O /dev/shm/portmaster
 PortInfoInstall() {
 
 local setwebsiteback="N"
+local unzipstatus
 
   if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ]; then
     whichsd="roms2"
@@ -132,33 +134,39 @@ local setwebsiteback="N"
   installloc=$(cat /dev/shm/portmaster/ports.md | grep "$1" | grep -oP '(?<=locat=").*?(?=")')
   porter=$(cat /dev/shm/portmaster/ports.md | grep "$1" | grep -oP '(?<=porter=").*?(?=")')
   if [[ "$website" != "http://139.196.213.206/arkos/ports/" ]]; then
-    if [[ "$installloc" == "SuperTux.zip" ]]; then
+    if [[ "$installloc" == "SuperTux.zip" ]] || [[ "$installloc" == "UQM.zip" ]]; then
       website="http://139.196.213.206/arkos/ports/"
 	  setwebsiteback="Y"
     fi
   fi
   dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
-  --yesno "\n$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?" $height $width 2>&1 > /dev/tty1
+  --yesno "\n$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?" $height $width 2>&1 > /dev/tty0
 
   case $? in
      0) wget -t 3 -T 60 -q --show-progress "$website$installloc" -O \
 	    /dev/shm/portmaster/$installloc 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog --progressbox \
-		"Downloading ${1} package..." $height $width > /dev/tty1
-        unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/
-		if [ $? -eq 0 ] || [ $? -eq 1 ]; then
+		"Downloading ${1} package..." $height $width > /dev/tty0
+		if [ ${PIPESTATUS[0]} -eq 0 ]; then
+          unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/
+          unzipstatus=$?
 		  if [[ "$setwebsiteback" == "Y" ]]; then
 		    website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 		  fi
-		  if [[ $isitthera == *"TheRA"* ]]; then
-		    sudo chmod -R 777 /roms/ports
+          if [ $unzipstatus -ne 50 ]; then
+		    if [[ $isitthera == *"TheRA"* ]]; then
+		      sudo chmod -R 777 /roms/ports
+		    fi
+		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
+		    \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > /dev/tty0
+		  else
+		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
+		    \n\nYour roms partition seems to be full." $height $width 2>&1 > /dev/tty0
 		  fi
-		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
-		  \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > /dev/tty1
 		else
 		  if [[ "$setwebsiteback" == "Y" ]]; then
 		    website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 		  fi
-		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 failed to install." $height $width 2>&1 > /dev/tty1
+		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 failed to download successfully.  The PortMaster server maybe busy or check your internet connection." $height $width 2>&1 > /dev/tty0
 		fi
         sudo rm -f /dev/shm/portmaster/$installloc
 	    ;;
@@ -190,7 +198,7 @@ MainMenu() {
 	--cancel-label "$hotkey + Start to Exit" \
     --menu "Available ports for install" $height $width 15)
 
-    choices=$("${selection[@]}" "${options[@]}" 2>&1 > /dev/tty1) || userExit
+    choices=$("${selection[@]}" "${options[@]}" 2>&1 > /dev/tty0) || userExit
 
     for choice in $choices; do
       case $choice in
@@ -201,7 +209,7 @@ MainMenu() {
 }
 
 dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
---yesno "\nWould you like to check for an update to the PortMaster tool?" $height $width 2>&1 > /dev/tty1
+--yesno "\nWould you like to check for an update to the PortMaster tool?" $height $width 2>&1 > /dev/tty0
 
   case $? in
      0) UpdateCheck;;
