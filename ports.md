@@ -20,6 +20,8 @@ Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery s
 
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip"
 
+Title="Exhumed ." Desc=" A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip"
+
 Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have a copy of Freedom Planet for Linux copied to the ports/freedomplanet/gamedata folder." porter="Johnny on Flame" locat="Freedom%20Planet.zip"
 
 Title="Heart_of_Darkness ." Desc="Heart of Darkness using the hode reimplementation of the engine developed by Amazing Studio.  Just add your own Heart of Darkness game files to the ports/hode/gamedata folder." porter="Jetup13" locat="Heart%20of%20Darkness.zip"
