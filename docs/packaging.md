@@ -107,6 +107,15 @@ fi
 ## Port specific additional libraries should be included within the port's directory in a separate subfolder named libs.
 They can be loaded at runtime using export LD_LIBRARY_PATH
 
+## Port specific config files that are normally created and stored in the home folder or anywhere outside the port's directory should be symlinked
+This allows the port's configuration information to stay within the port's folder.  This is important in order to maintain the portability and ease backup capability for ports for the user.
+
+ex.
+```
+sudo rm -rf ~/.config/opentyrian
+ln -sfv /$directory/ports/opentyrian/ ~/.config/
+```
+
 # Now let's put it all together.  Below is an example script for AM2R that incorporates everything mentioned above
 ```
 #!/bin/bash
