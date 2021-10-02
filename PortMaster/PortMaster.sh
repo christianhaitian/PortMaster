@@ -66,6 +66,11 @@ if [ -z "$GW" ]; then
   exit 0
 fi
 
+isitarkos=$(grep "title=" /usr/share/plymouth/themes/text.plymouth)
+if [[ $isitarkos == *"ArkOS"* ]]; then
+  sudo timedatectl set-ntp 1
+fi
+
 website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 
 ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | grep -Po '"country":.*?[^\\]"')
