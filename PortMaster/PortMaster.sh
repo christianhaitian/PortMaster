@@ -4,10 +4,15 @@
 # https://github.com/christianhaitian/arkos/wiki/PortMaster
 # Description : A simple tool that allows you to download
 # various game ports that are available for RK3326 devices
-# using Ubuntu based distros such as ArkOS, TheRA, and RetroOZ.
+# using 351Elec and Ubuntu based distros such as ArkOS, TheRA, and RetroOZ.
 #
 
-sudo chmod 666 /dev/tty0
+ESUDO="sudo"
+if [ -f "/storage/.config/.OS_ARCH" ]; then
+  ESUDO=""
+fi
+
+$ESUDO chmod 666 /dev/tty0
 export TERM=linux
 export XDG_RUNTIME_DIR=/run/user/$UID/
 printf "\033c" > /dev/tty0
@@ -20,7 +25,7 @@ width="55"
 if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
   param_device="anbernic"
   if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ] || [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ]; then
-    sudo setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
+    $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
     height="20"
     width="60"
   fi
@@ -33,13 +38,13 @@ elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; the
 	fi
 elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; then
   param_device="ogs"
-  sudo setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
+  $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
   height="20"
   width="60"
 else
   param_device="chi"
   hotkey="1"
-  sudo setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
+  $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
   height="20"
   width="60"
 fi
@@ -52,7 +57,7 @@ else
 fi
 
 cd $toolsfolderloc
-sudo $toolsfolderloc/PortMaster/oga_controls PortMaster.sh $param_device > /dev/null 2>&1 &
+$ESUDO $toolsfolderloc/PortMaster/oga_controls PortMaster.sh $param_device > /dev/null 2>&1 &
 
 curversion="$(curl file://$toolsfolderloc/PortMaster/version)"
 
@@ -61,14 +66,14 @@ if [ -z "$GW" ]; then
   dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
   --msgbox "\n\nYour network connection doesn't seem to be working. \
   \nDid you make sure to configure your wifi connection?" $height $width 2>&1 > /dev/tty0
-  sudo kill -9 $(pidof oga_controls)
-  sudo systemctl restart oga_events &
+  $ESUDO kill -9 $(pidof oga_controls)
+  $ESUDO systemctl restart oga_events &
   exit 0
 fi
 
 isitarkos=$(grep "title=" /usr/share/plymouth/themes/text.plymouth)
 if [[ $isitarkos == *"ArkOS"* ]]; then
-  sudo timedatectl set-ntp 1
+  $ESUDO timedatectl set-ntp 1
 fi
 
 website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
@@ -85,17 +90,17 @@ fi
 
 dpkg -s "curl" &>/dev/null
 if [ "$?" != "0" ]; then
-  sudo apt update && sudo apt install -y curl --no-install-recommends
+  $ESUDO apt update && $ESUDO apt install -y curl --no-install-recommends
 fi
 
 dpkg -s "dialog" &>/dev/null
 if [ "$?" != "0" ]; then
-  sudo apt update && sudo apt install -y dialog --no-install-recommends
+  $ESUDO apt update && $ESUDO apt install -y dialog --no-install-recommends
   temp=$(grep "title=" /usr/share/plymouth/themes/text.plymouth)
   if [[ $temp == *"ArkOS 351P/M"* ]]; then
 	#Make sure sdl2 wasn't impacted by the install of dialog for the 351P/M
-    sudo ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.14.1 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0
-	sudo ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.10.0 /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0
+    $ESUDO ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.14.1 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0
+	$ESUDO ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.10.0 /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0
   fi
 fi
 
@@ -109,16 +114,16 @@ UpdateCheck() {
 	if [ ${PIPESTATUS[0]} -eq 0 ]; then
       unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
 	  if [[ $isitthera == *"TheRA"* ]]; then
-		sudo chmod -R 777 $toolsfolderloc/PortMaster
+		$ESUDO chmod -R 777 $toolsfolderloc/PortMaster
 	  fi
 	  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty0
-	  sudo kill -9 $(pidof oga_controls)
-	  sudo rm -f /dev/shm/portmaster/PortMaster.zip
-	  sudo systemctl restart oga_events &
+	  $ESUDO kill -9 $(pidof oga_controls)
+	  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
+	  $ESUDO systemctl restart oga_events &
 	  exit 0
 	else
 	  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster failed to update." $height $width 2>&1 > /dev/tty0
-	  sudo rm -f /dev/shm/portmaster/PortMaster.zip
+	  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
 	fi
   else
     dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nNo update needed." $height $width 2>&1 > /dev/tty0
@@ -162,7 +167,7 @@ local unzipstatus
 		  fi
           if [ $unzipstatus -ne 50 ]; then
 		    if [[ $isitthera == *"TheRA"* ]]; then
-		      sudo chmod -R 777 /roms/ports
+		      $ESUDO chmod -R 777 /roms/ports
 		    fi
 		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
 		    \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > /dev/tty0
@@ -176,7 +181,7 @@ local unzipstatus
 		  fi
 		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 failed to download successfully.  The PortMaster server maybe busy or check your internet connection." $height $width 2>&1 > /dev/tty0
 		fi
-        sudo rm -f /dev/shm/portmaster/$installloc
+        $ESUDO rm -f /dev/shm/portmaster/$installloc
 	    ;;
 	 *) if [[ "$setwebsiteback" == "Y" ]]; then
 		  website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
@@ -187,8 +192,8 @@ local unzipstatus
 
 userExit() {
   rm -f /dev/shm/portmaster/ports.md
-  sudo kill -9 $(pidof oga_controls)
-  sudo systemctl restart oga_events &
+  $ESUDO kill -9 $(pidof oga_controls)
+  $ESUDO systemctl restart oga_events &
   exit 0
 }
 
