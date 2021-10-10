@@ -8,8 +8,13 @@
 #
 
 ESUDO="sudo"
+GREP="grep"
+WGET="wget"
 if [ -f "/storage/.config/.OS_ARCH" ]; then
   ESUDO=""
+  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/storage/roms/ports/PortMaster/libs"
+  GREP="/storage/roms/ports/PortMaster/grep"
+  WGET="/storage/roms/ports/PortMaster/wget"
 fi
 
 $ESUDO chmod 666 /dev/tty0
@@ -30,7 +35,7 @@ if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick"
     width="60"
   fi
 elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; then
-    if [[ ! -z $(cat /etc/emulationstation/es_input.cfg | grep "190000004b4800000010000001010000") ]]; then
+    if [[ ! -z $(cat /etc/emulationstation/es_input.cfg | $GREP "190000004b4800000010000001010000") ]]; then
       param_device="oga"
 	  hotkey="Minus"
 	else
@@ -49,9 +54,11 @@ else
   width="60"
 fi
 
-isitthera=$(grep "title=" "/usr/share/plymouth/themes/text.plymouth")
+isitthera=$($GREP "title=" "/usr/share/plymouth/themes/text.plymouth")
 if [[ $isitthera == *"TheRA"* ]]; then
   toolsfolderloc="/opt/tools"
+elif [[ -e "/storage/.config/.OS_ARCH" ]]; then
+  toolsfolderloc="/storage/roms/ports"
 else
   toolsfolderloc="/opt/system/Tools"
 fi
@@ -71,14 +78,14 @@ if [ -z "$GW" ]; then
   exit 0
 fi
 
-isitarkos=$(grep "title=" /usr/share/plymouth/themes/text.plymouth)
+isitarkos=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
 if [[ $isitarkos == *"ArkOS"* ]]; then
   $ESUDO timedatectl set-ntp 1
 fi
 
 website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 
-ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | grep -Po '"country":.*?[^\\]"')
+ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | $GREP -Po '"country":.*?[^\\]"')
 
 if [[ "$ISITCHINA" == "\"country\":\"China\"" ]]; then
   website="http://139.196.213.206/arkos/ports/"
@@ -96,7 +103,7 @@ fi
 dpkg -s "dialog" &>/dev/null
 if [ "$?" != "0" ]; then
   $ESUDO apt update && $ESUDO apt install -y dialog --no-install-recommends
-  temp=$(grep "title=" /usr/share/plymouth/themes/text.plymouth)
+  temp=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
   if [[ $temp == *"ArkOS 351P/M"* ]]; then
 	#Make sure sdl2 wasn't impacted by the install of dialog for the 351P/M
     $ESUDO ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.14.1 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0
@@ -109,7 +116,7 @@ UpdateCheck() {
   gitversion=$(curl -s --connect-timeout 30 -m 60 ${website}version)
 
   if [[ "$gitversion" != "$curversion" ]]; then
-    wget -t 3 -T 60 -q --show-progress "${website}PortMaster.zip" -O /dev/shm/portmaster/PortMaster.zip 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog \
+    $WGET -t 3 -T 60 -q --show-progress "${website}PortMaster.zip" -O /dev/shm/portmaster/PortMaster.zip 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog \
           --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty0
 	if [ ${PIPESTATUS[0]} -eq 0 ]; then
       unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
@@ -130,7 +137,7 @@ UpdateCheck() {
   fi
 }
 
-wget -t 3 -T 60 --no-check-certificate "$website"ports.md -O /dev/shm/portmaster/ports.md
+$WGET -t 3 -T 60 --no-check-certificate "$website"ports.md -O /dev/shm/portmaster/ports.md
 
 PortInfoInstall() {
 
@@ -139,13 +146,15 @@ local unzipstatus
 
   if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ]; then
     whichsd="roms2"
+  elif [ -f "/storage/.config/.OS_ARCH" ]; then
+    whichsd="storage/roms"
   else
     whichsd="roms"
   fi
   
-  msgtxt=$(cat /dev/shm/portmaster/ports.md | grep "$1" | grep -oP '(?<=Desc=").*?(?=")')
-  installloc=$(cat /dev/shm/portmaster/ports.md | grep "$1" | grep -oP '(?<=locat=").*?(?=")')
-  porter=$(cat /dev/shm/portmaster/ports.md | grep "$1" | grep -oP '(?<=porter=").*?(?=")')
+  msgtxt=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=Desc=").*?(?=")')
+  installloc=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
+  porter=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=porter=").*?(?=")')
   if [[ "$website" != "http://139.196.213.206/arkos/ports/" ]]; then
     if [[ "$installloc" == "SuperTux.zip" ]] || [[ "$installloc" == "UQM.zip" ]]; then
       website="http://139.196.213.206/arkos/ports/"
@@ -156,11 +165,11 @@ local unzipstatus
   --yesno "\n$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?" $height $width 2>&1 > /dev/tty0
 
   case $? in
-     0) wget -t 3 -T 60 -q --show-progress "$website$installloc" -O \
+     0) $WGET -t 3 -T 60 -q --show-progress "$website$installloc" -O \
 	    /dev/shm/portmaster/$installloc 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog --progressbox \
 		"Downloading ${1} package..." $height $width > /dev/tty0
-		if [ ${PIPESTATUS[0]} -eq 0 ]; then
-          unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/
+		if [ ${PIPESTATUS[0]} -eq 0 ] || [ -f "/storage/.config/.OS_ARCH" ] ; then
+          unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > /dev/tty0
           unzipstatus=$?
 		  if [[ "$setwebsiteback" == "Y" ]]; then
 		    website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
@@ -199,7 +208,7 @@ userExit() {
 
 MainMenu() {
   local options=(
-   $(cat /dev/shm/portmaster/ports.md | grep -oP '(?<=Title=").*?(?=")')
+   $(cat /dev/shm/portmaster/ports.md | $GREP -oP '(?<=Title=").*?(?=")')
   )
 
   while true; do
@@ -229,4 +238,3 @@ dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
   esac
 
 MainMenu
-
