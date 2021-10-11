@@ -54,13 +54,15 @@ else
   width="60"
 fi
 
-isitthera=$($GREP "title=" "/usr/share/plymouth/themes/text.plymouth")
-if [[ $isitthera == *"TheRA"* ]]; then
-  toolsfolderloc="/opt/tools"
-elif [[ -e "/storage/.config/.OS_ARCH" ]]; then
+if [[ -e "/storage/.config/.OS_ARCH" ]]; then
   toolsfolderloc="/storage/roms/ports"
 else
-  toolsfolderloc="/opt/system/Tools"
+  isitthera=$($GREP "title=" "/usr/share/plymouth/themes/text.plymouth")
+  if [[ $isitthera == *"TheRA"* ]]; then
+    toolsfolderloc="/opt/tools"
+  else
+    toolsfolderloc="/opt/system/Tools"
+  fi
 fi
 
 cd $toolsfolderloc
@@ -78,9 +80,13 @@ if [ -z "$GW" ]; then
   exit 0
 fi
 
-isitarkos=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
-if [[ $isitarkos == *"ArkOS"* ]]; then
-  $ESUDO timedatectl set-ntp 1
+if [[ -e "/storage/.config/.OS_ARCH" ]]; then
+  echo ""
+else
+  isitarkos=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
+  if [[ $isitarkos == *"ArkOS"* ]]; then
+    $ESUDO timedatectl set-ntp 1
+  fi
 fi
 
 website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
@@ -178,6 +184,9 @@ local unzipstatus
 		    if [[ $isitthera == *"TheRA"* ]]; then
 		      $ESUDO chmod -R 777 /roms/ports
 		    fi
+			if [[ -e "/storage/.config/.OS_ARCH" ]]; then
+			  sed -i 's/sudo //g' /storage/roms/ports/*.sh
+			fi
 		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
 		    \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > /dev/tty0
 		  else
@@ -203,6 +212,8 @@ userExit() {
   rm -f /dev/shm/portmaster/ports.md
   $ESUDO kill -9 $(pidof oga_controls)
   $ESUDO systemctl restart oga_events &
+  dialog --clear
+  printf "\033c" > /dev/tty0
   exit 0
 }
 
