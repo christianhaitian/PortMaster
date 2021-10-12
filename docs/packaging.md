@@ -105,7 +105,7 @@ fi
 ```
 
 ## Port specific additional libraries should be included within the port's directory in a separate subfolder named libs.
-They can be loaded at runtime using export LD_LIBRARY_PATH
+They can be loaded at runtime using `export LD_LIBRARY_PATH`.
 
 ## Port specific config files that are normally created and stored in the home folder or anywhere outside the port's directory should be symlinked
 This allows the port's configuration information to stay within the port's folder.  This is important in order to maintain the portability and ease backup capability for ports for the user.
@@ -147,7 +147,7 @@ else
   directory="roms"
 fi
 
-export LD_LIBRARY_PATH=/$directory/ports/am2r/libs:/usr/lib
+export LD_LIBRARY_PATH=/$directory/ports/am2r/libs:/usr/lib:/storage/.config/emuelec/lib32
 sudo rm -rf ~/.config/am2r
 ln -sfv /$directory/ports/am2r/conf/am2r/ ~/.config/
 cd /$directory/ports/am2r
