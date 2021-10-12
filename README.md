@@ -20,7 +20,7 @@ No.  You can simply go to the PortMaster repo (https://github.com/christianhaiti
 
 ## If there are updates to Ports, how will that work?
 
-Just run PortMaster and reinstall the port.  This should install the latest port related files if they've been updated in PortMaster.  In most cases, it should not impact any existing game data you had to provide or existing saves unless the updated port made changes to the port backend that impacts previous saves.
+Just run PortMaster and reinstall the port.  You can also unzip the associated .zip for the port you want and unzip the contents of it to the ports folder.  This should install the latest port related files if they've been updated in PortMaster.  In most cases, it should not impact any existing game data you had to provide or existing saves unless the updated port made changes to the port backend that impacts previous saves.
 
 ## How can I help add ports to PortMaster?
 
