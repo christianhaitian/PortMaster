@@ -6,6 +6,8 @@ Title="Blood ." Desc="Blood port based on EDuke32.  You'll need to add your own 
 
 Title="Blues_Brothers ." Desc="A rewrite of the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Amiga or Dos files to the ports/bluesbrothers/gamedata folder." porter="Jetup13" locat="Blues%20Brothers.zip"
 
+Title="Cannonball ." Desc="This is the libretro port of the OutRun game engine recreation written by Chris White in 2014.  Add the OutRun Revision B ROMs into /ports/cannonball/gamedata folder. " porter="Christian_Haitian" locat="Cannonball.zip"
+
 Title="Cave_Story_lr ." Desc="Cave Story using the Libretro Retroarch Nxengine core." porter="Christian_Haitian" locat="Cave%20Story.zip"
 
 Title="Cave_Story_(Evo) ." Desc="Cave Story using the Nxengine-evo engine from https://github.com/nxengine/nxengine-evo" porter="Christian_Haitian" locat="Cave%20Story-evo.zip"
