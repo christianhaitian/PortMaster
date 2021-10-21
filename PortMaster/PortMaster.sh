@@ -185,12 +185,14 @@ local unzipstatus
 		      $ESUDO chmod -R 777 /roms/ports
 		    fi
 			if [[ -e "/storage/.config/.OS_ARCH" ]]; then
+			  cd /$whichsd/ports/
 			  for s in *.sh
 			  do
 			    if [[ -z $(cat "$s" | $GREP "alias") ]]; then
-			      sed -i 's/\/bin\/bash/\/bin\/bash\n\nalias sudo\=\"\"/' $s
+			      sed -i 's/\/bin\/bash/\/bin\/bash\n\nalias sudo\=\"\"/' "$s"
 				fi
 			  done
+			  cd $toolsfolderloc
 			  #sed -i 's/sudo //g' /storage/roms/ports/*.sh
 			fi
 		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
