@@ -1,6 +1,6 @@
 ## What is PortMaster?
 
-PortMaster is a simple tool that allows you to download various game ports that are available for ArkOS, RetroOZ, and TheRA for RK3326 based devices.  A number of ports have been tested and confirmed working with TheRA and RetroOZ.  Ports such as Freedom Planet and Maldita Castilla will be working for TheRA soon.  
+PortMaster is a simple tool that allows you to download various game ports that are available for ArkOS, RetroOZ, and TheRA for RK3326 based devices.  Support for 351Elec is being worked on as well.  A list of ports from here that work on 351Elec are available [here](https://351elec.de/PortMaster).  A number of ports have been tested and confirmed working with TheRA and RetroOZ.  Ports such as Freedom Planet and Maldita Castilla will be working for TheRA soon.  
 
 One of the goals of PortMaster is to not install or upgrade any existing OS libraries for any ports.  Any of the ports that need a particular non standard library are maintained within the ports' folder and made available specifically to that port during execution.
 
@@ -9,6 +9,7 @@ Most of the the ports available through PortMaster have been configured to launc
 ## Install info
 
 For ArkOS on supported devices, PortMaster was included with a recent online update.  You can locate it in the Options > Tools menu. \
+For 351Elec, just unzip the content of PortMaster.zip to your storage/roms/ports folder then run PortMaster.sh from the Ports menu in 351Elec.
 If you don't have PortMaster there or need to install it manually, you can do the following:
 * Place the PortMaster folder in /roms/tools.
    * On the RG351V, if SD2 is being used for roms, installation must be in /roms2/tools/. 
