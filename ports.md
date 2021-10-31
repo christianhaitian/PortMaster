@@ -80,6 +80,8 @@ Title="Sonic_CD ." Desc="Sonic the Hedgehog CD decompilation by Rubberduckycooly
 
 Title="SorR ." Desc="Streets of Rage Remake.  Just add your own sorr.dat file, mod folder, and palettes folder into the ports/sorr folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="SorR.zip"
 
+Title="Space_Cadet_Pinball ." Desc="A reversed engineered version Space Cadet Pinball.  Just add your own Space Cadet Pinball PINBALL.DAT files and sound files to the spacecadetpinball folder." porter="Jetup and Romadu" locat="Space%20Cadet%20Pinball.zip"
+
 Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's game Spelunky Classic. Based on the source code published in Humble Weekly Bundle: Play and Create with GameMaker (not original 1.1 release)." porter="Christian_Haitian" locat="Spelunky.zip"
 
 Title="Super_Mario_War ." Desc="Super Mario War is a fan-made multiplayer Super Mario Bros. style deathmatch game in which players try to beat one another in a variety of gameplay modes.  Great fun even in single player mode." porter="Christian_Haitian" locat="Super%20Mario%20War.zip"
