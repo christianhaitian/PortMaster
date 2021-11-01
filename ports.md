@@ -1,6 +1,6 @@
 Title="2048 ." Desc="The 2048 puzzle game" porter="Christian_Haitian" locat="2048.zip"
 
-Title="Abuse ." Desc="A fork of the original Abuse SDL port from http://abuse.zoy.org/.  An An intense 2D shooter.  Plays best on dual analog stick devices.  Just download and play." porter="romadu" locat="Abuse.zip"
+Title="Abuse ." Desc="A fork of the original Abuse SDL port from http://abuse.zoy.org/.  An intense 2D shooter.  Plays best on dual analog stick devices.  Just download and play." porter="romadu" locat="Abuse.zip"
 
 Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip"
 
