@@ -18,6 +18,8 @@ Title="C-Dogs ." Desc="C-Dogs is a classic overhead run-and-gun game" porter="Ch
 
 Title="Commander_Genius ." Desc="Commander Genius is an open-source clone of Commander Keen (1-6, Dreams) which allows you to play these episodes and some of the mods made for them.  Developed by Gerstrong.  Includes the shareware version of Commander Keen 1.  You can add load your own keen folders into the ports/cgenius/games folder" porter="Christian_Haitian" locat="Commander%20Genius.zip"
 
+Title="CorsixTH ." Desc="An opensource clone of Theme Hospital.  Load your Theme Hospital files into the ports/corsixth/HOSP folder.  As an example, the demo files of Theme Hospital is already included." porter="Jetup and Romadu" locat="CorsixTH.zip"
+
 Title="DevilutionX ." Desc="DevilutionX is a source port of Diablo from https://github.com/diasurgical/devilutionX.  Includes the Diablo shareware version.  You can add your own full version DIABDAT.MPQ file to the ports/devilution folder.  To run the Diablo: Hellfire expansion you will need to also copy hellfire.mpq, hfmonk.mpq, hfmusic.mpq, hfvoice.mpq" porter="Christian_Haitian" locat="Devilutionx.zip"
 
 Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery surfaces." porter="Christian_Haitian" locat="Dinothawr.zip"
