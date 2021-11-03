@@ -1,0 +1,6 @@
+[submodule "external/SuperTux"]
+	path = external/SuperTux.zip
+	url = http://139.196.213.206/arkos/ports/SuperTux.zip
+[submodule "external/UQM"]
+	path = external/UQM.zip
+	url = http://139.196.213.206/arkos/ports/UQM.zip
