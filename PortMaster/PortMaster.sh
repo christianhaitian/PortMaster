@@ -14,7 +14,8 @@ if [ -f "/storage/.config/.OS_ARCH" ]; then
   ESUDO=""
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/storage/roms/ports/PortMaster/libs"
   GREP="/storage/roms/ports/PortMaster/grep"
-  WGET="/storage/roms/ports/PortMaster/wget"
+  #WGET="/storage/roms/ports/PortMaster/wget"
+  LANG=""
 fi
 
 $ESUDO chmod 666 /dev/tty0
@@ -29,7 +30,7 @@ width="55"
 
 if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
   param_device="anbernic"
-  if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ] || [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ]; then
+  if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ] || [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ $(cat "/storage/.config/.OS_ARCH") == "RG351V" ]; then
     $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
     height="20"
     width="60"
@@ -59,9 +60,17 @@ if [[ -e "/storage/.config/.OS_ARCH" ]]; then
 else
   isitthera=$($GREP "title=" "/usr/share/plymouth/themes/text.plymouth")
   if [[ $isitthera == *"TheRA"* ]]; then
-    toolsfolderloc="/opt/tools"
+	if [ -d "/opt/tools/PortMaster/" ]; then
+      toolsfolderloc="/opt/tools"
+	else
+	  toolsfolderloc="/roms/ports"
+	fi
   else
-    toolsfolderloc="/opt/system/Tools"
+	if [ -d "/opt/system/Tools/PortMaster/" ]; then
+      toolsfolderloc="/opt/system/Tools"
+	else
+	  toolsfolderloc="/roms/ports"
+	fi
   fi
 fi
 
@@ -189,7 +198,7 @@ local unzipstatus
 			  for s in *.sh
 			  do
 			    if [[ -z $(cat "$s" | $GREP "ESUDO") ]]; then
-			      sed -i 's/sudo //g' /storage/roms/ports/*.sh
+			      sed -i 's/sudo //g' /storage/roms/ports/"$s"
 				fi
 			  done
 			  cd $toolsfolderloc
