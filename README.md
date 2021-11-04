@@ -19,6 +19,10 @@ If you don't have PortMaster there or need to install it manually, you can do th
 
 No.  You can simply go to the PortMaster repo (https://github.com/christianhaitian/PortMaster), find the .zip of the port you want, download it and unzip the contents of it to the /roms/ports folder.  NB : For ArkOS on the RG351V or RG351MP, if SD2 is being used for roms, unzip the port to the /roms2/ports folder instead.  A few additional ports are available from the China Server (http://portmaster.hopto.org) due to their size (ex. SuperTux and Ur Quan Masters).
 
+## How do I get more info about the ports in this repo like the sources used and additional asset needs if applicable?
+
+You can find that information via the ArkOS Emulators and Ports information wiki link [here](https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports).
+
 ## If there are updates to Ports, how will that work?
 
 Just run PortMaster and reinstall the port.  You can also unzip the associated .zip for the port you want and unzip the contents of it to the ports folder.  This should install the latest port related files if they've been updated in PortMaster.  In most cases, it should not impact any existing game data you had to provide or existing saves unless the updated port made changes to the port backend that impacts previous saves.
