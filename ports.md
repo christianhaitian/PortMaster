@@ -58,6 +58,8 @@ Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play."
 
 Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrabbit games by Alister Thomson.  Includes the Jazz Jackrabiit shareware files.  You can add your own full game Dos files to the ports/openjazz/gamedata folder." porter="Jetup" locat="OpenJazz.zip"
 
+Title="OpenOMF ." Desc="a Open Source remake of "One Must Fall 2097" by Diversions Entertainment." porter="Cebion" locat="Openomf.zip"
+
 Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyrian.  OpenTyrian 2.1 files are already included as they were made freeware sometime ago." porter="Christian_Haitian" locat="OpenTyrian.zip"
 
 Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip"
