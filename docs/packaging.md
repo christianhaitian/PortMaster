@@ -1,6 +1,23 @@
 # Packaging ports for PortMaster
 
-Because the intention of the ports in PortMaster is to be as broadly compatible as possible with at least the Ubuntu based RK3326 devices, there are some prerequisites the packages ports have to meet which are as follows:
+Because the intention of the ports in PortMaster is to be as broadly compatible as possible with 351Elec and Ubuntu based custom firmwares for the RK3326 devices, there are some prerequisites the packages ports have to meet which are as follows:
+
+## 351Elec runs everything as root.  sudo is not needed nor does it work on 351Elec.  Ubuntu based distros like ArkOS, TheRA and RetroOZ does support sudo though.
+
+So it's important to accomodate these differences as certain commands, as you'll read below, need sudo on Ubuntu based distros and some don't.  We need to make sudo available as an updatable variable instead.  A good solution for this is to check if the distro has a .OS_ARCH file located in a /storage/.config location.  Only 351Elec has such a file and such a location for that matter between among these defined distros.
+```
+ESUDO="sudo"
+if [ -f "/storage/.config/.OS_ARCH" ]; then
+  ESUDO=""
+  export LD_LIBRARY_PATH="/storage/roms/ports/shadow-warrior/libs"
+fi
+```
+As a side note, you can also `cat` that .OS_ARCH file to find out which unit 351Elec is running on such as RG351V or RG351MP.  
+```
+if [ $(cat "/storage/.config/.OS_ARCH") == "RG351V" ]; then
+  echo "Do something"
+fi
+```
 
 ## Identifying which rk3326 device it's being run from in order to set various parameters like gamepad controls and screen resolution.
 
@@ -25,7 +42,7 @@ fi
 
 You can use [oga_controls](https://github.com/christianhaitian/oga_controls.git) to do this.  Just have it launched before the actual port is launched and provide the name of the port's executable and fork it to the background.
 
-ex. `sudo ./oga_controls opentyrian rk2020 &`
+ex. `$ESUDO ./oga_controls opentyrian rk2020 &`
 Note: if the port is using it's own builtin gamepad control, be sure to disable oga_controls' button definitions so they don't potentially interfere with controls.  You do this by providing a oga_controls_settings.txt file in the same directory as oga_controls with all inputs disabled using `\"` so it just serves as an exit daemon.
 
 ex.
@@ -59,13 +76,17 @@ right_analog_left = \"
 right_analog_right = \"
 ```
 
+you can also use [gptokeyb](https://github.com/christianhaitian/gptokeyb) which works similarly to oga_controls but has much better mouse based controls.  
+
 ## If the port needs keyboard controls, you can use [oga_controls](https://github.com/christianhaitian/oga_controls.git) to emulate keyboard presses.  Reassignment of keyboard keys can be done via oga_controls_settings.txt.  The default assigned keys can be reviewed [here](https://github.com/christianhaitian/oga_controls/blob/17325791c46c1ee4ec2ad68d44b4ebb2fb305433/main.c#L69)
 
 It's important to note that when running oga_controls, you need to provide a name of the executable so it can kill the application using the device's hotkey combo as well as the device (anbernic, chi, oga, ogs, rk2020) so the keys can be assigned properly.  
 
-`sudo ./oga_controls opentyrian chi &`
+`$ESUDO ./oga_controls opentyrian chi &`
 
 As an aside, the reason for the rk2020 be assigned separate from the oga is because the rk2020 is missing one of the keys that is used by the oga for using hotkeys to kill applications.
+
+you can also use [gptokeyb](https://github.com/christianhaitian/gptokeyb) which works similarly to oga_controls but has much better mouse based controls.  
 
 ## If the port uses SDL gamecontroller controls.  Assign them to a gamecontrollerdb.txt file or provide the controls to the port via SDL_GAMECONTROLLERCONFIG= during execution or as an export.
 
@@ -78,7 +99,7 @@ if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick"
   sdl_controllerconfig="03000000091200000031000011010000,OpenSimHardware OSH PB Controller,a:b1,b:b0,x:b3,y:b2,leftshoulder:b4,rightshoulder:b5,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftx:a0~,lefty:a1~,leftstick:b8,lefttrigger:b10,rightstick:b9,back:b7,start:b6,rightx:a2,righty:a3,righttrigger:b11,platform:Linux,"
 elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; then
   if [[ ! -z $(cat /etc/emulationstation/es_input.cfg | grep "190000004b4800000010000001010000") ]]; then
-    sdl_controllerconfig="190000004b4800000010000001010000,GO-Advance Gamepad (rev 1.1),a:b1,b:b0,x:b2,y:b3,leftshoulder:b4,rightshoulder:b5,dpdown:b9,dpleft:b10,dpright:b11,dpup:b8,leftx:a0,lefty:a1,back:b12,leftstick:b13,lefttrigger:b14,rightstick:b16,righttrigger:b15,start:b17,platform:Linux,"
+    sdl_controllerconfig="190000004b4800000010000001010000,GO-Advance Gamepad (rev 1.1),a:b1,b:b0,x:b2,y:b3,leftshoulder:b4,rightshoulder:b5,dpdown:b9,dpleft:b10,dpright:b11,dpup:b8,leftx:a0,lefty:a1,back:b12,leftstick:b13,lefttrigger:b6,rightstick:b16,righttrigger:b7,start:b17,platform:Linux,"
   else
     sdl_controllerconfig="190000004b4800000010000000010000,GO-Advance Gamepad,a:b1,b:b0,x:b2,y:b3,leftshoulder:b4,rightshoulder:b5,dpdown:b7,dpleft:b8,dpright:b9,dpup:b6,leftx:a0,lefty:a1,back:b10,lefttrigger:b12,righttrigger:b13,start:b15,platform:Linux,"
   fi
@@ -112,7 +133,7 @@ This allows the port's configuration information to stay within the port's folde
 
 ex.
 ```
-sudo rm -rf ~/.config/opentyrian
+$ESUDO rm -rf ~/.config/opentyrian
 ln -sfv /$directory/ports/opentyrian/ ~/.config/
 ```
 
@@ -120,12 +141,18 @@ ln -sfv /$directory/ports/opentyrian/ ~/.config/
 ```
 #!/bin/bash
 
+ESUDO="sudo"
+if [ -f "/storage/.config/.OS_ARCH" ]; then
+  ESUDO=""
+  export LD_LIBRARY_PATH="/storage/roms/ports/shadow-warrior/libs"
+fi
+
 if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
   sdl_controllerconfig="03000000091200000031000011010000,OpenSimHardware OSH PB Controller,a:b1,b:b0,x:b3,y:b2,leftshoulder:b4,rightshoulder:b5,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftx:a0~,lefty:a1~,leftstick:b8,lefttrigger:b10,rightstick:b9,back:b7,start:b6,rightx:a2,righty:a3,righttrigger:b11,platform:Linux,"
   param_device="anbernic"
 elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; then
   if [[ ! -z $(cat /etc/emulationstation/es_input.cfg | grep "190000004b4800000010000001010000") ]]; then
-    sdl_controllerconfig="190000004b4800000010000001010000,GO-Advance Gamepad (rev 1.1),a:b1,b:b0,x:b2,y:b3,leftshoulder:b4,rightshoulder:b5,dpdown:b9,dpleft:b10,dpright:b11,dpup:b8,leftx:a0,lefty:a1,back:b12,leftstick:b13,lefttrigger:b14,rightstick:b16,righttrigger:b15,start:b17,platform:Linux,"
+    sdl_controllerconfig="190000004b4800000010000001010000,GO-Advance Gamepad (rev 1.1),a:b1,b:b0,x:b2,y:b3,leftshoulder:b4,rightshoulder:b5,dpdown:b9,dpleft:b10,dpright:b11,dpup:b8,leftx:a0,lefty:a1,back:b12,leftstick:b13,lefttrigger:b6,rightstick:b16,righttrigger:b7,start:b17,platform:Linux,"
     param_device="oga"
   else
     sdl_controllerconfig="190000004b4800000010000000010000,GO-Advance Gamepad,a:b1,b:b0,x:b2,y:b3,leftshoulder:b4,rightshoulder:b5,dpdown:b7,dpleft:b8,dpright:b9,dpup:b6,leftx:a0,lefty:a1,back:b10,lefttrigger:b12,righttrigger:b13,start:b15,platform:Linux,"
@@ -139,7 +166,7 @@ else
   param_device="chi"
 fi
 
-sudo chmod 666 /dev/tty1
+$ESUDO chmod 666 /dev/tty1
 
 if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ]; then
   directory="roms2"
@@ -148,14 +175,14 @@ else
 fi
 
 export LD_LIBRARY_PATH=/$directory/ports/am2r/libs:/usr/lib:/storage/.config/emuelec/lib32
-sudo rm -rf ~/.config/am2r
+$ESUDO rm -rf ~/.config/am2r
 ln -sfv /$directory/ports/am2r/conf/am2r/ ~/.config/
 cd /$directory/ports/am2r
-sudo ./oga_controls gmloader $param_device &
+$ESUDO ./oga_controls gmloader $param_device &
 SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig" ./gmloader gamedata/am2r.apk
-sudo kill -9 $(pidof oga_controls)
+$ESUDO kill -9 $(pidof oga_controls)
 unset LD_LIBRARY_PATH
-sudo systemctl restart oga_events &
+$ESUDO systemctl restart oga_events &
 printf "\033c" > /dev/tty1
 ```
 
