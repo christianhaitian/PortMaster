@@ -1,8 +1,29 @@
 # Packaging ports for PortMaster
+## Be aware that as of 11/7/2021, the packaging requirements list below are now met by just sourcing controls.txt from the PortMaster folder.  At the start of your port script just include the following:
+```
+#!/bin/bash
 
-Because the intention of the ports in PortMaster is to be as broadly compatible as possible with 351Elec and Ubuntu based custom firmwares for the RK3326 devices, there are some prerequisites the packages ports have to meet which are as follows:
+if [ -d "/opt/system/Tools/PortMaster/" ]; then
+  controlfolder="/opt/system/Tools/PortMaster"
+elif [ -d "/opt/tools/PortMaster/" ]; then
+  controlfolder="/opt/tools/PortMaster"
+else
+  controlfolder="/roms/ports/PortMaster"
+fi
 
-## 351Elec runs everything as root.  sudo is not needed nor does it work on 351Elec.  Ubuntu based distros like ArkOS, TheRA and RetroOZ does support sudo though.
+source $controlfolder/control.txt
+
+get_controls
+```
+and the $ESUDO, $directory, $param_device and necessary sdl configuration controller configurations will be sourced from the control.txt file shown [here](https://github.com/christianhaitian/PortMaster/blob/main/PortMaster/control.txt). \
+Thanks to JohnnyonFlame, dhwz, romadu, and shantigilbert for this easier to manage solution for common variables and future expansion needs if and when applicable.
+
+
+### (Historical information below.  No longer needed or should be included in port scripts!)
+
+Because the intention of the ports in PortMaster is to be as broadly compatible as possible with 351Elec and Ubuntu based custom firmwares for the RK3326 devices, there are some prerequisites the packages ports have to meet which are as follows
+
+### 351Elec runs everything as root.  sudo is not needed nor does it work on 351Elec.  Ubuntu based distros like ArkOS, TheRA and RetroOZ does support sudo though.~~
 
 So it's important to accomodate these differences as certain commands, as you'll read below, need sudo on Ubuntu based distros and some don't.  We need to make sudo available as an updatable variable instead.  A good solution for this is to check if the distro has a .OS_ARCH file located in a /storage/.config location.  Only 351Elec has such a file and such a location for that matter between among these defined distros.
 ```
@@ -19,7 +40,7 @@ if [ $(cat "/storage/.config/.OS_ARCH") == "RG351V" ]; then
 fi
 ```
 
-## Identifying which rk3326 device it's being run from in order to set various parameters like gamepad controls and screen resolution.
+### Identifying which rk3326 device it's being run from in order to set various parameters like gamepad controls and screen resolution.
 
 The best solution I've seen so far is to look at the device's gamecontroller existence in /dev/input/by-path/.  In some cases, you can also look in emulationstation's es_systems.cfg file to differentiate between a OGA 1.0(RK2020) and OGA 1.1(RGB10) unit.
   As an example, here's how I typically do this for the Chi, Anbernic, OGA, OGS and the RK2020,
@@ -38,7 +59,7 @@ else
   echo "chi"
 fi
 ```
-## Provide the ability to force quit a port where possible.
+### Provide the ability to force quit a port where possible.
 
 You can use [oga_controls](https://github.com/christianhaitian/oga_controls.git) to do this.  Just have it launched before the actual port is launched and provide the name of the port's executable and fork it to the background.
 
@@ -88,7 +109,7 @@ As an aside, the reason for the rk2020 be assigned separate from the oga is beca
 
 you can also use [gptokeyb](https://github.com/christianhaitian/gptokeyb) which works similarly to oga_controls but has much better mouse based controls.  
 
-## If the port uses SDL gamecontroller controls.  Assign them to a gamecontrollerdb.txt file or provide the controls to the port via SDL_GAMECONTROLLERCONFIG= during execution or as an export.
+### If the port uses SDL gamecontroller controls.  Assign them to a gamecontrollerdb.txt file or provide the controls to the port via SDL_GAMECONTROLLERCONFIG= during execution or as an export.
 
 You can have these preassigned per supported device so depending on which device is identified during execution, it will have the proper SDL_GAMECONTROLLERCONFIG info.
 
@@ -114,7 +135,7 @@ SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig" ./gmloader gamedata/am2r.apk
 
 ```
 
-## At least one RK3326 device (Anbernic RG351V) supports 2 sd card slots.  ArkOS is one that specifically distinguishes when the second sd card is being use or not for games and ports.  If a singular sd card is being used, then there's just a roms partition used for games and ports.  When the second sd card slow is being used, then there's a roms2 partition for games nad ports. That needs to be accounted for:
+### At least one RK3326 device (Anbernic RG351V) supports 2 sd card slots.  ArkOS is one that specifically distinguishes when the second sd card is being use or not for games and ports.  If a singular sd card is being used, then there's just a roms partition used for games and ports.  When the second sd card slow is being used, then there's a roms2 partition for games nad ports. That needs to be accounted for:
 
 ex. 
 ```
@@ -125,11 +146,11 @@ else
 fi
 ```
 
-## Port specific additional libraries should be included within the port's directory in a separate subfolder named libs.
+### Port specific additional libraries should be included within the port's directory in a separate subfolder named libs.
 They can be loaded at runtime using `export LD_LIBRARY_PATH` or using `LD_LIBRARY_PATH=` on the same line as the executable as long as it's before it. \
 `LD_LIBRARY_PATH=./libs:$LD_LIBRARY_PATH ./executable`
 
-## Port specific config files that are normally created and stored in the home folder or anywhere outside the port's directory should be symlinked
+### Port specific config files that are normally created and stored in the home folder or anywhere outside the port's directory should be symlinked
 This allows the port's configuration information to stay within the port's folder.  This is important in order to maintain the portability and ease backup capability for ports for the user.
 
 ex.
@@ -138,7 +159,7 @@ $ESUDO rm -rf ~/.config/opentyrian
 ln -sfv /$directory/ports/opentyrian/ ~/.config/
 ```
 
-# Now let's put it all together.  Below is an example script for AM2R that incorporates everything mentioned above
+### Now let's put it all together.  Below is an example script for AM2R that incorporates everything mentioned above
 ```
 #!/bin/bash
 
