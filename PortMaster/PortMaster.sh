@@ -197,7 +197,7 @@ local unzipstatus
 			  cd /$whichsd/ports/
 			  for s in *.sh
 			  do
-			    if [[ -z $(cat "$s" | $GREP "ESUDO") ]]; then
+			    if [[ -z $(cat "$s" | $GREP "ESUDO") ]] || [[ -z $(cat "$s" | $GREP "controlfolder") ]]; then
 			      sed -i 's/sudo //g' /storage/roms/ports/"$s"
 				fi
 			  done
