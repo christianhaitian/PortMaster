@@ -126,7 +126,8 @@ fi
 ```
 
 ## Port specific additional libraries should be included within the port's directory in a separate subfolder named libs.
-They can be loaded at runtime using `export LD_LIBRARY_PATH`.
+They can be loaded at runtime using `export LD_LIBRARY_PATH` or using `LD_LIBRARY_PATH=` on the same line as the executable as long as it's before it. \
+`LD_LIBRARY_PATH=./libs:$LD_LIBRARY_PATH ./executable`
 
 ## Port specific config files that are normally created and stored in the home folder or anywhere outside the port's directory should be symlinked
 This allows the port's configuration information to stay within the port's folder.  This is important in order to maintain the portability and ease backup capability for ports for the user.
