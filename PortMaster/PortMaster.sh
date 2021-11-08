@@ -75,6 +75,8 @@ else
   fi
 fi
 
+isitext=$(df -PTh $toolsfolderloc | awk '{print $2}' | grep ext)
+
 cd $toolsfolderloc
 $ESUDO $toolsfolderloc/PortMaster/oga_controls PortMaster.sh $param_device > /dev/null 2>&1 &
 
@@ -136,7 +138,7 @@ UpdateCheck() {
           --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty0
 	if [ ${PIPESTATUS[0]} -eq 0 ]; then
       unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
-	  if [[ $isitthera == *"TheRA"* ]]; then
+	  if [ ! -z $isitext ]; then
 		$ESUDO chmod -R 777 $toolsfolderloc/PortMaster
 	  fi
 	  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty0
@@ -190,7 +192,7 @@ local unzipstatus
 		  if [[ "$setwebsiteback" == "Y" ]]; then
 		    website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 		  fi
-	      if [[ $isitthera == *"TheRA"* ]]; then
+	      if [ ! -z $isitext ]; then
 		    $ESUDO chmod -R 777 /roms/ports
 		  fi
 		  if [[ -e "/storage/.config/.OS_ARCH" ]]; then
