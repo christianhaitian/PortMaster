@@ -10,11 +10,12 @@
 ESUDO="sudo"
 GREP="grep"
 WGET="wget"
-if [ -f "/storage/.config/.OS_ARCH" ]; then
+sudo echo "Testing for sudo..."
+if [ $? != 0 ]; then
   ESUDO=""
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/storage/roms/ports/PortMaster/libs"
   GREP="/storage/roms/ports/PortMaster/grep"
-  #WGET="/storage/roms/ports/PortMaster/wget"
+  WGET="/storage/roms/ports/PortMaster/wget"
   LANG=""
 fi
 
@@ -183,38 +184,42 @@ local unzipstatus
      0) $WGET -t 3 -T 60 -q --show-progress "$website$installloc" -O \
 	    /dev/shm/portmaster/$installloc 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog --progressbox \
 		"Downloading ${1} package..." $height $width > /dev/tty0
-		if [ ${PIPESTATUS[0]} -eq 0 ] || [ -f "/storage/.config/.OS_ARCH" ] ; then
-          unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > /dev/tty0
-          unzipstatus=$?
+        unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > /dev/tty0
+        unzipstatus=$?
+		if [ $unzipstatus -eq 0 ]; then
 		  if [[ "$setwebsiteback" == "Y" ]]; then
 		    website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 		  fi
-          if [ $unzipstatus -ne 50 ]; then
-		    if [[ $isitthera == *"TheRA"* ]]; then
-		      $ESUDO chmod -R 777 /roms/ports
-		    fi
-			if [[ -e "/storage/.config/.OS_ARCH" ]]; then
-			  cd /$whichsd/ports/
-			  for s in *.sh
-			  do
-			    if [[ -z $(cat "$s" | $GREP "ESUDO") ]] || [[ -z $(cat "$s" | $GREP "controlfolder") ]]; then
-			      sed -i 's/sudo //g' /storage/roms/ports/"$s"
-				fi
+	      if [[ $isitthera == *"TheRA"* ]]; then
+		    $ESUDO chmod -R 777 /roms/ports
+		  fi
+		  if [[ -e "/storage/.config/.OS_ARCH" ]]; then
+		    cd /$whichsd/ports/
+		    for s in *.sh
+			do
+			  if [[ -z $(cat "$s" | $GREP "ESUDO") ]] || [[ -z $(cat "$s" | $GREP "controlfolder") ]]; then
+			    sed -i 's/sudo //g' /storage/roms/ports/"$s"
+			  fi
 			  done
-			  cd $toolsfolderloc
-			fi
-		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
-		    \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > /dev/tty0
-		  else
-		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
-		    \n\nYour roms partition seems to be full." $height $width 2>&1 > /dev/tty0
 		  fi
+		  cd $toolsfolderloc
+		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
+		  \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > /dev/tty0
+		elif [ $unzipstatus -eq 2 ] || [ $unzipstatus -eq 3 ] || [ $unzipstatus -eq 9 ] || [ $unzipstatus -eq 51 ]; then
+		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
+		  \n\nIt did not download correctly.  Please check your internet connection and try again." $height $width 2>&1 > /dev/tty0
+		elif [ $unzipstatus -eq 50 ]; then
+		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
+		  \n\nYour roms partition seems to be full." $height $width 2>&1 > /dev/tty0
 		else
-		  if [[ "$setwebsiteback" == "Y" ]]; then
-		    website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
-		  fi
-		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 failed to download successfully.  The PortMaster server maybe busy or check your internet connection." $height $width 2>&1 > /dev/tty0
+		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
+		  \n\nThe reason is unknown. ¯\_(ツ)_/¯ " $height $width 2>&1 > /dev/tty0
 		fi
+
+		if [[ "$setwebsiteback" == "Y" ]]; then
+		  website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
+		fi
+
         $ESUDO rm -f /dev/shm/portmaster/$installloc
 	    ;;
 	 *) if [[ "$setwebsiteback" == "Y" ]]; then

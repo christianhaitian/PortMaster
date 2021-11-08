@@ -53,6 +53,6 @@ else
 fi
 
     CONTROLS=`grep "${SDLDBUSERFILE}" -e "${DEVICE}"`
-    [ -z "${CONTROLS}" ] && CONTROLS=`grep "${SDLDBFILE}" -e "${1}"`
+    [ -z "${CONTROLS}" ] && CONTROLS=`grep "${SDLDBFILE}" -e "${DEVICE}"`
 	sdl_controllerconfig="${CONTROLS}"
 }
