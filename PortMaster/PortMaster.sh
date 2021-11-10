@@ -134,24 +134,30 @@ UpdateCheck() {
   gitversion=$(curl -s --connect-timeout 30 -m 60 ${website}version)
 
   if [[ "$gitversion" != "$curversion" ]]; then
-    $WGET -t 3 -T 60 -q --show-progress "${website}PortMaster.zip" -O /dev/shm/portmaster/PortMaster.zip 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog \
-          --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty0
-	if [ ${PIPESTATUS[0]} -eq 0 ]; then
-      unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
-	  if [ ! -z $isitext ]; then
-		$ESUDO chmod -R 777 $toolsfolderloc/PortMaster
-	  fi
-	  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty0
-	  $ESUDO kill -9 $(pidof oga_controls)
-	  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
-	  $ESUDO systemctl restart oga_events &
-	  exit 0
-	else
-	  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster failed to update." $height $width 2>&1 > /dev/tty0
-	  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
-	fi
-  else
-    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nNo update needed." $height $width 2>&1 > /dev/tty0
+    
+	dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
+--yesno "\nThere's an update for PortMaster.  Would you like to download it now?" $height $width 2>&1 > /dev/tty0
+
+    case $? in
+	   0) 
+		$WGET -t 3 -T 60 -q --show-progress "${website}PortMaster.zip" -O /dev/shm/portmaster/PortMaster.zip 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog \
+			  --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty0
+		if [ ${PIPESTATUS[0]} -eq 0 ]; then
+		  unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
+		  if [ ! -z $isitext ]; then
+			$ESUDO chmod -R 777 $toolsfolderloc/PortMaster
+		  fi
+		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty0
+		  $ESUDO kill -9 $(pidof oga_controls)
+		  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
+		  $ESUDO systemctl restart oga_events &
+		  exit 0
+		else
+		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster failed to update." $height $width 2>&1 > /dev/tty0
+		  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
+		fi
+        ;;
+    esac
   fi
 }
 
@@ -264,11 +270,5 @@ MainMenu() {
   done
 }
 
-dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
---yesno "\nWould you like to check for an update to the PortMaster tool?" $height $width 2>&1 > /dev/tty0
-
-  case $? in
-     0) UpdateCheck;;
-  esac
-
+UpdateCheck
 MainMenu
