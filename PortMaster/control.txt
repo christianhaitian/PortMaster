@@ -44,7 +44,7 @@ elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; the
 elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; then
       DEVICE="190000004b4800000011000000010000"
       param_device="ogs"
-elif [[ -e "/dev/input/by-path/platform-gameforce-joypad-event-joystick" ]]; then
+elif [[ -e "/dev/input/by-path/platform-gameforce-gamepad-event-joystick" ]]; then
       DEVICE="19000000030000000300000002030000"
       param_device="chi"
 else
