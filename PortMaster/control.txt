@@ -31,8 +31,13 @@ SDLDBUSERFILE="${HOME}/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 get_controls() {
 
 if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
-  DEVICE="03000000091200000031000011010000"
-  param_device="anbernic"
+    DEVICE="03000000091200000031000011010000"
+    param_device="anbernic"
+    ANALOGSTICKS=2
+    HOTKEY=""
+    if [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ $(cat "/storage/.config/.OS_ARCH") == "RG351V" ]; then
+      ANALOGSTICKS=1
+    fi
 elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; then
     if [[ ! -z $(cat /etc/emulationstation/es_input.cfg | grep "190000004b4800000010000001010000") ]]; then
       DEVICE="190000004b4800000010000001010000"
@@ -41,15 +46,23 @@ elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; the
       DEVICE="190000004b4800000010000000010000"
       param_device="rk2020"
     fi
+    ANALOGSTICKS=1
+    HOTKEY=""
 elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; then
       DEVICE="190000004b4800000011000000010000"
       param_device="ogs"
-elif [[ -e "/dev/input/by-path/platform-gameforce-joypad-event-joystick" ]]; then
+      ANALOGSTICKS=2
+      HOTKEY=""
+elif [[ -e "/dev/input/by-path/platform-gameforce-gamepad-event-joystick" ]]; then
       DEVICE="19000000030000000300000002030000"
       param_device="chi"
+      ANALOGSTICKS=2
+      HOTKEY="-hotkey l3"
 else
       DEVICE="${1}"
       param_device="${2}"
+      ANALOGSTICKS=2
+      HOTKEY=""
 fi
 
     CONTROLS=`grep "${SDLDBUSERFILE}" -e "${DEVICE}"`
