@@ -34,6 +34,7 @@ if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick"
     DEVICE="03000000091200000031000011010000"
     param_device="anbernic"
     ANALOGSTICKS=2
+    HOTKEY=""
     if [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ $(cat "/storage/.config/.OS_ARCH") == "RG351V" ]; then
       ANALOGSTICKS=1
     fi
@@ -46,18 +47,22 @@ elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; the
       param_device="rk2020"
     fi
     ANALOGSTICKS=1
+    HOTKEY=""
 elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; then
       DEVICE="190000004b4800000011000000010000"
       param_device="ogs"
       ANALOGSTICKS=2
+      HOTKEY=""
 elif [[ -e "/dev/input/by-path/platform-gameforce-gamepad-event-joystick" ]]; then
       DEVICE="19000000030000000300000002030000"
       param_device="chi"
       ANALOGSTICKS=2
+      HOTKEY="-hotkey l3"
 else
       DEVICE="${1}"
       param_device="${2}"
       ANALOGSTICKS=2
+      HOTKEY=""
 fi
 
     CONTROLS=`grep "${SDLDBUSERFILE}" -e "${DEVICE}"`
