@@ -41,18 +41,19 @@ get_controls # We pull the controller configs from the get_controls function fro
 # We switch to the port's directory location below
 cd /$directory/ports/blobbyvolley2
 
-# Some ports like to create save files or settings files in the user's home folder or other locations.  Let's use symlinks reroute that to a location
-# within the ports folder so the data stays with the port installation for easy backup and portability.
+# Some ports like to create save files or settings files in the user's home folder or other locations.  
+# Let's use symlinks reroute that to a location within the ports folder so the data stays with the port 
+# installation for easy backup and portability.
 $ESUDO rm -rf ~/.blobby
 ln -sfv /$directory/ports/blobbyvolley2/conf/.blobby ~/
 
-# Make sure uinput is accessible so we can make use of the gptokeyb controls.  351Elec always runs in root, naughty naughty.  The other distros don't so the $ESUDO
-# variable provides the sudo or not dependant on the OS this script is run from.
+# Make sure uinput is accessible so we can make use of the gptokeyb controls.  351Elec always runs in root, naughty naughty.  
+# The other distros don't so the $ESUDO variable provides the sudo or not dependant on the OS this script is run from.
 $ESUDO chmod 666 /dev/uinput
 
 # We launch gptokeyb using this $GPTOKEYB variable as it will take care of sourcing the executable from the central location,
-# assign the appropriate exit hotkey dependent on the device (ex. select + start for rg351 devices and minus + start for the rgb10),
-#and assign the appropriate method for killing an executable dependent on the OS the port is run from.
+# assign the appropriate exit hotkey dependent on the device (ex. select + start for rg351 devices and minus + start for the 
+# rgb10) and assign the appropriate method for killing an executable dependent on the OS the port is run from.
 $GPTOKEYB "blobby" -c "./blobby.gptk.$ANALOGSTICKS" &
 
 # Now we launch the port's executable and provide the location of specific libraries in may need along with the appropriate
@@ -60,11 +61,12 @@ $GPTOKEYB "blobby" -c "./blobby.gptk.$ANALOGSTICKS" &
 LD_LIBRARY_PATH="$PWD/libs" SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig" ./blobby 2>&1 | tee -a ./log.txt
 
 # Although you can kill most of the ports (if not all of the ports) via a hotkey, the user may choose to exit gracefully.
-# That's fine but let's make sure gptokeyb is killed so we don't get ghost inputs or worse yet, launch it again and have 2 or more of them running.
+# That's fine but let's make sure gptokeyb is killed so we don't get ghost inputs or worse yet, 
+# launch it again and have 2 or more of them running.
 $ESUDO kill -9 $(pidof gptokeyb)
 
-# The line below is helpful for ArkOS, RetroOZ, and TheRA as some of these ports tend to cause the global hotkeys (like brightness and volume control)
-# to stop working after exiting the port for some reason.
+# The line below is helpful for ArkOS, RetroOZ, and TheRA as some of these ports tend to cause the 
+# global hotkeys (like brightness and volume control) to stop working after exiting the port for some reason.
 $ESUDO systemctl restart oga_events &
 
 # Finally we clean up the terminal screen just for neatness sake as some people care about this.
