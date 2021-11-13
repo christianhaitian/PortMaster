@@ -18,7 +18,7 @@ get_controls
 and the $ESUDO, $directory, $param_device and necessary sdl configuration controller configurations will be sourced from the control.txt file shown [here](https://github.com/christianhaitian/PortMaster/blob/main/PortMaster/control.txt). \
 Thanks to JohnnyonFlame, dhwz, romadu, and shantigilbert for this easier to manage solution for common variables and future expansion needs if and when applicable.
 
-For an example of how a shell script can be setup to pull this info, see Blobby Volley 2's script below. \
+For an example of how a shell script can be setup to pull this info, see Blobby Volley 2's script with extra documentation added below. \
 **Note**:  This Blobby Volley 2 package allows for mouse conrol using the right analog stick on dual analog stick devices (such as the OGS or RG351MP) or on the singular analog stick device such as the OGA or RGB10.
 Hence the reason the package provies 2 configuration files for gptokeyb and is selected based on the $ANALOGSTICKS variable.
 
