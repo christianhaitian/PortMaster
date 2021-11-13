@@ -194,7 +194,7 @@ local unzipstatus
 		"Downloading ${1} package..." $height $width > /dev/tty0
         unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > /dev/tty0
         unzipstatus=$?
-		if [ $unzipstatus -eq 0 ]; then
+		if [ $unzipstatus -eq 0 ] || [ $unzipstatus -eq 1 ]; then
 		  if [[ "$setwebsiteback" == "Y" ]]; then
 		    website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 		  fi
@@ -221,7 +221,7 @@ local unzipstatus
 		  \n\nYour roms partition seems to be full." $height $width 2>&1 > /dev/tty0
 		else
 		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
-		  \n\nThe reason is unknown. ¯\_(ツ)_/¯ " $height $width 2>&1 > /dev/tty0
+		  \n\nUnzip error code:$unzipstatus " $height $width 2>&1 > /dev/tty0
 		fi
 
 		if [[ "$setwebsiteback" == "Y" ]]; then
