@@ -19,7 +19,7 @@ If you don't have PortMaster there or need to install it manually, you can do th
 
 No.  You can simply go to the PortMaster repo (https://github.com/christianhaitian/PortMaster), find the .zip of the port you want, download it and unzip the contents of it to the /roms/ports folder.  You'll also need to copy the PortMaster folder to your /roms/ports folder.  If you don't want the PortMaster folder to show up in your Ports menu in Emulationstation, just delete the PortMaster.sh file as it won't be needed if you don't plan to install or update your ports online via this tool. \
 
-NB : For ArkOS on the RG351V or RG351MP, if SD2 is being used for roms, unzip the port to the /roms2/ports folder instead and copy the PortMaster folder to the /roms2/tools location.  A few additional ports are available from the China Server (http://portmaster.hopto.org) due to their size (ex. SuperTux and Ur Quan Masters).
+**Note**: For ArkOS on the RG351V or RG351MP, if SD2 is being used for roms, unzip the port to the /roms2/ports folder instead and copy the PortMaster folder to the /roms2/tools location.  A few additional ports are available from the China Server (http://portmaster.hopto.org) due to their size (ex. SuperTux and Ur Quan Masters).
 
 ## How do I get more info about the ports in this repo like the sources used and additional asset needs if applicable?
 
