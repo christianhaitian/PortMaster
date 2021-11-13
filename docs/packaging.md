@@ -18,6 +18,60 @@ get_controls
 and the $ESUDO, $directory, $param_device and necessary sdl configuration controller configurations will be sourced from the control.txt file shown [here](https://github.com/christianhaitian/PortMaster/blob/main/PortMaster/control.txt). \
 Thanks to JohnnyonFlame, dhwz, romadu, and shantigilbert for this easier to manage solution for common variables and future expansion needs if and when applicable.
 
+For an example of how a shell script can be setup to pull this info, see Blobby Volley 2's script with extra documentation added below. \
+**Note**:  This Blobby Volley 2 package allows for mouse conrol using the right analog stick on dual analog stick devices (such as the OGS or RG351MP) or on the singular analog stick device such as the OGA or RGB10.
+Hence the reason the package provies 2 configuration files for gptokeyb and is selected based on the $ANALOGSTICKS variable.
+
+```
+#!/bin/bash
+
+# Below we assign the source of the control folder (which is the PortMaster folder) based on the distro:
+if [ -d "/opt/system/Tools/PortMaster/" ]; then
+  controlfolder="/opt/system/Tools/PortMaster" # Location for ArkOS which is mapped from /roms/tools or /roms2/tools for devices that support 2 sd cards and have them in use.
+elif [ -d "/opt/tools/PortMaster/" ]; then
+  controlfolder="/opt/tools/PortMaster" # Location for TheRA
+else
+  controlfolder="/roms/ports/PortMaster" # Location for 351Elec and RetroOZ
+fi
+
+source $controlfolder/control.txt # We source the control.txt file contens here
+
+get_controls # We pull the controller configs from the get_controls function from the control.txt file here
+
+# We switch to the port's directory location below
+cd /$directory/ports/blobbyvolley2
+
+# Some ports like to create save files or settings files in the user's home folder or other locations.  
+# Let's use symlinks to reroute that to a location within the ports folder so the data stays with the port 
+# installation for easy backup and portability.
+$ESUDO rm -rf ~/.blobby
+ln -sfv /$directory/ports/blobbyvolley2/conf/.blobby ~/
+
+# Make sure uinput is accessible so we can make use of the gptokeyb controls.  351Elec always runs in root, naughty naughty.  
+# The other distros don't so the $ESUDO variable provides the sudo or not dependant on the OS this script is run from.
+$ESUDO chmod 666 /dev/uinput
+
+# We launch gptokeyb using this $GPTOKEYB variable as it will take care of sourcing the executable from the central location,
+# assign the appropriate exit hotkey dependent on the device (ex. select + start for rg351 devices and minus + start for the 
+# rgb10) and assign the appropriate method for killing an executable dependent on the OS the port is run from.
+$GPTOKEYB "blobby" -c "./blobby.gptk.$ANALOGSTICKS" &
+
+# Now we launch the port's executable and provide the location of specific libraries in may need along with the appropriate
+# controller configuration if it recognizes SDL controller input
+LD_LIBRARY_PATH="$PWD/libs" SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig" ./blobby 2>&1 | tee -a ./log.txt
+
+# Although you can kill most of the ports (if not all of the ports) via a hotkey, the user may choose to exit gracefully.
+# That's fine but let's make sure gptokeyb is killed so we don't get ghost inputs or worse yet, 
+# launch it again and have 2 or more of them running.
+$ESUDO kill -9 $(pidof gptokeyb)
+
+# The line below is helpful for ArkOS, RetroOZ, and TheRA as some of these ports tend to cause the 
+# global hotkeys (like brightness and volume control) to stop working after exiting the port for some reason.
+$ESUDO systemctl restart oga_events &
+
+# Finally we clean up the terminal screen just for neatness sake as some people care about this.
+printf "\033c" >> /dev/tty1
+```
 
 ### (Historical information below.  No longer needed or should be included in port scripts!)
 
