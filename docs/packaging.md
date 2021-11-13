@@ -42,7 +42,7 @@ get_controls # We pull the controller configs from the get_controls function fro
 cd /$directory/ports/blobbyvolley2
 
 # Some ports like to create save files or settings files in the user's home folder or other locations.  
-# Let's use symlinks reroute that to a location within the ports folder so the data stays with the port 
+# Let's use symlinks to reroute that to a location within the ports folder so the data stays with the port 
 # installation for easy backup and portability.
 $ESUDO rm -rf ~/.blobby
 ln -sfv /$directory/ports/blobbyvolley2/conf/.blobby ~/
