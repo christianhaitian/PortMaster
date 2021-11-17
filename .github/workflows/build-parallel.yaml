@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         run: |
           REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
-          git clone --filter=blob:none $REPO .
+          git clone $REPO .
 
       - name: Get date for artifacts
         id: date
