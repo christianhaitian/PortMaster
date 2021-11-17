@@ -282,12 +282,15 @@ function build_package() {
     fi
   fi
 
+  if [[ -z "${TEST_PLATFORM}" ]]; then
+    TEST_PLATFORM="$BUILD_PLATFORM"
+  fi
+  if [[ "${TEST_PLATFORM}" == "any" ]]; then
+     TEST_PLATFORM=$(get_linux_platform)
+  fi
   if [[ -f "${PACKAGE_DIR}/test" ]]; then
     if [[ -z "${DOCKER_WORK_DIR}" ]]; then
       DOCKER_WORK_DIR=/work
-    fi
-    if [[ -z "${TEST_PLATFORM}" ]]; then
-      TEST_PLATFORM="$BUILD_PLATFORM"
     fi
 
     if [[ "${USE_DOCKER}" == "false" ]]; then
@@ -305,9 +308,6 @@ function build_package() {
     else
         echo "testing ${PACKAGE} with docker using ${DOCKER_IMAGE}..."
         pushd "${PACKAGE_DIR}" &> /dev/null
-        if [[ "${TEST_PLATFORM}" == "any" ]]; then
-          TEST_PLATFORM=$(get_linux_platform)
-        fi
         # Get .env file ready
         env | grep "=" > .env
         ${SUDO} ${DOCKER_CMD} run --platform ${TEST_PLATFORM} ${INTERACTIVE} --env-file .env --rm --user ${UID}:"${GID}" -v "${PACKAGE_DIR}:${DOCKER_WORK_DIR}" -w "${DOCKER_WORK_DIR}" ${DOCKER_IMAGE} bash -e ./test
@@ -349,7 +349,7 @@ function build_package() {
       IS_TEST_MODE=true bash ./run
       popd &> /dev/null
     else
-      docker run ${INTERACTIVE} ${DOCKER_ARGS} --rm --platform ${BUILD_PLATFORM} \
+      docker run ${INTERACTIVE} ${DOCKER_ARGS} --rm --platform ${TEST_PLATFORM} \
         -v "$(realpath ${PACKAGE_DIR}/pkg/):${PORTS_DIR}/${PACKAGE}" \
         -w "${PORTS_DIR}/${PACKAGE}" ${TEST_IMAGE} \
         bash -c "IS_TEST_MODE=true bash \"./run\""
