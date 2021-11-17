@@ -1,0 +1,3 @@
+PKG_NAME="global"
+PKG_LIBRARY="true"
+BUILD_PLATFORM="any"

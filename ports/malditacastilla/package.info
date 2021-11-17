@@ -1,0 +1,3 @@
+PKG_NAME="Maldita Castilla"
+PKG_DIRECTORY_OVERRIDE="MalditaCastilla"
+LEGACY_PORTMASTER="true"

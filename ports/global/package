@@ -1,0 +1,4 @@
+#! /bin/bash
+
+cp ./global-functions pkg/
+cp ./gamecontrollerdb.txt pkg/

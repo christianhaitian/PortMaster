@@ -1,0 +1,7 @@
+ARG DOCKER_IMAGE=""
+FROM ${DOCKER_IMAGE} as prod
+
+# This file makes it so that any dependencies can be installed
+COPY Dockerfile.deps install-deps* ./
+RUN [ -f ./install-deps ] && bash -e ./install-deps
+

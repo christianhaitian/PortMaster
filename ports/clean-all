@@ -1,0 +1,15 @@
+#! /bin/bash
+set -e
+DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+
+for directory in ${DIR}/*/; do
+  directory=${directory%/}
+  echo "directory: $directory"
+  if [ -f "${directory}/package.info" ]; then
+    TO_CLEAN="$(basename ${directory})"
+    echo "clean-all: cleaning: ${TO_CLEAN}"
+    ${DIR}/clean "${TO_CLEAN}" "$@"
+  else
+    echo "No package.info found for: ${directory}"
+  fi
+done

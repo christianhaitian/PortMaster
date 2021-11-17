@@ -1,0 +1,11 @@
+{
+	"Version": 2,
+	"LastMission": {
+		"Campaign": {
+			"Path": ""
+		},
+		"Password": "",
+		"MissionsCompleted": 0
+	},
+	"Missions": []
+}

@@ -1,0 +1,741 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+source ${DIR}/clone-source
+source "${DIR}/ports.info"
+BRANCH="${GITHUB_BRANCH}"
+IMAGE_BASE=ghcr.io/${GITHUB_ORG}/portmaster
+export CCACHE_DIR="../.ccache"
+
+GITHUB_API_URL=https://api.github.com/repos
+CACHE_DIR="/tmp/cache/github"
+
+
+function github_api() {
+  local url="$1"
+  local org="$2"
+  local repo="$3"
+  local accept="$4"
+  local response
+  if [[ -z "${org}" ]]; then
+    org=$GITHUB_ORG
+  fi
+  if [[ -z "${repo}" ]]; then
+    repo=PortMaster
+  fi
+
+  if ! which wget &> /dev/null; then
+    echo "ERROR: wget not found!  Please install wget."
+    exit
+  fi
+  response="$(_github_call "$GITHUB_API_URL/${org}/${repo}/${url}" "$accept")"
+
+  echo -e "${response}"
+}
+function _github_call() {
+  local apiUrl="$1"
+  local accept_header="$2"
+  local headers=""
+  set +e
+  if [[ -n "${accept_header}" ]]; then
+     headers="--header=Accept:${accept_header}"
+  fi
+  
+  local return_code
+  cache_file="$CACHE_DIR/${org}/${repo}/${url}"
+  cache_dir="$(dirname "$cache_file")"
+  mkdir -p "${cache_dir}"
+
+  echo_err "cache file: $cache_file"
+
+  cache=""
+  if [[ -f "$cache_file" ]]; then
+    cache="$(cat "$cache_file" |col -b )"
+    etag="$(_get_header "ETag" "$cache" | sed "s|^.*W/||g" )"
+    echo_err "etag: '${etag}'"
+  fi
+  echo_err wget --save-headers ${headers} --header="$GITHUB_AUTH" --header="If-None-Match: \"$etag\"" -O- "$apiUrl" -q
+
+  output="$(wget --save-headers ${headers} --header="$GITHUB_AUTH" --header="If-None-Match: \"$etag\"" -O- "$apiUrl" -q 2>&1 |col -b)"
+
+  response="$(echo -e "${output}" | tail -n +2 | grep -v "^[A-Za-z]" | tail -n +2)"
+  return_code="$(_get_return "$output")"
+  #echo_err "output: ${output}"
+  
+  echo_err "return code: $return_code"
+  if [[ "$return_code" == "200" ]]; then
+    rate_limit="$(_get_header "X-RateLimit-Limit" "${output}")"
+    rate_limit_remaining="$(_get_header "X-RateLimit-Remaining" "${output}")"
+    rate_limit_used="$(_get_header "X-RateLimit-Used" "${output}")"
+  
+    echo_err "rate limit: $rate_limit"
+    echo_err "remaining: $rate_limit_remaining"
+    echo_err "used: $rate_limit_used"
+    echo -e "${output}" > "$cache_file"
+  elif [[ "$return_code" == "404" ]]; then
+    echo_err "404"
+    return
+  else
+    echo_err "output: ${output}"
+    echo_err "cache hit.  Look at: $cache_file for more info"
+    
+  fi
+  if [[ -f "${cache_file}" ]]; then
+    response="$(cat "$cache_file" |  tail -n +2 |grep -v "^[A-Za-z].*:" | tail -n +2)"
+  fi
+  set -e
+  echo -e "${response}"
+
+}
+function _get_header() {
+  local header="$1"
+  local output="$2"
+  response="$(echo -e "$output" | grep "^${header}: " | sed "s|^${header}: ||g" | xargs)"
+  echo -e "$response"
+
+}
+function _get_return() {
+  local output="$1"
+  local response
+  response="$(echo  "$output" | grep "HTTP/" | head -1 | xargs  | awk '{print $2}')"
+  echo -e "$response"
+
+}
+function github_api_asset_output()
+{
+  local asset_id=$1
+  local org="$GITHUB_ORG"
+  local repo="PortMaster"
+
+  response=$(github_api "releases/assets/${asset_id}" "" "" "application/octet-stream")
+
+  echo "${response}"
+}
+function github_api_asset_download()
+{
+  local asset_id="$1"
+  local output_file="$2"
+  local output_dir
+  output_dir=$(dirname "$output_file")
+  mkdir -p "${output_dir}"
+  
+  if ! wget -S --header="$GITHUB_AUTH" --header 'Accept:application/octet-stream' -O "${output_file}" "$GITHUB_API_URL/${GITHUB_ORG}/PortMaster/releases/assets/${asset_id}"; then
+    echo "Error!  Could not download!"
+  fi
+}
+
+function get_linux_platform() {
+  local raw_linux_platform
+  raw_linux_platform="$(uname -m)"
+  if [[ "${raw_linux_platform}" == "x86_64" ]]; then
+    echo "linux/amd64"
+  elif [[ "${raw_linux_platform}" == "aarch64" ]]; then
+    echo "linux/arm64/v8"
+  elif  [[ "${raw_linux_platform}" == "armv7l" ]]; then
+    echo "linux/arm/v7"
+  elif [[ "${raw_linux_platform}" == "arm64" ]]; then  #M1 mac
+    echo "linux/arm64/v8"
+  else
+    echo "unknown"
+  fi
+
+}
+# outputs to stderr
+function echo_err() {
+  echo "$@" 1>&2;
+}
+
+function get_directory_git_hash() {
+  local directory
+  directory="$1"
+  local pkg_name
+  pkg_name=$(basename "${directory}")
+
+  pushd "${directory}"  &> /dev/null
+  dirty="$(git ls-files --modified  --others --exclude-standard .)"
+  echo "${pkg_name}=$(git log --pretty=tformat:"%h" -n1 .)"
+  if [[ -n "${dirty}" ]]; then
+
+     # This makes it easy to find files that have changed
+     echo ${pkg_name}_dirty="$(echo -e "$dirty" | tr '\n' ',')"
+
+     # Makes it so if any files are changed, we rebuild
+     echo ${pkg_name}_dirty_hash="$(echo -e "$dirty" | xargs cat | git hash-object --stdin)"
+
+  fi
+
+  # Ignored files which we should still cause a rebuild
+  if [[ -f "package.tmp" ]]; then
+    echo package_tmp="$(git hash-object --stdin < ./package.tmp)"
+  fi
+  if [[ -f "package.legacy.info" ]]; then
+    echo package_legacy_info="$(git hash-object --stdin < ./package.legacy.info)"
+  fi
+  if [[ "$pkg_name" == "global" ]]; then
+    return
+  fi
+  echo_err "pkgdeps: ${PKG_DEPENDS}" 
+
+  for dep in ${PKG_DEPENDS_CALCULATED//,/ }
+  do
+    if [[ "$dep" == "$pkg_name" ]]; then
+      continue
+    fi
+    echo_err "dep: ${dep}" 
+    echo -e "$(get_directory_git_hash "../$dep")"
+  done
+
+  popd &> /dev/null
+
+}
+function build_package() {
+  local PACKAGE
+  PACKAGE="$1"
+  local PACKAGE_DIR
+  PACKAGE_DIR="$2"
+  local SOURCE_DIR="${PACKAGE_DIR}/source"
+  local SOURCE_DOCKER_DIR="${PACKAGE}/source"
+  local BUILD_DIR
+  BUILD_DIR="$(realpath ${PACKAGE_DIR}/..)"
+
+  rm -rf "${PACKAGE_DIR}/pkg"
+  mkdir -p "${PACKAGE_DIR}/pkg/"
+  PACKAGE_SCRIPT="${PACKAGE_DIR}/package"
+  if [[ ! -f "$PACKAGE_SCRIPT" && -f "$PACKAGE_SCRIPT.tmp" ]]; then
+    PACKAGE_SCRIPT="$PACKAGE_SCRIPT.tmp"
+  fi
+
+  if [[ -f "${PACKAGE_DIR}/build" || -f "${PACKAGE_SCRIPT}" ]]; then
+
+    if [[ -z "${DOCKER_WORK_DIR}" ]]; then
+      DOCKER_WORK_DIR=/work
+    fi
+
+    GID=$(id -g)
+    DOCKER_CMD=docker
+  
+    # Use 'sudo' if docker ps doesn't work.  In theory, other things than missing sudo could cause this.  But sudo needed is a common issue and easy to fix.
+    SUDO=""
+    if ! docker ps -q &> /dev/null && sudo docker ps -q &> /dev/null; then
+     SUDO="sudo"
+    fi
+ 
+    # Launch docker as interactive if this is an interactive shell (allows ctrl-c for manual and running non-interactive - aka: build server)
+    INTERACTIVE=""
+    if [ -t 0 ]; then
+      INTERACTIVE="-it"
+    fi
+
+    clone_source ${PACKAGE} "${PACKAGE_DIR}"
+    if [[ ! -d "${SOURCE_DIR}" ]]; then
+      SOURCE_DIR="${PACKAGE_DIR}"
+      SOURCE_DOCKER_DIR=""
+      BUILD_DIR="."
+      mkdir -p "${SOURCE_DIR}"
+    fi
+    if [[ "$INSTALL_DEPS" == "true" && -f "${PACKAGE_DIR}/install-deps" ]]; then
+      if [[ "${USE_DOCKER}" == "false" ]]; then
+        echo "Installing dependencies for ${PACKAGE} without docker..."
+        pushd "${PACKAGE_DIR}" &> /dev/null
+        ESUDO="sudo"
+        if ! which sudo &> /dev/null || [[ "$UID" == "0" ]]; then
+          ESUDO=""
+        fi
+        $ESUDO bash "${PACKAGE_DIR}/install-deps"
+        popd &> /dev/null
+      fi
+    fi
+    if [[ -f "${PACKAGE_DIR}/build" ]]; then
+      if [[ "${USE_DOCKER}" == "false" ]]; then
+        linux_platform=$(get_linux_platform)
+        if [[ "${BUILD_PLATFORM}" == "any" || "${BUILD_PLATFORM}" != "${linux_platform}" ]]; then
+          echo "--------------------------------------------------------------------------------------------------"
+          echo "ERROR: BUILD_PLATFORM is set to ${BUILD_PLATFORM} but current platform is: ${linux_platform} ($(uname -m))"
+          echo "  If you are attempting to cross-compile or this is in error, etc.  Please update BUILD_PLATFORM in package.info to: ${linux_platform}"
+          exit 1
+        fi
+        if [[ "${BUILD_PLATFORM}" == "any" ]]; then
+          BUILD_PLATFORM=${linux_platform}
+        fi
+        echo "building ${PACKAGE} without docker..."
+        pushd "${SOURCE_DIR}" &> /dev/null
+        bash "../build"
+        popd &> /dev/null
+      else
+        echo "building ${PACKAGE} with docker..."
+        pushd "${SOURCE_DIR}" &> /dev/null
+
+        DOCKER_ARGS=""
+        if [[ "$DOCKER_REMOTE" == "true" ]]; then
+          DOCKER_ARGS="--pull=always"
+        fi
+        # Get .env file ready
+        env | grep "=" > .env
+
+        ${SUDO} ${DOCKER_CMD} run --init --platform ${BUILD_PLATFORM} ${INTERACTIVE} --env-file .env --rm --user ${UID}:"${GID}" -v "${BUILD_DIR}:${DOCKER_WORK_DIR}" -w "${DOCKER_WORK_DIR}/${SOURCE_DOCKER_DIR}" ${DOCKER_IMAGE} bash -e "../build"
+        echo "err: $?"
+        popd &> /dev/null
+      fi
+      echo "build done"
+    fi
+  fi
+
+  if [[ -f "${PACKAGE_DIR}/test" ]]; then
+    if [[ -z "${DOCKER_WORK_DIR}" ]]; then
+      DOCKER_WORK_DIR=/work
+    fi
+    if [[ -z "${TEST_PLATFORM}" ]]; then
+      TEST_PLATFORM="$BUILD_PLATFORM"
+    fi
+
+    if [[ "${USE_DOCKER}" == "false" ]]; then
+        linux_platform=$(get_linux_platform)
+        if [[ "${TEST_PLATFORM}" != "any" && "${TEST_PLATFORM}" != "${linux_platform}" ]]; then
+          echo "--------------------------------------------------------------------------------------------------"
+          echo "ERROR: TEST_PLATFORM is set to ${TEST_PLATFORM} but current platform is: ${linux_platform} ($(uname -m)"
+          echo "  If you are attempting to cross-compile or this is in error, etc.  Please update TEST_PLATFORM in package.info to: ${linux_platform} or any"
+          exit 1
+        fi
+        echo "testing ${PACKAGE} without docker..."
+        pushd "${PACKAGE_DIR}" &> /dev/null
+        bash "./test"
+        popd &> /dev/null
+    else
+        echo "testing ${PACKAGE} with docker using ${DOCKER_IMAGE}..."
+        pushd "${PACKAGE_DIR}" &> /dev/null
+        if [[ "${TEST_PLATFORM}" == "any" ]]; then
+          TEST_PLATFORM=$(get_linux_platform)
+        fi
+        # Get .env file ready
+        env | grep "=" > .env
+        ${SUDO} ${DOCKER_CMD} run --platform ${TEST_PLATFORM} ${INTERACTIVE} --env-file .env --rm --user ${UID}:"${GID}" -v "${PACKAGE_DIR}:${DOCKER_WORK_DIR}" -w "${DOCKER_WORK_DIR}" ${DOCKER_IMAGE} bash -e ./test
+        popd &> /dev/null
+    fi
+    echo "test done"
+  fi
+  mkdir -p "${PACKAGE_DIR}/pkg/"
+
+  if [[ -f "${PACKAGE_DIR}/run" ]]; then
+    cp "${PACKAGE_DIR}/run" "${PACKAGE_DIR}/pkg/run"
+  fi
+
+  for dep in ${PKG_DEPENDS_CALCULATED//,/ }
+  do
+    echo "copying dep: $dep"
+    cp -r ${PACKAGE_DIR}/../$dep/pkg/* ${PACKAGE_DIR}/pkg/
+  done
+
+  if [[ -f "${PACKAGE_SCRIPT}" ]]; then
+    echo "Running custom package script: ${PACKAGE_SCRIPT}"
+    pushd "${PACKAGE_DIR}/" &> /dev/null
+    bash ${PACKAGE_SCRIPT}
+    popd
+  fi
+
+  if [[ -f "${PACKAGE_DIR}/pkg/run" ]] && grep -q IS_TEST_MODE "${PACKAGE_DIR}/pkg/run"; then
+    echo "Running ${PACKAGE} run using IS_TEST_MODE=true"
+    PORTS_DIR=/opt/roms/ports
+
+    TEST_IMAGE=ghcr.io/${GITHUB_ORG}/portmaster:${BRANCH}
+    echo "Test Image: ${TEST_IMAGE}"
+    DOCKER_ARGS=""
+    if [[ "${DOCKER_REMOTE}" == "true" ]]; then
+      DOCKER_ARGS="--pull=always"
+    fi
+    docker run ${INTERACTIVE} ${DOCKER_ARGS} --rm --platform ${BUILD_PLATFORM} \
+      -v "$(realpath ${PACKAGE_DIR}/pkg/):${PORTS_DIR}/${PACKAGE}" \
+      -w "${PORTS_DIR}/${PACKAGE}" ${TEST_IMAGE} \
+      bash -c "IS_TEST_MODE=true bash \"./run\""
+    echo "run test passed"
+    
+  fi
+  
+}
+function build_env_docker_image() {
+  local PACKAGE
+  PACKAGE="$1"
+  local PACKAGE_DIR
+  PACKAGE_DIR="$2"
+  local DOCKERFILE
+  DOCKERFILE="${PACKAGE_DIR}/Dockerfile"
+
+  DOCKER_IMAGE=${IMAGE_BASE}/${PACKAGE}:${BRANCH}
+
+  if [[ ! -f "${DOCKERFILE}" && -f "${PACKAGE_DIR}/install-deps" ]]; then
+    DOCKERFILE="${PACKAGE_DIR}/Dockerfile.deps"
+    cp "${PACKAGE_DIR}/../Dockerfile.deps.template" "${DOCKERFILE}"
+  fi
+  if [[ -f "${DOCKERFILE}" ]]; then
+    echo "${DOCKERFILE} exists"
+
+    DOCKER_IMAGE_CACHE=${IMAGE_BASE}/${PACKAGE}/cache:${BRANCH}
+  
+    if [[ "${USE_DOCKER_PUSH}" == "true" ]]; then
+      IMAGE_CACHE_TO="--pull --builder=portmaster-remote-builder --cache-to=type=registry,ref=${DOCKER_IMAGE_CACHE},mode=max --push"
+    else
+      IMAGE_CACHE_TO="--load --builder default"
+    fi
+    IMAGE_CACHE_FROM="--cache-from=type=registry,ref=${DOCKER_IMAGE_CACHE}"
+
+    echo "docker image: ${DOCKER_IMAGE}"
+
+    if [[ "${USE_DOCKER}" != "false" ]]; then
+      pushd "${PACKAGE_DIR}" &> /dev/null
+
+      if [[ "${DOCKER_REMOTE}" == "true" ]]; then
+        echo "Skipping local docker environment build as --remote is set"
+      else
+        docker buildx build --platform ${BUILD_PLATFORM} \
+          --tag "${DOCKER_IMAGE}" \
+          --build-arg "DOCKER_IMAGE=${IMAGE_BASE}:${BRANCH}" \
+          -f "${DOCKERFILE}" \
+          ${IMAGE_CACHE_FROM} \
+          ${IMAGE_CACHE_TO} .
+        echo "tagged: ${DOCKER_IMAGE}"
+
+      fi
+      popd &> /dev/null
+    fi 
+  else
+    echo "${PACKAGE_DIR}/Dockerfile does not exist"
+    DOCKER_IMAGE=${IMAGE_BASE}:${BRANCH}
+  fi
+}
+
+function parse_args() {
+  USE_DOCKER=true
+  USE_DOCKER_PUSH=false
+  INSTALL_DEPS=false
+  ALWAYS_BUILD_DEPENDS=false
+  NO_RELEASE_ZIP=false
+  DOCKER_REMOTE=false
+  REMOTE_BUILD_CACHE=false
+  NO_BUILD_CACHE=false
+  PACKAGE=""
+  PACKAGE_DIR=""
+
+  # Parse args
+  ARGS=()
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+  
+    case $key in
+      -n|--no-docker)
+        USE_DOCKER="false"
+        shift # past argument
+        ;;
+      --no-release-zip)
+        NO_RELEASE_ZIP="true"
+        shift # past argument
+        ;;
+      --no-build-cache)
+        NO_BUILD_CACHE="true"
+        shift # past argument
+        ;;
+      --remote-build-cache)
+        REMOTE_BUILD_CACHE="true"
+        shift # past argument
+        ;;
+      -d|--install-deps)
+        INSTALL_DEPS="true"
+        shift # past argument
+        ;;
+      -b|--build-deps)
+        ALWAYS_BUILD_DEPENDS="true"
+        shift # past argument
+        ;;
+      --docker-remote)
+        DOCKER_REMOTE="true"
+        shift # past argument
+        ;;
+      -p|--push)
+        USE_DOCKER_PUSH="true"
+        shift # past argument
+        ;;
+      -h|--help)
+        echo "$0 <package> [arguments]"
+        echo "  --no-docker (-n) - Runs ./build script directly without docker overhead.  For troubleshooting and internal use as part of --docker-image"
+        echo "  --no-build-cache - Always rebuilds packages and does not check for a pre-build zip.  Disables --remote-build-cache if both are passed"
+        echo "  --no-release-zip - Won't create the zip file under release.  Primarily used internally for building libraries"    
+        echo "  --install-deps (-d) - Runs the ./install-deps script automatically using 'sudo' if 'sudo' binary exists and the user is not root.  Only needed with --no-docker"
+        echo "  --push (-p) - pushes docker images.  Meant for build server"
+        echo "  --remote-build-cache - indicates to look for pre-built images in GitHub releases.  Requires setting GITHUB_TOKEN due to high github API usage."
+        echo "  --docker-remote - do not use local docker images and always pull images.  Meant to help simulate build server locally. Will not build changes to install-deps for ports"
+        echo "  --always-build-depends - always build PKG_DEPENDS before package.  If not set, dependent package will only be built if /pkg folder does not exist"
+        exit 1
+        ;;
+      -*|--*)
+        echo "Unknown option: $1"
+        shift #past argument
+        ;;
+      *)    # unknown option
+        if [[ -z "${PACKAGE}" ]]; then
+          PACKAGE="${1%/}"
+          if [[ -d "${PACKAGE}" ]]; then
+            PACKAGE="$(basename ${PACKAGE})"
+          fi
+        else
+          echo "Unknown argument: $1"
+          ARGS+=("$1") # save it in an array for later
+        fi
+        shift
+        ;;
+    esac
+  done
+  if [[ -z "${PACKAGE}" ]]; then
+    echo "Please provide port to build. Ex: $0 smw"
+    exit 1
+  fi
+  if [[ ! -d "${DIR}/${PACKAGE}" ]]; then
+    echo "Please provide a port which exists in the ports directory. ${DIR}/${PACKAGE} does not exist."
+    exit 1
+  fi
+  PACKAGE_DIR="$(realpath "$DIR/${PACKAGE}")"
+
+  if [[ ! -f "${PACKAGE_DIR}/package.info" ]]; then
+    echo "The port '$PACKAGE' does not have a package.info file. Please create: ${PACKAGE_DIR}/package.info with appropriate values."
+    exit 1
+  fi
+  if [[ "$USE_DOCKER" == "true" ]] && ! which docker &> /dev/null; then
+    echo "WARNING: docker not found.  Assuming: --no-docker which means you must manually run in a chroot or only run cross-compile builds"
+    sleep 1
+    USE_DOCKER=false
+  fi
+}
+
+# only run code if we are not being sourced.  This allows other scripts to source this script for function reuse
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  ARGS_COPY=("$@")
+  parse_args "$@"
+  source "${PACKAGE_DIR}/package.info"
+  echo "Building: ${PACKAGE}"
+  echo "================================="
+  echo ""
+
+  if [[ "$PACKAGE" != "global" && "$PKG_GLOBAL" != "false" && "$PKG_LIBRARY" != "true" ]]; then
+    PKG_DEPENDS_CALCULATED="global, $PKG_DEPENDS"
+  fi
+  for dep in ${PKG_DEPENDS_CALCULATED//,/ }
+  do
+    if [[ "$ALWAYS_BUILD_DEPENDS" == "true" || ! -d "$PACKAGE_DIR/../$dep/pkg" || -z "$(ls -A "$PACKAGE_DIR/../$dep/pkg")" ]]; then
+      echo "building dependent package: $0 $dep"
+      echo $0 "$dep" "${ARGS_COPY[@]}" --no-release-zip
+
+      # shellcheck disable=2068 # code is irrelevant because we want to pass args separately
+      $0 "$dep" ${ARGS_COPY[@]} --no-release-zip
+    fi
+  done
+
+  GITHUB_AUTH=""
+  if [[ -n "${GITHUB_TOKEN}" ]]; then
+    GITHUB_AUTH="Authorization: token ${GITHUB_TOKEN}"
+  fi
+
+  if [[ -z "${PKG_DOWNLOAD_NAME}" ]]; then
+    PKG_DOWNLOAD_NAME="${PKG_NAME}"
+  fi
+  echo "PKG_DOWNLOAD_NAME: $PKG_DOWNLOAD_NAME"
+
+  if [[ "${LEGACY_PORTMASTER}" == "true" ]]; then
+    echo "Legacy Portmaster Build (Builds zip from legacy portmaster URLs)"
+
+    # LEGACY_PORTMASTER doesn't 'build' anything (as build files are in legacy zips), so just use the current
+    # platform for max speed in packaging, etc.
+    if [[ -z "${BUILD_PLATFORM}" ]]; then
+      BUILD_PLATFORM="$(get_linux_platform)"
+    fi
+
+    PACKAGE_INFO_LEGACY="${PACKAGE_DIR}/package.legacy.info"
+
+
+    if [[ -z "$LEGACY_URL_OVERRIDE" ]]; then
+
+      GITHUB_SHA_URL="contents?sha=${LEGACY_PORTMASTER_BRANCH}&path=/&page=1&per_page=1"
+      echo "Github SHA URL: ${GITHUB_SHA_URL}"
+
+      if ! PKG_GIT_SHA=$(github_api "$GITHUB_SHA_URL" "$LEGACY_PORTMASTER_ORG" "$LEGACY_PORTMASTER_REPO"  | grep -i "${PKG_DOWNLOAD_NAME}.zip" -A 3 | grep -i "\"sha\"" | head -1 | sed -E 's|.*: "(.*)",|\1|g'); then
+         PKG_GIT_SHA=""
+      fi
+      if [[ -z "${PKG_GIT_SHA}" ]]; then
+        echo "Could not find ${PKG_NAME}.zip in ${GITHUB_SHA_URL}"
+        exit 1
+      fi
+      echo "PKG_GIT_SHA: $PKG_GIT_SHA"
+
+      PKG_VERSION_URL="commits?sha=${LEGACY_PORTMASTER_BRANCH}&path=${PKG_DOWNLOAD_NAME}.zip&page=1&per_page=1"
+      echo "Package Version URL: ${PKG_VERSION_URL}"
+
+      PKG_VERSION=$(github_api "$PKG_VERSION_URL" "$LEGACY_PORTMASTER_ORG" "$LEGACY_PORTMASTER_REPO" | grep -i sha | head -1 | sed -E 's|.*: "(.*)",|\1|g')
+      if [[ -z "${PKG_VERSION}" ]]; then
+        debug_github "${PKG_VERSION_URL}" "${LEGACY_PORTMASTER_ORG}" "${LEGACY_PORTMASTER_REPO}"
+        echo "Could not find a sha in: ${GITHUB_SHA_URL}"
+        exit 1
+      fi
+      PKG_URL="https://github.com/${LEGACY_PORTMASTER_ORG}/${LEGACY_PORTMASTER_REPO}/raw/${PKG_VERSION}/${PKG_DOWNLOAD_NAME}.zip"
+  
+    else
+      PKG_URL="${LEGACY_URL_OVERRIDE}"
+    fi
+    GET_HANDLER_SUPPORT="archive"
+    echo "PKG_GIT_SHA: ${PKG_GIT_SHA} PKG_VERSION: ${PKG_VERSION} PKG_URL: ${PKG_URL}"
+
+    rm -rf "${PACKAGE_INFO_LEGACY}"
+    echo "PKG_GIT_SHA=\"${PKG_GIT_SHA}\"" >> "${PACKAGE_INFO_LEGACY}"
+    echo "PKG_VERSION=\"${PKG_VERSION}\"" >> "${PACKAGE_INFO_LEGACY}"
+    echo "PKG_URL=\"${PKG_URL}\"" >> "${PACKAGE_INFO_LEGACY}"
+    echo "GET_HANDLER_SUPPORT=\"${GET_HANDLER_SUPPORT}\"" >> "${PACKAGE_INFO_LEGACY}"
+
+    cp "${PACKAGE_DIR}/../package.legacy.template" "${PACKAGE_DIR}/package.tmp"
+  fi
+  echo "package dir: ${PACKAGE_DIR}"
+  NEW_GIT_INFO="$(get_directory_git_hash ${PACKAGE_DIR})"
+  RELEASE_DIR="$(realpath ${PACKAGE_DIR}/../../release)"
+  mkdir -p "${RELEASE_DIR}"
+  RELEASE_GIT_INFO_FILE="${RELEASE_DIR:?}/${PKG_NAME}.git.info"
+  RELEASE_GIT_INFO_ZIP="${RELEASE_DIR:?}/${PKG_NAME}.zip"
+  
+  PKG_DIRECTORY="${PACKAGE}"
+  if [[ -n "${PKG_DIRECTORY_OVERRIDE}" ]]; then
+    PKG_DIRECTORY="$PKG_DIRECTORY_OVERRIDE"
+  fi
+
+  if [[ -f "$RELEASE_GIT_INFO_FILE" ]]; then
+    RELEASE_GIT_INFO_LOCAL="$(cat "${RELEASE_GIT_INFO_FILE}")"
+  fi
+  LINE="------------------------"
+  echo "$LINE"
+
+  echo -e "release ${PKG_DOWNLOAD_NAME}.git.info (local): \n${LINE}\n${RELEASE_GIT_INFO_LOCAL}\n${LINE}"
+
+  echo -e "calculated ${PKG_DOWNLOAD_NAME}.git.info (local): \n${LINE}\n${NEW_GIT_INFO}\n${LINE}"
+
+  if [[ "$NO_BUILD_CACHE" == "true" ]]; then
+    echo "Not using build cache..."
+  elif [[ "${NEW_GIT_INFO}" == "${RELEASE_GIT_INFO_LOCAL}" ]]; then
+    echo "Build already exists - local"
+    exit 0
+  fi
+  echo "use remote build cache: ${REMOTE_BUILD_CACHE}"
+  if [[ "${REMOTE_BUILD_CACHE}" == "true" && "$NO_BUILD_CACHE" == "false" ]]; then
+    if [[ -z "${GITHUB_AUTH}" ]]; then
+      echo "--remote requires setting a GITHUB_TOKEN variable to authenticate with github.  Otherwise you *will* get throttled."
+      exit 1
+    fi
+    if ! which jq &>/dev/null ; then
+      echo "jq is required.  Attempting install..."
+      sudo apt update
+      sudo apt install -y jq
+    fi
+    releases_url="releases?per_page=10&page=1"
+    echo "getting: ${releases_url}"
+    PKG_DOWNLOAD_NAME_GITHUB="$(echo ${PKG_DOWNLOAD_NAME} | sed 's/ /./g')"
+    echo "looking for asset: $PKG_DOWNLOAD_NAME_GITHUB"
+
+    attempts=5
+    attempt=0
+    releases_raw="$(github_api "${releases_url}")"
+    while [ "$attempt" -lt "$attempts" ]; do
+      release_id_git_info=$(echo -e "${releases_raw}" | jq ".[] | {release:.id, asset_id: .assets[] | select(.name==\"${PKG_DOWNLOAD_NAME_GITHUB}.zip\") | .id }"| jq -s ".[$attempt] | .release")
+      asset_id_zip=$(echo -e "${releases_raw}"  | jq ".[]| select(.id == ${release_id_git_info}) | .assets[] | select(.name==\"${PKG_DOWNLOAD_NAME_GITHUB}.zip\") | .id" | xargs )
+      asset_id_git_info=$(echo -e "${releases_raw}" | jq ".[]| select(.id == ${release_id_git_info}) | .assets[] | select(.name==\"${PKG_DOWNLOAD_NAME_GITHUB}.git.info\") | .id" | xargs )
+      echo "release: $release_id_git_info asset_id_zip: $asset_id_zip asset_id_git_info: $asset_id_git_info"
+      if [[ -n "$asset_id_zip" && -n "$asset_id_git_info" ]]; then
+        set +e
+        RELEASE_GIT_INFO_REMOTE=$(github_api_asset_output "${asset_id_git_info}")
+        set -e
+
+        echo -e "release ${PKG_DOWNLOAD_NAME_GITHUB}.git.info (remote): \n${LINE}\n${RELEASE_GIT_INFO_REMOTE}\n${LINE}"
+
+        if [[ "${NEW_GIT_INFO}" == "${RELEASE_GIT_INFO_REMOTE}" ]]; then
+          RELEASE_MATCHES="true"
+          break
+        fi
+      fi
+      attempt=$((attempt+1))
+    done
+  
+    if [[ "${RELEASE_MATCHES}" == "true" ]]; then
+      echo "Build already exists - remote - downloading..."
+      echo "Finding: ${PKG_DOWNLOAD_NAME_GITHUB}.zip"
+      echo "PKG_LIBRARY: ${PKG_LIBRARY}"
+      echo "asset id zip: ${asset_id_zip}"
+
+      github_api_asset_download "${asset_id_zip}" "${RELEASE_GIT_INFO_ZIP}"
+      pushd "$RELEASE_DIR" &> /dev/null
+
+      if [[ -f "$RELEASE_GIT_INFO_ZIP" ]]; then
+        rm -rf "./${PKG_NAME}"
+        if unzip -o "${RELEASE_GIT_INFO_ZIP}"; then
+          echo "download: ${PKG_DOWNLOAD_NAME} directory: ${PKG_DIRECTORY_OVERRIDE}"
+          rm -rf "${PACKAGE_DIR}/pkg"
+          cp -r "${PKG_DIRECTORY}" "${PACKAGE_DIR}/pkg"
+  
+          echo "Updating git info: $RELEASE_GIT_INFO_FILE"
+          echo -e "${RELEASE_GIT_INFO_REMOTE}" > "$RELEASE_GIT_INFO_FILE"
+          echo "Remote download success"
+          exit 0
+        else
+          echo "downloaded zip seems corrupted"
+        fi
+      else
+        echo "zip not found.  Something went wrong downloading.."
+      fi 
+    fi
+
+    echo 'remote checking done'
+  fi
+  # Default BUILD_PLATFORM to arm64 unless set in package.info or by LEGACY_PORTMASTER
+  if [[ -z "$BUILD_PLATFORM" ]]; then
+    BUILD_PLATFORM="linux/arm64/v8"
+  fi
+
+  echo "USE_DOCKER: ${USE_DOCKER} USE_DOCKER_PUSH: ${USE_DOCKER_PUSH} BUILD_PLATFORM: ${BUILD_PLATFORM}"
+
+  build_env_docker_image "$PACKAGE" "$PACKAGE_DIR"
+  build_package "$PACKAGE" "$PACKAGE_DIR"
+
+  mkdir -p "${RELEASE_DIR}"
+
+  GLOBAL_DIR="$(realpath ${PACKAGE_DIR}/../global)"
+  pushd "${PACKAGE_DIR}/pkg" &> /dev/null
+
+  echo "Release dir: ${RELEASE_DIR}"
+  ZIP_FILE="${RELEASE_DIR}/${PKG_NAME}.zip"
+  rm -rf "${RELEASE_DIR:?}/${PKG_NAME}"
+  rm -rf "${RELEASE_DIR:?}/${PKG_NAME}.zip"
+
+  echo -e "$NEW_GIT_INFO" > "${RELEASE_GIT_INFO_FILE}"
+
+  if [[ "${NO_RELEASE_ZIP}" == "false" ]]; then
+    echo "Preparing release zip..."
+  
+    mkdir -p "${RELEASE_DIR:?}/${PKG_NAME}/"
+
+    if [[ -f "${PACKAGE_DIR}/run-legacy" ]]; then
+      cp "${PACKAGE_DIR}/run-legacy" "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh"
+    elif [[ "${LEGACY_PORTMASTER}"  == "true" \
+           && -f "${PACKAGE_DIR}/source/${PKG_NAME}.sh" \
+           && ! -f "${PACKAGE_DIR}/run" ]]; then
+      cp "${PACKAGE_DIR}/source/${PKG_NAME}.sh" "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh"
+    else
+      cp "${GLOBAL_DIR}/global-run.sh" "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh"
+      sed -i.bak "s/__PACKAGE__/${PACKAGE}/g" "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh"
+      rm -f "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh.bak"
+    fi
+  
+    cp -r "./" "${RELEASE_DIR}/${PKG_NAME}/${PKG_DIRECTORY}"
+    popd &> /dev/null
+  
+    pushd "${RELEASE_DIR}/${PKG_NAME}" &> /dev/null || exit 1
+    echo "Zipping..."
+    zip -FSqr "${ZIP_FILE}" .
+    popd &> /dev/null
+  fi
+
+  echo "========================================="
+  echo "Build done: ${PACKAGE}"
+  echo ""
+
+fi

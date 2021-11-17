@@ -1,0 +1,14 @@
+#! /bin/bash
+set -e
+DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+PACKAGE=$(basename $DIR)
+source package.info
+
+mkdir -p pkg/
+if [[ -n "${PKG_DIRECTORY_OVERRIDE}" ]]; then
+  cp -r "source/${PKG_DIRECTORY_OVERRIDE}/"* pkg/
+elif [[ -d "source/${PACKAGE}" ]]; then
+  cp -r source/${PACKAGE}/* pkg/
+fi
+
+

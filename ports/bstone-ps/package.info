@@ -1,0 +1,4 @@
+PKG_NAME="Blake Stone - Planet Strike"
+PKG_DIRECTORY_OVERRIDE="bstone"
+PKG_DOWNLOAD_NAME="bstone-ps"
+LEGACY_PORTMASTER="true"

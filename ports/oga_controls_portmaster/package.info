@@ -1,0 +1,6 @@
+PKG_NAME="oga-controls-portmaster"
+PKG_LIBRARY="true"
+PKG_URL="https://github.com/christianhaitian/oga_controls"
+PKG_VERSION="4aaf01b26f21ea5c5fa64e7285130bc501703a99"
+PKG_BRANCH="portmaster"
+GET_HANDLER_SUPPORT="git"

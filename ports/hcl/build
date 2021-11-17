@@ -1,0 +1,8 @@
+#! /bin/bash
+set -e
+
+# assumptions
+# - that git/download is checked out in 'source'
+# - the current directory is source
+cmake . -DUSE_SDL2=ON
+make

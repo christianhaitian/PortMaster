@@ -1,0 +1,3 @@
+PKG_NAME="Return to Castle Wolfenstein"
+PKG_DOWNLOAD_NAME="iortcw"
+LEGACY_PORTMASTER="true"

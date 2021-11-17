@@ -1,0 +1,5 @@
+PKG_NAME="Block Attack"
+PKG_URL="https://github.com/blockattack/blockattack-game"
+PKG_VERSION=5f4823d5429cf97473de74ae1e0e8e1e03717bd5
+PKG_DEPENDS=oga_controls
+GET_HANDLER_SUPPORT="git"

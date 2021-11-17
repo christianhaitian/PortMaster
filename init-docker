@@ -1,0 +1,36 @@
+#! /bin/bash
+
+if ! which docker &> /dev/null; then
+  echo "Please install docker.  It is suggested to install docker from https://docs.docker.com/engine/install/"
+  exit 1
+fi
+
+if ! docker ps -q &> /dev/null; then
+  echo "Please ensure that you can access docker without sudo"
+  echo "You may need to follow the instructions here (and reboot): https://docs.docker.com/engine/install/linux-postinstall/"
+  exit 1
+fi
+BUILDX_RELEASE=v0.7.0
+
+if ! docker buildx &> /dev/null; then
+  if ! which curl &> /dev/null; then
+     echo "curl is required to install buildx" 
+     echo "please install curl"
+     exit 1
+  fi
+  CLI_PLUGIN_DIR="$(realpath ~/.docker/cli-plugins)"
+  BUILDX_BIN="${CLI_PLUGIN_DIR}/docker-buildx"
+
+  mkdir -p ${CLI_PLUGIN_DIR}
+  curl -L -o "${BUILDX_BIN}" https://github.com/docker/buildx/releases/download/${BUILDX_RELEASE}/buildx-${BUILDX_RELEASE}.linux-amd64
+  chmod +x "${BUILDX_BIN}" 
+fi
+
+if [[ ! -f /proc/sys/fs/binfmt_misc/qemu-aarch64 || ! -f /proc/sys/fs/binfmt_misc/qemu-arm ]]; then
+  docker run --rm --privileged tonistiigi/binfmt:latest --install all
+fi 
+
+if ! docker buildx ls | grep -q portmaster-remote-builder; then
+  docker buildx create --name portmaster-remote-builder --driver docker-container
+fi
+

@@ -1,0 +1,141 @@
+#! /bin/bash
+set -e
+DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+ARGS_COPY=("$@")
+
+function parse_args() {
+  LIBRARIES=""
+  LEGACY_PORTMASTER_DEFAULT=""
+  LEGACY_PORTMASTER_OVERRIDE=""
+  BUILDS=""
+  DO_BUILD="true"
+  BUILD_SPLIT_TOTAL=""
+  BUILD_SPLIT=""
+
+  # Parse args
+  ARGS=()
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+  
+    case $key in
+      -l|--libraries)
+        LIBRARIES="true"
+        shift # past argument
+        ;;
+      --legacy-default)
+        LEGACY_PORTMASTER_DEFAULT="true"
+        shift # past argument
+        ;;
+      --legacy-url-override)
+        LEGACY_PORTMASTER_OVERRIDE="true"
+        shift # past argument
+        ;;
+      --builds)
+        BUILDS="true"
+        shift # past argument
+        ;;
+      --no-build)
+        DO_BUILD="false"
+        shift # past argument
+        ;;
+      --build-shard-total)
+        BUILD_SPLIT_TOTAL="$2"
+        shift # past argument
+        shift # past value
+        ;;
+      --build-shard)
+        BUILD_SPLIT="$2"
+        shift # past argument
+        shift # past value
+
+        ;;
+      -h|--help)
+        echo "$0  [arguments]"
+        echo "  --libraries - lists all PKG_LIBRARY=true"
+        echo "  --legacy-default - lists all LEGACY_PORTMASTER=true which do not have an LEGACY_URL_OVERRIDE"
+        echo "  --legacy-override-url - lists all LEGACY_PORTMASTER=true which have a LEGACY_URL_OVERRIDE"
+        echo "  --builds - lists all non-legacy builds"
+        echo "  --no-builds - just output the list of builds which would be run"
+        echo "  --build-shard-total - the total number to shard the jobs into - used with --build-shard to only build a subset of builds"
+        echo "  --build-shard - the specific shards (modulus) to run.  Starts from 1.  Ex: --build-shard-total=5 and --build-shard=1 the first of each 5 builds will be run" 
+
+        exit 1
+        ;;
+      *)    # unknown option
+        ARGS+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+  done
+}
+parse_args "$@"
+
+CURRENT_BUILD_SPLIT=0
+for directory in ${DIR}/*/; do
+  directory=${directory%/}
+  CURRENT_BUILD_SPLIT="$((${CURRENT_BUILD_SPLIT} + 1))"
+  if [[ "$CURRENT_BUILD_SPLIT" -gt "$BUILD_SPLIT_TOTAL" ]]; then
+    CURRENT_BUILD_SPLIT=1
+  fi
+  #echo "current build shard: ${CURRENT_BUILD_SPLIT} shard: ${BUILD_SPLIT}"
+  if [[ -n "${BUILD_SPLIT_TOTAL}" ]]; then
+    if [[ "$CURRENT_BUILD_SPLIT" != "${BUILD_SPLIT}" ]]; then
+       continue
+    fi
+  fi
+  #echo "directory: $directory"
+  if [ -f "${directory}/package.info" ]; then
+    PKG_LIBRARY=""
+    LEGACY_URL_OVERRIDE=""
+    LEGACY_PORTMASTER=""
+    source "${directory}/package.info"
+    TO_BUILD="$(basename ${directory})"
+    DEFAULT=true
+    if [[ "${LEGACY_PORTMASTER_OVERRIDE}" == "true" ]]; then
+       DEFAULT=false
+       if [[ -n "${LEGACY_URL_OVERRIDE}" &&  "${LEGACY_PORTMASTER}" == "true" ]]; then
+          echo "${TO_BUILD}"
+          if [[ "${DO_BUILD}" == "true" ]]; then
+            ${DIR}/build "${TO_BUILD}" "${ARGS_COPY[@]}"
+          fi
+       fi
+    fi
+    if [[ "${LEGACY_PORTMASTER_DEFAULT}" == "true" ]]; then
+       DEFAULT=false
+
+       if [[ -z "${LEGACY_URL_OVERRIDE}" &&  "${LEGACY_PORTMASTER}" == "true" ]]; then
+          echo "${TO_BUILD}"
+          if [[ "${DO_BUILD}" == "true" ]]; then
+            ${DIR}/build "${TO_BUILD}" "${ARGS_COPY[@]}"
+          fi
+       fi
+    fi
+    if [[ "${BUILDS}" == "true" ]]; then
+       DEFAULT=false
+
+       if [[ -n "${PKG_URL}" &&  "${LEGACY_PORTMASTER}" != "true" &&  "${PKG_LIBRARY}" != "true" ]]; then
+          echo "${TO_BUILD}"
+          if [[ "${DO_BUILD}" == "true" ]]; then
+            ${DIR}/build "${TO_BUILD}" "${ARGS_COPY[@]}"
+          fi
+       fi
+    fi
+    if [[ "${LIBRARIES}" == "true" ]]; then
+      DEFAULT=false
+      if [[ "${PKG_LIBRARY}" == "true" ]]; then
+        echo "${TO_BUILD}"
+        if [[ "${DO_BUILD}" == "true" ]]; then
+          ${DIR}/build "${TO_BUILD}" "${ARGS_COPY[@]}"
+        fi
+      fi
+    fi
+    
+    
+    if [[ "${DEFAULT}" == "true" && "${PKG_LIBRARY}" != "true" ]]; then
+      echo "${TO_BUILD}"
+      if [[ "${DO_BUILD}" == "true" ]]; then
+        ${DIR}/build "${TO_BUILD}" "${ARGS_COPY[@]}"
+      fi
+    fi
+  fi
+done

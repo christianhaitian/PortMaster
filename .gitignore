@@ -1,0 +1,15 @@
+**/source/
+/ports/*/Dockerfile.deps
+/ports/*/Dockerfile.build
+/ports/*/clone-source
+/release/
+.env
+**/.ccache
+**/pkg
+**/bld
+**.log
+**/pkg.zip
+**/pkg.zip.sha256
+**/pkg.zip.git.sha
+**/package.legacy.info
+**/package.tmp

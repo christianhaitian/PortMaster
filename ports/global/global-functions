@@ -1,0 +1,248 @@
+#! /bin/bash
+# Common functions used across ports
+#  - Will be copied into the package next to run.sh
+#
+# The suggested way to source this file from run.sh is:
+# -----------------------------------------------------
+# DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+# source "${DIR}/global-functions"
+# -----------------------------------------------------
+# Utilizing DIR instead of ./ means the script can be called from any directory
+#
+# All files in this script should suppport the $ROOT_DIR variable which will default to ''.  This allows
+# creating mock environments for testing
+#
+# Functions are designed to be called in the format:
+# DEVICE=$(get_device)
+# DEV NOTE: If debug output is needed in a function, output information with `echo_err` (stderr) as
+# anything output to stdout will be included in the returned device, etc
+
+
+ROOT_DIR=
+
+# Gets the current device:
+#  Supported devices: rg351p, rg351p (rg351m), rg351mp, oga, rk2020, ogs (same as rgb10max), chi, unknown
+function get_device() {
+  local param_device="unknown"
+  if [[ -e "${ROOT_DIR}/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
+    #anbernic rg351v and rg351p
+    if [[ -e "${ROOT_DIR}/dev/input/by-path/platform-rg351-keys-event" ]]; then #volume buttons
+      param_device="rg351v"
+    else
+      param_device="rg351p"
+    fi
+  elif [[ -e "${ROOT_DIR}/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; then
+    if [[ -f "${ROOT_DIR}/etc/emulationstation/es_input.cfg" ]] \
+       && grep -q "190000004b4800000010000001010000" "${ROOT_DIR}/etc/emulationstation/es_input.cfg" &> /dev/null; then
+      param_device="oga"
+  	else
+  	  param_device="rk2020"
+  	fi
+  elif [[ -e "${ROOT_DIR}/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; then
+    if [[ -e "${ROOT_DIR}/dev/input/by-path/platform-rg351-keys-event" ]]; then
+      param_device="rg351mp"
+    else
+      param_device="ogs"
+    fi
+  elif [[ -e "${ROOT_DIR}/dev/input/by-path/platform-gameforce-gamepad-joystick" ]]; then
+    param_device="chi"
+  fi
+  echo "${param_device}"
+}
+
+# This is the 'param_device' to pass to oga_controls.
+# Must be one of: anbernic, chi, oga, ogs, rk2020
+function get_oga_device() {
+  local device
+  device="$(get_device)"
+  if [[ "${device}" == "rg351v" || "${device}" == "rg351v" ]]; then
+    device="anbernic"
+  elif [[ "${device}" == "rg351mp" ]]; then
+    device="ogs"  #TODO: validate this works as 351mp uses same controller - I think this is true
+  fi
+  echo "${device}"
+}
+
+# Gets the SDL device ID which can be used to get the SDL config from
+# the gamecontrollerdb.txt
+# See: get_controls
+function get_sdl_device_id() {
+  local oga_device
+  local device_id=unknown
+  oga_device="$(get_oga_device)"
+
+  if [[ "${oga_device}" == "anbernic" ]]; then
+    device_id="03000000091200000031000011010000"
+  elif [[ "${oga_device}" == "oga" ]]; then
+    device_id="190000004b4800000010000001010000"
+  elif [[ "${oga_device}" == "rk2020" ]]; then
+    device_id="190000004b4800000010000000010000"
+  elif [[ "${oga_device}" == "ogs" ]]; then
+    device_id="190000004b4800000011000000010000"
+  elif [[ "${oga_device}" == "chi" ]]; then
+    device_id="19000000030000000300000002030000"
+  fi
+  echo "$device_id"
+}
+
+# Gets the SDL controls for the device from gamecontrollerdb.txt
+# Suggested usage: SDL_GAMECONTROLLERCONFIG="$(get_controls)"
+function get_controls() {
+  local device_id
+  local controls
+  local sdldbuserfile="${HOME}/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
+  local sdldbfile="$DIR/gamecontrollerdb.txt"
+  device_id=$(get_sdl_device_id)
+
+  controls=$(grep "${sdldbuserfile}" -e "${device_id}")
+  if [[ -z "${controls}" ]]; then
+    controls=$(grep "${sdldbfile}" -e "${device_id}")
+  fi
+  echo "${controls}"
+}
+
+# Gets the current OS
+#  Options: ArkOS, 351ELEC, TheRA, ubuntu, unknown
+#  NOTE: ubuntu is to be used as fallback for testing off-device (mostly applicable for portmaster)
+function get_os() {
+  local param_os="unknown"
+
+  if [[ -f "${ROOT_DIR}/boot/rk3326-rg351v-linux.dtb" || -d "${ROOT_DIR}/opt/system/Advanced/" ]]; then
+    param_os="ArkOS"
+  elif [[ -e "${ROOT_DIR}/storage/.config/.OS_ARCH" ]]; then
+    param_os="351ELEC"
+  elif [[ -e "${ROOT_DIR}/usr/share/plymouth/themes/text.plymouth" \
+          && $(grep "title=" "${ROOT_DIR}/usr/share/plymouth/themes/text.plymouth") == *"TheRA"* ]]; then
+    param_os="TheRA"
+  elif grep -q "ID=ubuntu" ${ROOT_DIR}/etc/os-release &> /dev/null; then
+    param_os="ubuntu"
+  fi
+  echo "${param_os}"
+}
+
+# Whether to use sudo
+function get_sudo() {
+  local os
+  os="$(get_os)"
+  if [[ "${os}" == "351ELEC" ]]; then
+    echo ""
+  else
+    echo "sudo"
+  fi
+}
+
+function get_tools_dir() {
+  os=$(get_os)
+  local toolsfolderloc="${ROOT_DIR}/opt/tools"
+  if [[ "351ELEC" == "${os}" ]]; then
+    toolsfolderloc="${ROOT_DIR}/storage/roms/tools"
+  elif [[ "TheRA" == "${os}" ]]; then
+    toolsfolderloc="${ROOT_DIR}/opt/system/Tools"
+  elif [[ "ArkOS" == "${os}" ]]; then
+    toolsfolderloc="${ROOT_DIR}/opt/tools"
+  fi
+  echo "${toolsfolderloc}"
+}
+
+function get_roms_dir() {
+  local os
+  os=$(get_os)
+  local romsfolderloc="${ROOT_DIR}/opt/roms"
+  if [[ "351ELEC" == "${os}" ]]; then
+    romsfolderloc="${ROOT_DIR}/storage/roms/"
+  elif [[ "TheRA" == "${os}" ]]; then
+    romsfolderloc="${ROOT_DIR}/opt/system/Roms"
+  elif [[ "ArkOS" == "${os}" ]]; then
+    romsfolderloc="${ROOT_DIR}/opt/roms"
+  fi
+  echo "${romsfolderloc}"
+}
+
+function get_ports_dir() {
+  echo "$(get_roms_dir)/ports"
+}
+
+function get_console() {
+  local os
+  os=$(get_os)
+  local console="/dev/tty0"
+  if [[ "ubuntu" == "${os}" || "unknown" == "${os}" ]]; then
+    console="/dev/stdout"
+  fi
+  echo "${console}"
+}
+
+function get_hotkey() {
+  local hotkey="Select"
+  local device
+  device="$(get_device)"
+
+  if [[ "${device}" == "oga" ]]; then
+	  hotkey="Minus"
+  elif [[ "${device}" == "chi" ]]; then
+    hotkey="1"
+  fi
+  echo "${hotkey}"
+}
+
+function in_china() {
+  ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | grep -Po '"country":.*?[^\\]"')
+  local in_china=false
+  if [[ "$ISITCHINA" == "\"country\":\"China\"" ]]; then
+    in_china=true
+  fi
+  echo "${in_china}"
+}
+
+# outputs to stderr
+function echo_err() {
+  echo "$@" 1>&2;
+}
+
+# does any cleanup that may be needed when launching
+function user_exit() {
+  set +e
+
+  local esudo
+  esudo=$(get_sudo)
+  local console
+  console=$(get_console)
+  $esudo kill -9 $(pidof oga_controls)
+  $esudo systemctl restart oga_events &
+  printf "\033c" >> $console
+}
+
+#This function makes it easier to launch (and cleanup) with oga_controls
+# NOTE: Current directory **must** contain oga_controls and the executable to launch
+function launch_with_oga_controls() {
+
+  local to_launch="$1"
+
+  local esudo
+  esudo="$(get_sudo)"
+
+  $esudo chmod 666 /dev/uinput
+
+  $esudo ./oga_controls $to_launch $param_device &
+  $esudo ./$to_launch 2>&1 | tee -a ./log.txt
+  trap user_exit EXIT
+}
+
+#The below code only runs when this file is executed (not sourced)
+#  Ex:  Please run `bash ./global-functions` and give us the output
+# It's meant to help debugging on devices and should have output to help debug
+# each function in this file.
+#
+# Output format currently allows being sourced by bash as variables as this might
+# be useful in the future
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  echo "OS=$(get_os)"
+  echo "DEVICE=$(get_device)"
+  echo "TOOLSDIR=$(get_tools_dir)"
+  echo "ROMSDIR=$(get_roms_dir)"
+  echo "CONSOLE=$(get_console)"
+  echo "HOTKEY=$(get_hotkey)"
+  echo "IN_CHINA=$(in_china)"
+  echo "OGA_DEVICE=$(get_oga_device)"
+  echo "SDL_DEVICE_ID=$(get_sdl_device_id)"
+fi

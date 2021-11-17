@@ -1,0 +1,9 @@
+LEGACY_PORTMASTER_ORG=christianhaitian
+LEGACY_PORTMASTER_REPO=PortMaster
+LEGACY_PORTMASTER_BRANCH=main
+
+GITHUB_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+GITHUB_REPO=PortMaster
+
+#This needs to work for both: https://github.com/<org>/PortMaster and git@github.com:<org>/PortMaster.git
+GITHUB_ORG=$(dirname $(git config --get remote.origin.url) | sed "s|.*:||g" | sed "s|.*/||g")

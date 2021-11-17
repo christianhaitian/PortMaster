@@ -1,0 +1,9 @@
+#! /bin/bash
+set -e
+
+# assumptions
+# - that git/download is checked out in 'source'
+# - the current directory is ./source
+
+make -f Makefile.libretro platform=arm64 all
+cp 2048_libretro.dll ../pkg/2048_libretro.so

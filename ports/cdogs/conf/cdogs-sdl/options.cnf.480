@@ -1,0 +1,91 @@
+{
+	"Version": 8,
+	"Game": {
+		"FriendlyFire": false,
+		"RandomSeed": 0,
+		"Difficulty": "Normal",
+		"FPS": 70,
+		"Superhot(tm)Mode": false,
+		"EnemyDensity": 100,
+		"NonPlayerHP": 100,
+		"PlayerHP": 75,
+		"Lives": 2,
+		"HealthPickups": true,
+		"Fog": true,
+		"SightRange": 15,
+		"FireMoveStyle": "Stop",
+		"SwitchMoveStyle": "Slide",
+		"AllyCollision": "Repel",
+		"LaserSight": "None"
+	},
+	"Deathmatch": {
+		"Lives": 10
+	},
+	"Dogfight": {
+		"PlayerHP": 100,
+		"FirstTo": 5
+	},
+	"Graphics": {
+		"Brightness": 0,
+		"Fullscreen": false,
+		"WindowWidth": 480,
+		"WindowHeight": 320,
+		"ScaleFactor": 2,
+		"ShakeMultiplier": 1,
+		"ShowHUD": true,
+		"ScaleMode": "Nearest neighbor",
+		"Shadows": true,
+		"Gore": "Trickle",
+		"Brass": true,
+		"SecondWindow": false
+	},
+	"Input": {
+		"PlayerCodes0": {
+			"left": 80,
+			"right": 79,
+			"up": 82,
+			"down": 81,
+			"button1": 27,
+			"button2": 29,
+			"grenade": 22,
+			"map": 4
+		},
+		"PlayerCodes1": {
+			"left": 92,
+			"right": 94,
+			"up": 96,
+			"down": 90,
+			"button1": 88,
+			"button2": 99,
+			"grenade": 91,
+			"map": 98
+		}
+	},
+	"Interface": {
+		"ShowFPS": false,
+		"ShowTime": false,
+		"ShowHUDMap": true,
+		"AIChatter": "Seldom",
+		"Splitscreen": "Never",
+		"SplitscreenAI": false
+	},
+	"Sound": {
+		"MusicVolume": 32,
+		"SoundVolume": 64,
+		"Footsteps": true,
+		"Reloads": true
+	},
+	"QuickPlay": {
+		"MapSize": "Any",
+		"WallCount": "Any",
+		"WallLength": "Any",
+		"RoomCount": "Any",
+		"SquareCount": "Any",
+		"EnemyCount": "Any",
+		"EnemySpeed": "Any",
+		"EnemyHealth": "Any",
+		"EnemiesWithExplosives": true,
+		"ItemCount": "Any"
+	},
+	"StartServer": false
+}

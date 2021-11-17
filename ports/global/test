@@ -1,0 +1,5 @@
+#! /bin/bash
+DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+cd $DIR/tests
+
+bats ./global-functions.bats

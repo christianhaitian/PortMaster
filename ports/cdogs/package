@@ -1,0 +1,15 @@
+#! /bin/bash
+set -e
+
+# assumptions
+# goal: assemble the zip in the 'pkg' directory.  This will correspond to /<package_name>/ in the zip.
+# - current directory is the package (/ports/<package>) directory
+# - 'build' has already run and all it's output is available provided its within the package directory 
+# - No special dependencies/platforms are needed (should be done in build)
+
+cp -r conf/ pkg/
+mkdir -p pkg/data
+
+mv pkg/bin/cdogs-sdl pkg/data/
+rm -rf pkg/bin
+mv pkg/oga* pkg/data/

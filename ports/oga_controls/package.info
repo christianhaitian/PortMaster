@@ -1,0 +1,5 @@
+PKG_NAME="oga-controls"
+PKG_LIBRARY="true"
+PKG_URL="https://github.com/christianhaitian/oga_controls"
+PKG_VERSION="1520281d8045c0a3442450db8c4968cbec575cc2"
+GET_HANDLER_SUPPORT="git"

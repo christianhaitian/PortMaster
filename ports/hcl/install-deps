@@ -1,0 +1,5 @@
+#! /bin/bash
+set -e
+
+apt-get update
+apt install -y libsdl2-mixer-dev

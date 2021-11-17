@@ -1,0 +1,6 @@
+#! /bin/bash
+
+cp source/oga* pkg
+
+# override the built version with custom
+cp oga_controls_settings.txt pkg

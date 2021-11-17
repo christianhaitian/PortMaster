@@ -1,0 +1,10 @@
+#! /bin/bash
+set -e
+
+mkdir -p ../pkg/libs
+cp /usr/lib/aarch64-linux-gnu/libboost_program_options.so.1.67.0 ../pkg/libs
+cp /usr/lib/aarch64-linux-gnu/libphysfs.so.1 ../pkg/libs
+
+./packdata.sh
+cmake -DCMAKE_BUILD_TYPE=Release .
+make -j$(nproc)

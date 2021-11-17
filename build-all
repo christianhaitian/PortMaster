@@ -1,0 +1,5 @@
+#! /bin/bash
+# This script provided as convenience
+
+DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+"${DIR}/ports/build-all" "$@"

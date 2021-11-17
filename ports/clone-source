@@ -1,0 +1,189 @@
+#!/bin/bash
+DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+
+function clone_source() {
+  local PACKAGE
+  PACKAGE="$1"
+  local PACKAGE_DIR
+  PACKAGE_DIR="$2"
+  local PACKAGE_INFO="${PACKAGE_DIR}/package.info"
+  local PACKAGE_INFO_LEGACY="${PACKAGE_DIR}/package.legacy.info"
+
+  local SOURCE_DIR_NAME=source
+  local SOURCE_DIR="${PACKAGE_DIR}/${SOURCE_DIR_NAME}"
+  if [[ -z "$PACKAGE_DIR" ]]; then
+    echo "Please specify package: $0 <package>"
+    exit 1
+  elif [[ ! -d "$PACKAGE_DIR" ]]; then
+    echo "Please specify a package directory that exists.  Not: $PACKAGE"
+    exit 1
+  elif [[ ! -f "$PACKAGE_INFO" ]]; then
+    echo "No package.mk found at: $PACKAGE_INFO"
+    exit 1
+  fi
+  GET_HANDLER_SUPPORT=""
+  PKG_VERSION=""
+  PKG_URL=""
+  source "${PACKAGE_INFO}"
+  if [[ -f "${PACKAGE_INFO_LEGACY}" ]]; then
+    source "${PACKAGE_INFO_LEGACY}"
+  fi
+  if [[ -z "${GET_HANDLER_SUPPORT}" ]]; then
+    GET_HANDLER_SUPPORT=git
+  fi
+  if [[ "${GET_HANDLER_SUPPORT}" == "git" ]]; then
+    if [[ -n "${PKG_URL}" ]]; then
+      if [[ -a "${PKG_VERSION}" ]]; then
+        echo "${PKG_VERSION} required"
+        exit 1
+      fi
+      ALREADY_CLONED=false
+      if [[ -d "${SOURCE_DIR}" ]]; then
+         pushd "${SOURCE_DIR}" &> /dev/null
+         if [[ "$(git config --get remote.origin.url)" == "$PKG_URL" ]]; then
+           git fetch
+           ALREADY_CLONED="true"
+         fi
+         popd &> /dev/null
+      fi
+      echo "source dir: ${SOURCE_DIR}"
+      if [[ "$ALREADY_CLONED" == "false" ]]; then
+         rm -rf "${SOURCE_DIR}"]
+         pushd "${PACKAGE_DIR}" &> /dev/null
+         git clone --recursive "${PKG_URL}" "${SOURCE_DIR_NAME}"
+         popd &> /dev/null
+      fi
+   
+      echo "chaning to: ${SOURCE_DIR}"
+      pushd "${SOURCE_DIR}" &> /dev/null
+      echo "Updating any submodules..."
+      git submodule update --init --recursive
+      echo "Cleaning ($(pwd))..."
+      git clean -fd
+      echo "Checking out: ${PKG_VERSION}"
+      git checkout "${PKG_VERSION}"
+      popd &> /dev/null || return
+    fi
+  elif [[ "${GET_HANDLER_SUPPORT}" == "archive" ]]; then
+    echo "Checking archive..."
+
+    if [[ -z "${PKG_URL}" ]]; then
+      echo "Package URL (PKG_URL) required in package.info with GET_HANDLER_SUPPORT==archive"
+      exit 1
+    elif [[ -z "${PKG_SHA256}" && -z "${PKG_GIT_SHA}" ]]; then
+      echo "PKG_SHA256 or PKG_SHA1 required to ensure download is repeatable.  Set it to something like 'wrong' and the build can tell you the right value"
+      exit 1
+    fi
+    SHA_TYPE=sha256
+    PKG_SHA="${PKG_SHA256}"
+    if [[ -z "${PKG_SHA256}" && -n "${PKG_GIT_SHA}" ]]; then
+      SHA_TYPE="git.sha"
+      PKG_SHA="${PKG_GIT_SHA}"
+    fi
+
+    if [[ -z "${PKG_TYPE}" ]]; then
+      local url_file_name="${PKG_URL##*/}"
+      PKG_TYPE="${url_file_name##*.}"
+    fi
+
+    if [[ "$PKG_TYPE" != "zip" ]]; then
+      echo "PKG_TYPE other than zip: (${PKG_TYPE}) is not currently supported"
+    fi
+    local DOWNLOAD_FILE="${PACKAGE_DIR}/pkg.${PKG_TYPE}"
+    local DOWNLOAD_FILE_SHA="${DOWNLOAD_FILE}.${SHA_TYPE}"
+  
+    if already_downloaded "${DOWNLOAD_FILE}" "${PKG_SHA}" "${DOWNLOAD_FILE_SHA}"; then
+      echo "File: ${DOWNLOAD_FILE} already downloaded and matching ${SHA_TYPE}"
+    else
+      echo "Downloading file: ${PKG_URL}"
+      if download_file "${PKG_URL}" "${DOWNLOAD_FILE}" "${DOWNLOAD_FILE_SHA}"; then
+        echo "File downloaded successfully"
+        calculated_sha=$(get_sha "${DOWNLOAD_FILE}" "${SHA_TYPE}")
+        echo "${calculated_sha}" > "${DOWNLOAD_FILE_SHA}"
+        if [[ "${PKG_SHA}" == "${calculated_sha}" ]]; then
+          echo "${SHA_TYPE} check successful"
+        else
+          echo "Expected SHA: '${PKG_SHA}' did not match calculated SHA: '${calculated_sha}'"
+          exit 1
+        fi
+      else
+        echo "Could not download file: ${PKG_URL} to: ${DOWNLOAD_FILE}"
+        exit 1
+      fi
+    fi
+    
+    if unpack "${DOWNLOAD_FILE}" "${SOURCE_DIR}" "${PKG_TYPE}"; then
+      echo "Unpacked: ${DOWNLOAD_FILE} to ${SOURCE_DIR}"
+    else
+      echo "Could not unpack ${DOWNLOAD_FILE} to ${SOURCE_DIR}"
+      exit 1
+    fi
+  else
+    echo "Handler: '${GET_HANDLER_SUPPORT}' not found"
+    exit 1
+  fi
+}
+function unpack() {
+  local unpack_file="$1"
+  local unpack_dir="$2"
+  local unpack_type="$3"
+          
+  if [[ "${unpack_type}"  == "zip" ]]; then
+    echo "Removing existing directory: ${unpack_dir}"
+    rm -rf "${unpack_dir}"
+    echo "Unzipping into: ${unpack_dir}"
+    unzip "${unpack_file}" -d "${unpack_dir}"
+  fi
+
+}
+function get_sha() {
+  local downloaded_file="$1"
+  local sha_type="$2"
+  local calculated_sha
+  if [[ "${sha_type}" == "git.sha" ]]; then
+    calculated_sha=$(git hash-object "${downloaded_file}" 2> /dev/null)
+  else
+    calculated_sha=$(${sha_type}sum "${downloaded_file}" 2> /dev/null | cut -d" " -f1)
+  fi
+  echo "${calculated_sha}"
+
+}
+function download_file() {
+  local download_url="$1"
+  local download_file_location="$2"
+  local download_file_sha256_location="$3"
+
+  rm -rf "${download_file_location}"
+  rm -rf "${download_file_sha256_location}"
+
+  WGET_OPT="--output-file=- --timeout=30 --tries=3 --passive-ftp --no-check-certificate -c -q --progress=bar:force --show-progress" #Could make configurable in future
+  if wget --header="$GITHUB_AUTH"  ${WGET_OPT}  -O "${download_file_location}" "${download_url}"; then
+    return 0
+  else
+    echo "Issue with download...retrying in 10 seconds..."
+    
+    sleep 10
+    if wget --header="$GITHUB_AUTH"  ${WGET_OPT}  -O "${download_file_location}" "${download_url}"; then
+      return 0
+    fi
+  fi
+
+  return 1
+}
+function already_downloaded() {
+  local filename="$1"
+  local sha256="$2"
+  local existing_sha256_file="$3"
+  echo "filename: ${filename} existing_sha256_file: ${existing_sha256_file} sha256: ${sha256}"
+  if [[ -f "${filename}" && -f ${existing_sha256_file} && -n "${sha256}" ]]; then
+    existing_sha256="$(cat "${existing_sha256_file}" 2> /dev/null)"
+    echo "existing sha: $existing_sha256"
+    if [[ -n "${existing_sha256}" && "${existing_sha256}" == "${sha256}" ]]; then
+      echo "matches!"
+      return 0
+    fi
+  fi
+
+  return 1
+
+}
