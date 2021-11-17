@@ -344,11 +344,17 @@ function build_package() {
     if [[ "${DOCKER_REMOTE}" == "true" ]]; then
       DOCKER_ARGS="--pull=always"
     fi
-    docker run ${INTERACTIVE} ${DOCKER_ARGS} --rm --platform ${BUILD_PLATFORM} \
-      -v "$(realpath ${PACKAGE_DIR}/pkg/):${PORTS_DIR}/${PACKAGE}" \
-      -w "${PORTS_DIR}/${PACKAGE}" ${TEST_IMAGE} \
-      bash -c "IS_TEST_MODE=true bash \"./run\""
-    echo "run test passed"
+    if [[ "${USE_DOCKER}" == "false" ]]; then
+      pushd "$PACKAGE_DIR/pkg" &> /dev/null
+      IS_TEST_MODE=true bash ./run
+      popd &> /dev/null
+    else
+      docker run ${INTERACTIVE} ${DOCKER_ARGS} --rm --platform ${BUILD_PLATFORM} \
+        -v "$(realpath ${PACKAGE_DIR}/pkg/):${PORTS_DIR}/${PACKAGE}" \
+        -w "${PORTS_DIR}/${PACKAGE}" ${TEST_IMAGE} \
+        bash -c "IS_TEST_MODE=true bash \"./run\""
+      echo "run test passed"
+    fi
     
   fi
   
