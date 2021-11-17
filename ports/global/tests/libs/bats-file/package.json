@@ -1,0 +1,8 @@
+{
+  "name": "bats-file",
+  "version": "0.2.0",
+  "private": true,
+  "peerDependencies": {
+    "bats-support": "git+https://github.com/bats-core/bats-support.git#v0.3.0"
+  }
+}
