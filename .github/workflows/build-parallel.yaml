@@ -1,0 +1,223 @@
+name: build-parallel
+
+on:
+  workflow_dispatch:
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.event.repository.name }}/portmaster
+
+#concurrency: 
+#  group: parallel
+
+jobs:
+  build-base-images:
+    name: Build Base Images and Libraries
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      date: ${{ steps.date.outputs.date }}
+    steps:
+      - name: Checkout
+        run: |
+          REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
+          git clone --filter=blob:none $REPO .
+
+      - name: Get date for artifacts
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%M')"
+      - name: Get token
+        id: token
+        run: | 
+          default_token=${{secrets.GITHUB_TOKEN}}
+          pat=${{secrets.BUILD_TOKEN}}
+          
+          if [[ -n "${pat}" ]]; then
+            echo "::set-output name=token::${pat}"
+            echo "using pat"
+          else
+            echo "::set-output name=token::${default_token}"
+            echo "using default"
+          fi
+          
+      - id: set-matrix
+        name: Determine Matrix Builds
+        run: |
+            echo -ne '::set-output name=matrix::{"package":['
+            echo -ne $(./ports/build-all  --no-build --builds | sed -e 's/^\|$/"/g' |sort | tr '\n' ',')
+            echo ']}'
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ steps.token.outputs.token }}
+      
+      - id: build-base-image
+        name: Build base image and libraries
+        run: |
+         ./init-docker
+         ./ports/build-base-images --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64
+         ./ports/build-all --libraries --push --remote-build-cache
+        env:
+            GITHUB_TOKEN: ${{ steps.token.outputs.token }}
+      - name: "Publish draft pre-release."
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{steps.date.outputs.date}}"
+          name: "${{steps.date.outputs.date}}"
+          allowUpdates: true
+          draft: true
+          prerelease: true
+          token: ${{ steps.token.outputs.token }}
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          artifacts: "ports.md, release/*.git.info, release/*.zip"
+
+  legacy:
+    name: Legacy Builds - Sharded
+    needs: build-base-images
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    strategy:
+      matrix:
+        shard: [1,2,3,4]
+    steps:
+      - name: Checkout
+        run: |
+          REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
+          git clone --filter=blob:none $REPO .
+      - name: Get token
+        id: token
+        run: | 
+          default_token=${{secrets.GITHUB_TOKEN}}
+          pat=${{secrets.BUILD_TOKEN}}
+          
+          if [[ -n "${pat}" ]]; then
+            echo "::set-output name=token::${pat}"
+            echo "using pat"
+          else
+            echo "::set-output name=token::${default_token}"
+            echo "using default"
+          fi
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ steps.token.outputs.token }}
+      
+      - name: Build ${{ matrix.package }}
+        id: build
+        run: |
+           set -e
+           ./init-docker
+           ./ports/build-all --build-shard ${{ matrix.shard }} --build-shard-total 4 --legacy-default --legacy-url-override  --push --remote-build-cache
+           
+        env:
+            GITHUB_TOKEN: ${{ steps.token.outputs.token }}
+      - name: "Update pre-release: ${{needs.build-base-images.outputs.date}}"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{needs.build-base-images.outputs.date}}"
+          allowUpdates: true
+          draft: true
+          prerelease: true
+          token: "${{ steps.token.outputs.token }}"
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          replacesArtifacts: false
+          artifacts: "release/*.zip, release/*.git.info"
+  buildx:
+    needs: build-base-images
+    name: Full Port Builds
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    strategy:
+      matrix: ${{fromJson(needs.build-base-images.outputs.matrix)}}
+    steps:
+      - name: Checkout
+        run: |
+          REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
+          git clone --filter=blob:none $REPO .
+      - name: Get token
+        id: token
+        run: | 
+          default_token=${{secrets.GITHUB_TOKEN}}
+          pat=${{secrets.BUILD_TOKEN}}
+          
+          if [[ -n "${pat}" ]]; then
+            echo "::set-output name=token::${pat}"
+            echo "using pat"
+          else
+            echo "::set-output name=token::${default_token}"
+            echo "using default"
+          fi
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ steps.token.outputs.token }}
+      
+      - name: Build ${{ matrix.package }}
+        id: build
+        run: |
+           set -e
+           ./init-docker
+           ./ports/build ${{ matrix.package }} --push --remote-build-cache
+           
+        env:
+            GITHUB_TOKEN: ${{ steps.token.outputs.token }}
+      - name: "Update pre-release: ${{needs.build-base-images.outputs.date}}"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{needs.build-base-images.outputs.date}}"
+          allowUpdates: true
+          draft: true
+          prerelease: true
+          token: "${{ steps.token.outputs.token }}"
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          replacesArtifacts: false
+          artifacts: "release/*.zip, release/*.git.info"
+
+  release:
+    needs: [buildx, legacy, build-base-images]
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Get token
+        id: token
+        run: | 
+          default_token=${{secrets.GITHUB_TOKEN}}
+          pat=${{secrets.BUILD_TOKEN}}
+          
+          if [[ -n "${pat}" ]]; then
+            echo "::set-output name=token::${pat}"
+            echo "using pat"
+          else
+            echo "::set-output name=token::${default_token}"
+            echo "using default"
+          fi
+      - name: "Publish pre-release: ${{needs.build-base-images.outputs.date}}"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{needs.build-base-images.outputs.date}}"
+          allowUpdates: true
+          draft: false
+          prerelease: true
+          token: ${{ steps.token.outputs.token }}
+          omitBodyDuringUpdate: true
+          replacesArtifacts: false
+          omitNameDuringUpdate: true
