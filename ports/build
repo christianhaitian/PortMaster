@@ -599,8 +599,8 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   NEW_GIT_INFO="$(get_directory_git_hash ${PACKAGE_DIR})"
   RELEASE_DIR="$(realpath ${PACKAGE_DIR}/../../release)"
   mkdir -p "${RELEASE_DIR}"
-  RELEASE_GIT_INFO_FILE="${RELEASE_DIR:?}/${PKG_NAME}.git.info"
-  RELEASE_GIT_INFO_ZIP="${RELEASE_DIR:?}/${PKG_NAME}.zip"
+  RELEASE_GIT_INFO_FILE="${RELEASE_DIR:?}/${PKG_DOWNLOAD_NAME}.git.info"
+  RELEASE_GIT_INFO_ZIP="${RELEASE_DIR:?}/${PKG_DOWNLOAD_NAME}.zip"
   
   PKG_DIRECTORY="${PACKAGE}"
   if [[ -n "${PKG_DIRECTORY_OVERRIDE}" ]]; then
@@ -708,9 +708,9 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   pushd "${PACKAGE_DIR}/pkg" &> /dev/null
 
   echo "Release dir: ${RELEASE_DIR}"
-  ZIP_FILE="${RELEASE_DIR}/${PKG_NAME}.zip"
-  rm -rf "${RELEASE_DIR:?}/${PKG_NAME}"
-  rm -rf "${RELEASE_DIR:?}/${PKG_NAME}.zip"
+  ZIP_FILE="${RELEASE_DIR}/${PKG_DOWNLOAD_NAME}.zip"
+  rm -rf "${RELEASE_DIR:?}/${PKG_DOWNLOAD_NAME}"
+  rm -rf "${RELEASE_DIR:?}/${PKG_DOWNLOAD_NAME}.zip"
 
   echo -e "$NEW_GIT_INFO" > "${RELEASE_GIT_INFO_FILE}"
 
