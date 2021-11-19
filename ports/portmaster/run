@@ -6,7 +6,7 @@
 # various game ports that are available for RK3326 DEVICEs
 # using 351Elec and Ubuntu based distrOS such as ArkOS, TheRA, and RetroOZ.
 #
-#set -e
+set -e
 set -u
 DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
 TITLE="PortMaster"
@@ -24,18 +24,31 @@ ROMS_DIR=$(get_roms_dir)
 TOOLS_DIR=$(get_tools_dir)
 HOTKEY=$(get_hotkey)
 CONSOLE=$(get_console)
-GITHUB_ORG=pkegg
-
-WEBSITE="https://github.com/${GITHUB_ORG}/PortMaster/releases/latest/download/"
-WEBSITE_IN_CHINA=
-
-
+GITHUB_ORG=$(get_github_org)
 ESUDO="$(get_sudo)"
 
-if [ "${OS}" == "351ELEC" ]; then
-  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/storage/roms/ports/PortMaster/libs"
-fi
 echo_err "OS: ${OS} ROMS_DIR: ${ROMS_DIR} TOOLS_DIR: ${TOOLS_DIR} CONSOLE: ${CONSOLE} HOTKEY: ${HOTKEY} SUDO: ${ESUDO}" 
+
+# If you set an environment variable LEGACY=true we will download from zips in the repo instead of releases
+# This is mostly for testing to ensure things are working as expected and maybe as a 'bridge' before we get to releases
+if [[ -z "${LEGACY:-}" ]]; then
+  LEGACY="false"
+fi
+
+WEBSITE="https://github.com/${GITHUB_ORG}/PortMaster/releases/latest/download/"
+
+if [[ "${LEGACY}" == "true" ]]; then
+  WEBSITE="https://raw.githubusercontent.com/${GITHUB_ORG}/PortMaster/main/"
+  WEBSITE_IN_CHINA="http://139.196.213.206/arkos/ports/"
+else
+  WEBSITE_IN_CHINA="${WEBSITE}"
+fi
+
+
+
+if [ "${OS}" == "351ELEC" ]; then
+  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${DIR}/libs"
+fi
 
 initialize_permissions
 
@@ -43,17 +56,17 @@ if [ ! -d "/dev/shm/portmaster" ]; then
   $ESUDO mkdir /dev/shm/portmaster
 fi
 
-curversion="$(curl "file://$(realpath "${DIR}")/version")"
-echo_err "version: ${curversion}"
+CURRENT_VERSION="$(curl "file://$(realpath "${DIR}")/version")"
+echo_err "version: ${CURRENT_VERSION}"
 
-dialog_initialize "PortMaster v$curversion"
+dialog_initialize "PortMaster v$CURRENT_VERSION"
 
 console_clear
 
 launch_with_oga_controls "Portmaster.sh"
 
 if ! is_network_connected; then
-  dialog_msg "$TITLE" "\n\nYour network connection doesn't seem to be working. \
+  dialog_msg "$TITLE" "\nYour network connection doesn't seem to be working. \
               \nDid you make sure to configure your wifi connection?"
 
   exit 0
@@ -71,26 +84,24 @@ function UpdateCheck() {
   local version_url="${WEBSITE}version"
   local portmaster_download_zip=/dev/shm/portmaster/PortMaster.zip
   local gitversion
-  gitversion=$(curl -s --connect-timeout 30 -m 60 "${version_url}")
+  gitversion=$(curl -L -s --connect-timeout 30 -m 60 "${version_url}")
 
-
-  if [[ "$gitversion" != "$curversion" ]]; then
-
-    if dialog_download "${WEBSITE}PortMaster.zip" "${portmaster_download_zip}" "Downloading and installing PortMaster update..."; then
-      $ESUDO unzip -X -o ${portmaster_download_zip} -d "${TOOLS_DIR}/"
-      if [[ "TheRA" == "${OS}" ]]; then
-   		  $ESUDO chmod -R 777 "$TOOLS_DIR/PortMaster"
-   	  fi
-      dialog_msg "$TITLE" "PortMaster updated successfully."
-   	  $ESUDO rm -f ${portmaster_download_zip} 
-   	  exit 0
-    else
-      dialog_msg "$TITLE" "PortMaster failed to update." 
-   	  $ESUDO rm -f ${portmaster_download_zip}
-      exit 1
-   	fi
-  else
-    dialog_msg "$TITLE" "No update needed."
+  if [[ "$gitversion" != "$CURRENT_VERSION" ]]; then
+	  if dialog_yes_no "$TITLE" "\nThere's an update for PortMaster ($gitversion).  Would you like to download it now?"; then
+      if dialog_download "${WEBSITE}PortMaster.zip" "${portmaster_download_zip}" "Downloading and installing PortMaster update..."; then
+        $ESUDO unzip -X -o ${portmaster_download_zip} -d "${TOOLS_DIR}/"
+        if [[ "TheRA" == "${OS}" ]]; then
+     		  $ESUDO chmod -R 777 "${DIR}"
+     	  fi
+        dialog_msg "$TITLE" "PortMaster updated successfully."
+     	  $ESUDO rm -f ${portmaster_download_zip} 
+     	  exit 0
+      else
+        dialog_msg "$TITLE" "PortMaster failed to update." 
+     	  $ESUDO rm -f ${portmaster_download_zip}
+        exit 1
+     	fi
+    fi
   fi
 }
 
@@ -103,31 +114,50 @@ PortInfoInstall() {
   local msgtxt
   msgtxt=$(cat "$ports_file" | grep "$choice" | grep -oP '(?<=Desc=").*?(?=")')
   local installloc
-  installloc=$(cat "$ports_file" | grep "$choice" | grep -oP '(?<=locat=").*?(?=")' | sed 's|%20|.|')
+ 
+  installloc=$(cat "$ports_file" | grep "$choice" | grep -oP '(?<=locat=").*?(?=")')
+  if [[ "${LEGACY}" != "true" ]]; then
+   installloc="$( echo "$installloc" | sed 's/%20/./g' | sed 's/ /./g' )"  #Github releases convert space " " ("%20") to "."
+  fi
   local porter
   porter=$(cat "$ports_file" | grep "$choice" | grep -oP '(?<=porter=").*?(?=")')
   local port_url="${WEBSITE}${installloc}"
 
+  # LEGACY: Due to size limitation of github files (which don't apply to github releases) files above 100MB are downloaded from another server
+  if [[ "${LEGACY}" == "true" ]] && [[ "$installloc" == "SuperTux.zip" || "$installloc" == "UQM.zip" ]]; then
+     port_url="${WEBSITE_IN_CHINA}${installloc}"
+  fi
+
   if dialog_yes_no "$choice" "$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?"; then
     if dialog_download "${port_url}" "$portmaster_tmp/$installloc" "Downloading ${1} package..."; then
-      if $ESUDO unzip -o $portmaster_tmp/$installloc -d ${ROMS_DIR}/ports/; then
+      
+      local unzipstatus="0"
+      $ESUDO unzip -o $portmaster_tmp/$installloc -d ${ROMS_DIR}/ports/ || unzipstatus="$?"
+      
+      if [ $unzipstatus -eq 0 ] || [ $unzipstatus -eq 1 ]; then
   		  if [[ "$OS" == "TheRA" ]]; then
   		    $ESUDO chmod -R 777 ${ROMS_DIR}/ports
   		  fi
   			if [[ "${OS}" == "351ELEC" ]]; then
   			  sed -i 's/sudo //g' ${ROMS_DIR}/ports/*.sh
   			fi
-        dialog_msg "$choice" "$choice installed successfully. \
+        dialog_msg "$choice" "\n$choice installed successfully. \
   		    \n\nMake sure to restart EmulationStation in order to see it in the ports menu."
-  		else
-        dialog_msg "$choice" "$choice did NOT install. \
-  		    \n\nYour roms partition seems to be full."
-  		fi
+  		elif [ $unzipstatus -eq 2 ] || [ $unzipstatus -eq 3 ] || [ $unzipstatus -eq 9 ] || [ $unzipstatus -eq 51 ]; then
+		    dialog_msg "$choice" "\n$choice did NOT install. \
+		        \n\nIt did not download correctly and the zip appeared corrupt.  Please check your internet connection and try again."
+	  	elif [ $unzipstatus -eq 50 ]; then
+		    dialog_msg "$choice"  "\n$choice did NOT install. \
+		        \n\nYour roms partition seems to be full."
+		  else
+		    dialog_msg "$choice" "\n$choice did NOT install. \
+		        \n\nUnzip error code: $unzipstatus "
+      fi
     else
       dialog_msg "$choice" "$choice failed to install successfully."
     fi
   else
-    dialog_msg "$choice" "$choice failed to download successfully.  The PortMaster server maybe busy or check your internet connection."
+    dialog_msg "$choice" "$choice failed to download successfully.  \n\nThe PortMaster server maybe busy or check your internet connection."
   fi
   $ESUDO rm -f "$portmaster_tmp/$installloc"
 
@@ -170,9 +200,7 @@ echo_err "downloaded ports.md"
 
 run_at_exit Cleanup
 
-if dialog_yes_no "$TITLE" "Would you like to check for an update to the PortMaster tool?"; then
-   UpdateCheck
-fi
+UpdateCheck
 
 MainMenu
 

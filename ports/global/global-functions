@@ -58,7 +58,7 @@ function get_oga_device() {
   if [[ "${device}" == "rg351v" || "${device}" == "rg351v" ]]; then
     device="anbernic"
   elif [[ "${device}" == "rg351mp" ]]; then
-    device="ogs"  #TODO: validate this works as 351mp uses same controller - I think this is true
+    device="ogs"
   fi
   echo "${device}"
 }
@@ -135,13 +135,22 @@ function get_sudo() {
 
 function get_tools_dir() {
   os=$(get_os)
-  local toolsfolderloc="${ROOT_DIR}/opt/tools"
+  local toolsfolderloc="${ROOT_DIR}/roms/ports"
   if [[ "351ELEC" == "${os}" ]]; then
-    toolsfolderloc="${ROOT_DIR}/storage/roms/tools"
+    toolsfolderloc="${ROOT_DIR}/storage/roms/ports"
   elif [[ "TheRA" == "${os}" ]]; then
-    toolsfolderloc="${ROOT_DIR}/opt/system/Tools"
+    if [ -d "/opt/tools/PortMaster/" ]; then
+      toolsfolderloc="${ROOT_DIR}/opt/tools"
+    else
+      toolsfolderloc="${ROOT_DIR}/roms/ports"
+    fi
   elif [[ "ArkOS" == "${os}" ]]; then
     toolsfolderloc="${ROOT_DIR}/opt/tools"
+    if [ -d "/opt/system/Tools/PortMaster/" ]; then
+      toolsfolderloc="${ROOT_DIR}/opt/system/Tools"
+    else
+      toolsfolderloc="${ROOT_DIR}/roms/ports"
+    fi
   fi
   echo "${toolsfolderloc}"
 }
@@ -222,7 +231,7 @@ function run_at_exit() {
 }
 
 # does any cleanup that may be needed when launching
-function user_exit() {
+function oga_exit() {
   set +e
   
   local esudo
@@ -240,7 +249,6 @@ function user_exit() {
   else
     echo_err "oga_events service does not exist"
   fi
-
   console_clear
 }
 
@@ -254,7 +262,11 @@ function launch_with_oga_controls() {
   local esudo
   esudo="$(get_sudo)"
 
-  $esudo chmod 666 /dev/uinput
+  if [[ -e "/dev/uinput" ]]; then
+    $esudo chmod 666 /dev/uinput
+  else
+    echo_err "/dev/uinput not found"
+  fi
 
   $esudo ./oga_controls $to_launch $param_device &
   if [[ -x "./$to_launch" ]]; then
@@ -262,7 +274,7 @@ function launch_with_oga_controls() {
   else
     echo_err "No executable found: ${to_launch}"
   fi
-  run_at_exit "user_exit"
+  run_at_exit "oga_exit"
 }
 
 function initialize_permissions() {
@@ -335,14 +347,22 @@ function dialog_initialize() {
   if [[ "ArkOS" == "${os}" ]]; then
     $esudo timedatectl set-ntp 1
   fi
+  __TMP_FILE=$(mktemp dialog.XXX 2>/dev/null) || __TMP_FILE=/tmp/dialog-$$
+  run_at_exit dialog_exit
 }
+
+function dialog_exit() {
+  echo_err "removing dialog temp file: ${__TMP_FILE}"
+  rm -f "${__TMP_FILE}"
+}
+
 function dialog_msg() {
   local message="$2"
   local title="$1"
   local console
   console="$(get_console)"
   dialog --clear --backtitle "${__DIALOG_BACKTITLE}" --title "${title}" \
-  --msgbox "\n\n${message}" $HEIGHT $WIDTH &> "${console}"
+  --msgbox "\n${message}" $HEIGHT $WIDTH &> "${console}"
 
 }
 function dialog_yes_no() {
@@ -351,7 +371,7 @@ function dialog_yes_no() {
   local console
   console="$(get_console)"
   if dialog --clear --backtitle "${__DIALOG_BACKTITLE}" --title "${title}" \
-  --yesno "\n\n${message}" $HEIGHT $WIDTH &> "${console}"; then
+  --yesno "\n${message}" $HEIGHT $WIDTH &> "${console}"; then
     return 0
   fi
   return 1
@@ -372,7 +392,6 @@ function dialog_menu() {
   local console
   console="$(get_console)"
 
-  tmp_file=$(mktemp 2>/dev/null) || tmp_file=/tmp/dialog-$$
   dialog_options=""
 
   if [[ "${console}" == "/dev/stdout" ]]; then
@@ -384,9 +403,9 @@ function dialog_menu() {
      --no-collapse \
      --clear \
      --cancel-label "$cancel_label" \
-     --menu "${message}" $HEIGHT $WIDTH 15 ${options[@]} 2> $tmp_file 1> "${console}"
+     --menu "${message}" $HEIGHT $WIDTH 15 ${options[@]} 2> $__TMP_FILE 1> "${console}"
                                                                                                                                               
-  cat "$tmp_file"
+  cat "$__TMP_FILE"
 }
 
 function dialog_download() {
@@ -429,8 +448,8 @@ function get_github_org() {
   local org="__GITHUB_ORG__"
 
   #fallback - shouldn't be used if __GITHUB_ORG__ is replaced
-  if ! [[ "${org}" =~ __.* ]]; then
-    echo "christianhaitian"
+  if [[ "${org}" == __* ]]; then
+    echo "pkegg"  #This can be switched to christianhaitian if merged
   fi
 }
 
