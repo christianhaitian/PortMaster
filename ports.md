@@ -40,13 +40,13 @@ Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Mi
 
 Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have a copy of Freedom Planet for Linux copied to the ports/freedomplanet/gamedata folder." porter="Johnny on Flame" locat="Freedom%20Planet.zip"
 
-Title="Iconoclasts ." Desc="A platformer that offers fun and wacky gameplay.  Recommended only for 640x480 devices or better.  You must have a copy of Iconoclasts for Linux copied to the ports/iconoclasts/gamedata folder.  Be sure the folder contains subfolders named 32, 64 and data." porter="Johnny on Flame" locat="Iconoclasts.zip"
-
 Title="Heart_of_Darkness ." Desc="Heart of Darkness using the hode reimplementation of the engine developed by Amazing Studio.  Just add your own Heart of Darkness game files to the ports/hode/gamedata folder." porter="Jetup" locat="Heart%20of%20Darkness.zip"
 
 Title="Hurrican ." Desc="Turrican port by Thrimbor.  Just add the data and lang folders from here to the ports/hurrican folder or just launch Hurrican from the ports menu in Emulationstation and it will download the files and install them automatically." porter="romadu" locat="Hurrican.zip"
 
 Title="Hydra_Castle_Labyrinth ." Desc="Hydra Castle Labyrinth is a platform game with some old school action. It's also reminiscent of games of the 16 bit era." porter="Christian_Haitian" locat="Hydra%20Castle%20Labyrinth.zip"
+
+Title="Iconoclasts ." Desc="A platformer that offers fun and wacky gameplay.  Recommended only for 640x480 devices or better.  You must have a copy of Iconoclasts for Linux copied to the ports/iconoclasts/gamedata folder.  Be sure the folder contains subfolders named 32, 64 and data." porter="Johnny on Flame" locat="Iconoclasts.zip"
 
 Title="Maldita_Castilla ." Desc="An arcade action video game developed by Locomalito and released in December 2012.  The gameplay is inspired by the games Shinobi and Ghost and Goblins." porter="krishenriksen (kreal)" locat="Maldita%20Castilla.zip"
 
