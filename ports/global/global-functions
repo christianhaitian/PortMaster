@@ -133,6 +133,8 @@ function get_sudo() {
   fi
 }
 
+
+#TODO: understand why this is sometimes 'roms' dir
 function get_tools_dir() {
   os=$(get_os)
   local toolsfolderloc="${ROOT_DIR}/roms/ports"
@@ -219,6 +221,8 @@ function echo_err() {
 }
 
 __RUN_AT_EXIT=""
+#This is a convenient way to add code to run whenever the program exits.  Without coordinating, only one 'trap' can
+# be registered at a time for a given exit code
 function run_at_exit() {
   command="$1"
 
