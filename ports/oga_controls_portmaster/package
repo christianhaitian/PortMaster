@@ -1,3 +1,4 @@
 #! /bin/bash
 
-cp source/oga* pkg
+# We don't want the oga_controls_settings - don't copy it
+cp source/oga_controls pkg

@@ -75,7 +75,7 @@ jobs:
           token: ${{ steps.token.outputs.token }}
           omitBodyDuringUpdate: true
           omitNameDuringUpdate: true
-          artifacts: "ports.md, release/*.git.info, release/*.zip"
+          artifacts: "ports.md, release/*.git.info, release/*.zip, version"
 
   legacy:
     name: Legacy Builds - Sharded

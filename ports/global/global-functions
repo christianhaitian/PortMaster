@@ -17,12 +17,12 @@
 # DEV NOTE: If debug output is needed in a function, output information with `echo_err` (stderr) as
 # anything output to stdout will be included in the returned device, etc
 
-
 ROOT_DIR=
 
 # Gets the current device:
 #  Supported devices: rg351p, rg351p (rg351m), rg351mp, oga, rk2020, ogs (same as rgb10max), chi, unknown
 function get_device() {
+
   local param_device="unknown"
   if [[ -e "${ROOT_DIR}/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
     #anbernic rg351v and rg351p
@@ -58,7 +58,7 @@ function get_oga_device() {
   if [[ "${device}" == "rg351v" || "${device}" == "rg351v" ]]; then
     device="anbernic"
   elif [[ "${device}" == "rg351mp" ]]; then
-    device="ogs"  #TODO: validate this works as 351mp uses same controller - I think this is true
+    device="ogs"
   fi
   echo "${device}"
 }
@@ -86,8 +86,8 @@ function get_sdl_device_id() {
 }
 
 # Gets the SDL controls for the device from gamecontrollerdb.txt
-# Suggested usage: SDL_GAMECONTROLLERCONFIG="$(get_controls)"
-function get_controls() {
+# Suggested usage: SDL_GAMECONTROLLERCONFIG="$(get_sdl_controls)"
+function get_sdl_controls() {
   local device_id
   local controls
   local sdldbuserfile="${HOME}/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
@@ -126,20 +126,31 @@ function get_sudo() {
   os="$(get_os)"
   if [[ "${os}" == "351ELEC" ]]; then
     echo ""
-  else
+  elif which sudo &> /dev/null; then
     echo "sudo"
+  else
+    echo ""
   fi
 }
 
 function get_tools_dir() {
   os=$(get_os)
-  local toolsfolderloc="${ROOT_DIR}/opt/tools"
+  local toolsfolderloc="${ROOT_DIR}/roms/ports"
   if [[ "351ELEC" == "${os}" ]]; then
-    toolsfolderloc="${ROOT_DIR}/storage/roms/tools"
+    toolsfolderloc="${ROOT_DIR}/storage/roms/ports"
   elif [[ "TheRA" == "${os}" ]]; then
-    toolsfolderloc="${ROOT_DIR}/opt/system/Tools"
+    if [ -d "/opt/tools/PortMaster/" ]; then
+      toolsfolderloc="${ROOT_DIR}/opt/tools"
+    else
+      toolsfolderloc="${ROOT_DIR}/roms/ports"
+    fi
   elif [[ "ArkOS" == "${os}" ]]; then
     toolsfolderloc="${ROOT_DIR}/opt/tools"
+    if [ -d "/opt/system/Tools/PortMaster/" ]; then
+      toolsfolderloc="${ROOT_DIR}/opt/system/Tools"
+    else
+      toolsfolderloc="${ROOT_DIR}/roms/ports"
+    fi
   fi
   echo "${toolsfolderloc}"
 }
@@ -153,9 +164,17 @@ function get_roms_dir() {
   elif [[ "TheRA" == "${os}" ]]; then
     romsfolderloc="${ROOT_DIR}/opt/system/Roms"
   elif [[ "ArkOS" == "${os}" ]]; then
-    romsfolderloc="${ROOT_DIR}/opt/roms"
+    romsfolderloc="${ROOT_DIR}/$(get_arkos_roms_dir_name)"
   fi
   echo "${romsfolderloc}"
+}
+
+function get_arkos_roms_dir_name() {
+  local dir_name="roms"
+  if [[ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ]]; then
+    dir_name="roms2"
+  fi
+  echo "${dir_name}"
 }
 
 function get_ports_dir() {
@@ -199,17 +218,38 @@ function echo_err() {
   echo "$@" 1>&2;
 }
 
-# does any cleanup that may be needed when launching
-function user_exit() {
-  set +e
+__RUN_AT_EXIT=""
+function run_at_exit() {
+  command="$1"
 
+  if [[ -n "${__RUN_AT_EXIT}" ]]; then
+    __RUN_AT_EXIT="${__RUN_AT_EXIT};${command}"
+  else
+    __RUN_AT_EXIT="${command}"
+  fi
+  trap -- "${__RUN_AT_EXIT}" EXIT
+}
+
+# does any cleanup that may be needed when launching
+function oga_exit() {
+  set +e
+  
   local esudo
   esudo=$(get_sudo)
   local console
   console=$(get_console)
-  $esudo kill -9 $(pidof oga_controls)
-  $esudo systemctl restart oga_events &
-  printf "\033c" >> $console
+  local oga_pid
+  oga_pid=$(pidof oga_controls)
+  if [[ -n "${oga_pid}" ]]; then
+    $esudo kill -9 "${oga_pid}"
+  fi
+  if systemctl list-units --full --all | grep -Fq "oga_events.service"; then
+    echo_err "restarting oga"
+    $esudo systemctl restart oga_events &
+  else
+    echo_err "oga_events service does not exist"
+  fi
+  console_clear
 }
 
 #This function makes it easier to launch (and cleanup) with oga_controls
@@ -217,15 +257,200 @@ function user_exit() {
 function launch_with_oga_controls() {
 
   local to_launch="$1"
-
+  local param_device
+  param_device="$(get_oga_device)"
   local esudo
   esudo="$(get_sudo)"
 
-  $esudo chmod 666 /dev/uinput
+  if [[ -e "/dev/uinput" ]]; then
+    $esudo chmod 666 /dev/uinput
+  else
+    echo_err "/dev/uinput not found"
+  fi
 
   $esudo ./oga_controls $to_launch $param_device &
-  $esudo ./$to_launch 2>&1 | tee -a ./log.txt
-  trap user_exit EXIT
+  if [[ -x "./$to_launch" ]]; then
+    $esudo "./$to_launch" 2>&1 | tee -a ./log.txt
+  else
+    echo_err "No executable found: ${to_launch}"
+  fi
+  run_at_exit "oga_exit"
+}
+
+function initialize_permissions() {
+  local esudo
+  local os
+  local console
+  esudo="$(get_sudo)"
+  os="$(get_os)"
+  console="$(get_console)"
+
+  #ensure directories are created
+  local romsdir
+  romsdir="$(get_roms_dir)"
+  local toolsdir
+  toolsdir="$(get_tools_dir)" 
+  $esudo mkdir -p "$romsdir" "$toolsdir"
+  
+  if [[ "${console}" != "/dev/stdout" ]]; then
+    $esudo chmod 666 "${console}"
+  fi
+}
+
+HEIGHT="15"
+WIDTH="55"
+function dialog_initialize() {
+  __DIALOG_BACKTITLE="$1"
+  local os
+  os="$(get_os)"
+  local esudo
+  esudo="$(get_sudo)"
+  local device
+  device="$(get_device)"
+  if [ "${os}" == "351ELEC" ]; then
+    LANG="" #Ensures lines are drawn properly even when ES sets LANG
+  fi
+  export TERM=linux
+  export XDG_RUNTIME_DIR=/run/user/$UID/
+
+  if [[ "${device}" == "rg351p" || "${device}" == "rg351v" ]]; then
+    if [[ "${os}" == "ArkOS" ]]; then
+      $esudo setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
+      HEIGHT="20"
+      WIDTH="60"
+    fi
+  elif [[ "${device}" == "ogs" ]]; then
+    $esudo setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
+    HEIGHT="20"
+    WIDTH="60"
+  elif [[ "${device}" == "chi" ]]; then
+    $esudo setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
+    HEIGHT="20"
+    WIDTH="60"
+  fi
+  # check_install curl
+  if ! which curl &> /dev/null; then
+    echo "curl not found"
+    $esudo apt update && $esudo apt install -y curl --no-install-recommends
+  fi
+  
+  # check_install dialog
+  if ! which dialog &> /dev/null; then
+    echo "dialog not found"
+    $esudo apt update && $esudo apt install -y dialog --no-install-recommends
+    if [[ "$os" == "ArkOS" && "$device" == "rg351p" ]]; then
+  	  #Make sure sdl2 wasn't impacted by the install of dialog for the 351P/M
+      $esudo ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.14.1 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0
+  	  $esudo ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.10.0 /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0
+    fi
+  fi
+  if [[ "ArkOS" == "${os}" ]]; then
+    $esudo timedatectl set-ntp 1
+  fi
+  __TMP_FILE=$(mktemp dialog.XXX 2>/dev/null) || __TMP_FILE=/tmp/dialog-$$
+  run_at_exit dialog_exit
+}
+
+function dialog_exit() {
+  echo_err "removing dialog temp file: ${__TMP_FILE}"
+  rm -f "${__TMP_FILE}"
+}
+
+function dialog_msg() {
+  local message="$2"
+  local title="$1"
+  local console
+  console="$(get_console)"
+  dialog --clear --backtitle "${__DIALOG_BACKTITLE}" --title "${title}" \
+  --msgbox "\n${message}" $HEIGHT $WIDTH &> "${console}"
+
+}
+function dialog_yes_no() {
+  local message="$2"
+  local title="$1"
+  local console
+  console="$(get_console)"
+  if dialog --clear --backtitle "${__DIALOG_BACKTITLE}" --title "${title}" \
+  --yesno "\n${message}" $HEIGHT $WIDTH &> "${console}"; then
+    return 0
+  fi
+  return 1
+}
+
+function dialog_clear() {
+  dialog --clear --stdout
+}
+
+function dialog_menu() {
+  local title="$1"
+  local message="$2"
+  local cancel_label="$3"
+  shift
+  shift
+  shift
+  local options=($@)
+  local console
+  console="$(get_console)"
+
+  dialog_options=""
+
+  if [[ "${console}" == "/dev/stdout" ]]; then
+    dialog_options="--stdout"
+  fi
+  dialog \
+     --backtitle "${__DIALOG_BACKTITLE}" ${dialog_options} \
+     --title "$title" \
+     --no-collapse \
+     --clear \
+     --cancel-label "$cancel_label" \
+     --menu "${message}" $HEIGHT $WIDTH 15 ${options[@]} 2> $__TMP_FILE 1> "${console}"
+                                                                                                                                              
+  cat "$__TMP_FILE"
+}
+
+function dialog_download() {
+  local url="$1"
+  local file="$2"
+  local message="$3"
+  local console
+  console="$(get_console)"
+  local esudo
+  esudo="$(get_sudo)"
+
+  echo_err "download: $url file: $file message: $message console: $console"
+  if $esudo wget -t 3 -T 60 -q --show-progress "${url}" -O ${file} 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog \
+                     --progressbox "$message" "$HEIGHT" "$WIDTH" &> ${console}; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+function is_network_connected() {
+  local gateway
+  gateway=$(ip route | awk '/default/ { print $3 }')
+  if [ -z "$gateway" ]; then
+    return 1
+  fi
+  return 0
+}
+
+function console_clear() {
+  local console
+  console="$(get_console)"
+  if [[ "${IS_TEST_MODE:-}" != "true" ]]; then
+    printf "\033c" >> "${console}"
+  fi
+}
+
+function get_github_org() {
+
+  local org="__GITHUB_ORG__"
+
+  #fallback - shouldn't be used if __GITHUB_ORG__ is replaced
+  if [[ "${org}" == __* ]]; then
+    echo "pkegg"  #This can be switched to christianhaitian if merged
+  fi
 }
 
 #The below code only runs when this file is executed (not sourced)
