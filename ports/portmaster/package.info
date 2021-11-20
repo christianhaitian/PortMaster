@@ -1,6 +1,4 @@
 PKG_NAME="PortMaster"
 PKG_DIRECTORY_OVERRIDE="PortMaster"
-
-PKG_VERSION="4.0"
 PKG_DEPENDS="oga_controls_portmaster"
 BUILD_PLATFORM="any"

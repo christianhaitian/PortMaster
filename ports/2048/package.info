@@ -1,6 +1,6 @@
 
 PKG_NAME="2048"
-PKG_VERSION="1ff7d5c3835ad89e5ce5eaa409b91c9a17cc1aa0"
+PKG_VERSION="20051e140346fb56376b59f41f28ef40f8ad7fb8"
 PKG_SITE="https://github.com/libretro/libretro-2048"
 PKG_URL="$PKG_SITE.git"
 GET_HANDLER_SUPPORT="git"

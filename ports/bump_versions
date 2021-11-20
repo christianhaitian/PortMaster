@@ -1,0 +1,34 @@
+#! /bin/bash
+DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+
+for directory in ${DIR}/*/; do
+  file=$directory/package.info
+  if [[ -f "${file}" ]]; then
+    source "$file"
+    pkg="$(basename ${directory})"
+    if [[ -z "${PKG_URL}" ]]; then
+      continue
+    fi
+    if [[ -n "${GET_HANDLER_SUPPORT}" && "${GET_HANDLER_SUPPORT}" != "git" ]]; then
+      echo "Cannot bump version in: ${file}.  Only GET_HANDLER_SUPPORT=git supported."
+      continue
+    fi
+
+    [ -n "${PKG_GIT_BRANCH}" ] && PKG_GIT_CLONE_BRANCH="${PKG_GIT_BRANCH}"
+    [ -n "${PKG_GIT_CLONE_BRANCH}" ] && GIT_HEAD="heads/${PKG_GIT_CLONE_BRANCH}" || GIT_HEAD="HEAD"
+    
+    UPS_VERSION=$(git ls-remote ${PKG_URL} | grep "${GIT_HEAD}$" | awk '{ print substr($1,1,40) }')
+    if [[ -n "$UPS_VERSION" ]]; then
+      if [[ "${PKG_VERSION}" != "${UPS_VERSION}" ]]; then
+        sed -i "s/PKG_VERSION=.*/PKG_VERSION=\"${UPS_VERSION}\"/" "$file"
+        echo "updated package: ${pkg} version: $UPS_VERSION old version: ${PKG_VERSION}"
+
+      fi
+
+    fi
+    UPS_VERSION=""
+    PKG_GIT_BRANCH=""
+    PKG_URL=""
+    PKG_GIT_CLONE_BRANCH=""
+  fi
+done

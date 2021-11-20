@@ -1,5 +1,5 @@
 PKG_NAME="Gamepad to Keyboard"
 PKG_LIBRARY="true"
 PKG_URL="https://github.com/EmuELEC/gptokeyb"
-PKG_VERSION="d9729927b1c6daf3c620323656f5dd0319521305"
+PKG_VERSION="9eca4a05f4a365b109e21afa36505d8efca51edf"
 GET_HANDLER_SUPPORT="git"
