@@ -1,0 +1,3 @@
+PKG_NAME="OpenClaw"
+PKG_DOWNLOAD_NAME="Openclaw"
+LEGACY_PORTMASTER="true"
