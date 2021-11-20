@@ -12,6 +12,19 @@ export CCACHE_DIR="../.ccache"
 GITHUB_API_URL=https://api.github.com/repos
 CACHE_DIR="/tmp/cache/github"
 
+# returns true ('0') if only the package hashes matches (no need for deps)
+function release_matches() {
+  local package="$1"
+  local git_info_a="$2"
+  local git_info_b="$3"
+  local git_info_a_only=$(echo -e "${git_info_a}" | grep "^${package}[=_].*")
+  local git_info_b_only=$(echo -e "${git_info_b}" | grep "^${package}[=_].*")
+  if [[ "${git_info_a_only}" == "${git_info_b_only}" ]]; then
+     return 0
+  else
+     return 1
+  fi
+}
 
 function github_api() {
   local url="$1"
@@ -514,6 +527,10 @@ function parse_args() {
 # only run code if we are not being sourced.  This allows other scripts to source this script for function reuse
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   ARGS_COPY=("$@")
+  
+  #Shift
+  ARGS_COPY=("${ARGS_COPY[@]:1}")
+
   parse_args "$@"
   source "${PACKAGE_DIR}/package.info"
   echo "Building: ${PACKAGE}"
@@ -525,13 +542,13 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   fi
   for dep in ${PKG_DEPENDS_CALCULATED//,/ }
   do
-    if [[ "$ALWAYS_BUILD_DEPENDS" == "true" || ! -d "$PACKAGE_DIR/../$dep/pkg" || -z "$(ls -A "$PACKAGE_DIR/../$dep/pkg")" ]]; then
-      echo "building dependent package: $0 $dep"
-      echo $0 "$dep" "${ARGS_COPY[@]}" --no-release-zip
 
-      # shellcheck disable=2068 # code is irrelevant because we want to pass args separately
-      $0 "$dep" ${ARGS_COPY[@]} --no-release-zip
-    fi
+    echo "building dependent package: $0 $dep"
+    echo $0 "$dep" "${ARGS_COPY[@]}" --no-release-zip
+
+    # shellcheck disable=2068 # code is irrelevant because we want to pass args separately
+    $0 "$dep" ${ARGS_COPY[@]} --no-release-zip
+
   done
 
   GITHUB_AUTH=""
@@ -654,7 +671,9 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 
         echo -e "release ${PKG_DOWNLOAD_NAME_GITHUB}.git.info (remote): \n${LINE}\n${RELEASE_GIT_INFO_REMOTE}\n${LINE}"
 
-        if [[ "${NEW_GIT_INFO}" == "${RELEASE_GIT_INFO_REMOTE}" ]]; then
+        RELEASE_MATCHES="false"
+
+        if release_matches "${PACKAGE}" "${NEW_GIT_INFO}" "${RELEASE_GIT_INFO_REMOTE}"; then
           RELEASE_MATCHES="true"
           break
         fi
@@ -681,7 +700,11 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
           echo "Updating git info: $RELEASE_GIT_INFO_FILE"
           echo -e "${RELEASE_GIT_INFO_REMOTE}" > "$RELEASE_GIT_INFO_FILE"
           echo "Remote download success"
-          exit 0
+          
+          # only exit if it was an exact match, a partial match we need to repackage
+          if [[ "${NEW_GIT_INFO}" == "${RELEASE_GIT_INFO_REMOTE}" ]]; then
+            exit 0
+          fi
         else
           echo "downloaded zip seems corrupted"
         fi
@@ -689,8 +712,11 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         echo "zip not found.  Something went wrong downloading.."
       fi 
     fi
-
     echo 'remote checking done'
+  fi
+  
+  if [[ -f "$RELEASE_GIT_INFO_FILE" ]]; then
+    RELEASE_GIT_INFO_LOCAL="$(cat "${RELEASE_GIT_INFO_FILE}")"
   fi
   # Default BUILD_PLATFORM to arm64 unless set in package.info or by LEGACY_PORTMASTER
   if [[ -z "$BUILD_PLATFORM" ]]; then
@@ -699,9 +725,13 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 
   echo "USE_DOCKER: ${USE_DOCKER} USE_DOCKER_PUSH: ${USE_DOCKER_PUSH} BUILD_PLATFORM: ${BUILD_PLATFORM}"
 
-  build_env_docker_image "$PACKAGE" "$PACKAGE_DIR"
-  build_package "$PACKAGE" "$PACKAGE_DIR"
-
+  #if the release git info matches (but not dependencies, or it would have been an exact match), we don't need to rebuild, just repackage
+  if ! release_matches "${PACKAGE}" "${NEW_GIT_INFO}" "${RELEASE_GIT_INFO_LOCAL}"; then
+    build_env_docker_image "$PACKAGE" "$PACKAGE_DIR"
+    build_package "$PACKAGE" "$PACKAGE_DIR"
+  else
+    echo "Dependencies changed - need to repackage"
+  fi
   mkdir -p "${RELEASE_DIR}"
 
   GLOBAL_DIR="$(realpath ${PACKAGE_DIR}/../global)"

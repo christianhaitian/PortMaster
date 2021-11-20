@@ -58,6 +58,8 @@ Title="NAM ." Desc="NAM using the rednukem build open source port by Alexey Khok
 
 Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play." porter="Jetup" locat="nKaruga.zip"
 
+Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.  Just download and play." porter="Cebion" locat="Openclaw.zip"
+
 Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrabbit games by Alister Thomson.  Includes the Jazz Jackrabiit shareware files.  You can add your own full game Dos files to the ports/openjazz/gamedata folder." porter="Jetup" locat="OpenJazz.zip"
 
 Title="OpenOMF ." Desc="a Open Source remake of "One Must Fall 2097" by Diversions Entertainment." porter="Cebion" locat="Openomf.zip"
