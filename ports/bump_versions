@@ -22,9 +22,7 @@ for directory in ${DIR}/*/; do
       if [[ "${PKG_VERSION}" != "${UPS_VERSION}" ]]; then
         sed -i "s/PKG_VERSION=.*/PKG_VERSION=\"${UPS_VERSION}\"/" "$file"
         echo "updated package: ${pkg} version: $UPS_VERSION old version: ${PKG_VERSION}"
-
       fi
-
     fi
     UPS_VERSION=""
     PKG_GIT_BRANCH=""

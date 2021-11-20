@@ -5,12 +5,14 @@ set -e
 DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
 
 source "${DIR}/global-functions"
+
 ESUDO=$(get_sudo)
 $ESUDO rm -rf ~/.local/share/blockattack
 ln -sfv $DIR/ ~/.local/share
 
 export LD_LIBRARY_PATH="$DIR/libs"
+
+SDL_GAMECONTROLLERCONFIG="$(get_sdl_controls)"
 export SDL_GAMECONTROLLERCONFIG
-SDL_GAMECONTROLLERCONFIG="$(get_controls)"
 
 launch_with_oga_controls blockattack
