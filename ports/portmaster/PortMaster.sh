@@ -29,7 +29,7 @@ ESUDO="$(get_sudo)"
 
 echo_err "OS: ${OS} ROMS_DIR: ${ROMS_DIR} TOOLS_DIR: ${TOOLS_DIR} CONSOLE: ${CONSOLE} HOTKEY: ${HOTKEY} SUDO: ${ESUDO}" 
 
-# If you set an environment variable LEGACY=true we will download from zips in the repo instead of releases
+# If you set an environment variable LEGACY=true we will download from zips in the repo as before instead from releases
 # This is mostly for testing to ensure things are working as expected and maybe as a 'bridge' before we get to releases
 if [[ -z "${LEGACY:-}" ]]; then
   LEGACY="false"
@@ -43,8 +43,6 @@ if [[ "${LEGACY}" == "true" ]]; then
 else
   WEBSITE_IN_CHINA="${WEBSITE}"
 fi
-
-
 
 if [ "${OS}" == "351ELEC" ]; then
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${DIR}/libs"

@@ -1,4 +1,8 @@
 PKG_NAME="PortMaster"
 PKG_DIRECTORY_OVERRIDE="PortMaster"
 PKG_DEPENDS="oga_controls_portmaster"
+
+#Won't create a "$PKG_NAME.sh" script at the top level of zip
+PKG_NO_MAIN_SCRIPT=true
+
 BUILD_PLATFORM="any"

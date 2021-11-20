@@ -453,8 +453,9 @@ function get_github_org() {
 
   #fallback - shouldn't be used if __GITHUB_ORG__ is replaced
   if [[ "${org}" == __* ]]; then
-    echo "pkegg"  #This can be switched to christianhaitian if merged
+    org="pkegg"  #This can be switched to christianhaitian if merged
   fi
+  echo "${org}"
 }
 
 #The below code only runs when this file is executed (not sourced)

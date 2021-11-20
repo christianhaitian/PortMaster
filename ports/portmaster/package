@@ -1,3 +1,4 @@
 #! /bin/bash
 cp version pkg
 cp control.txt pkg
+cp PortMaster.sh pkg

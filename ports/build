@@ -213,8 +213,6 @@ function build_package() {
   local BUILD_DIR
   BUILD_DIR="$(realpath ${PACKAGE_DIR}/..)"
 
-  rm -rf "${PACKAGE_DIR}/pkg"
-  mkdir -p "${PACKAGE_DIR}/pkg/"
   PACKAGE_SCRIPT="${PACKAGE_DIR}/package"
   if [[ ! -f "$PACKAGE_SCRIPT" && -f "$PACKAGE_SCRIPT.tmp" ]]; then
     PACKAGE_SCRIPT="$PACKAGE_SCRIPT.tmp"
@@ -328,48 +326,6 @@ function build_package() {
     fi
     echo "test done"
   fi
-  mkdir -p "${PACKAGE_DIR}/pkg/"
-
-  if [[ -f "${PACKAGE_DIR}/run" ]]; then
-    cp "${PACKAGE_DIR}/run" "${PACKAGE_DIR}/pkg/run"
-  fi
-
-  for dep in ${PKG_DEPENDS_CALCULATED//,/ }
-  do
-    echo "copying dep: $dep"
-    cp -r ${PACKAGE_DIR}/../$dep/pkg/* ${PACKAGE_DIR}/pkg/
-  done
-
-  if [[ -f "${PACKAGE_SCRIPT}" ]]; then
-    echo "Running custom package script: ${PACKAGE_SCRIPT}"
-    pushd "${PACKAGE_DIR}/" &> /dev/null
-    bash ${PACKAGE_SCRIPT}
-    popd
-  fi
-
-  if [[ -f "${PACKAGE_DIR}/pkg/run" ]] && grep -q IS_TEST_MODE "${PACKAGE_DIR}/pkg/run"; then
-    echo "Running ${PACKAGE} run using IS_TEST_MODE=true"
-    PORTS_DIR=/opt/roms/ports
-
-    TEST_IMAGE=ghcr.io/${GITHUB_ORG}/portmaster:${BRANCH}
-    echo "Test Image: ${TEST_IMAGE}"
-    DOCKER_ARGS=""
-    if [[ "${DOCKER_REMOTE}" == "true" ]]; then
-      DOCKER_ARGS="--pull=always"
-    fi
-    if [[ "${USE_DOCKER}" == "false" ]]; then
-      pushd "$PACKAGE_DIR/pkg" &> /dev/null
-      IS_TEST_MODE=true bash ./run
-      popd &> /dev/null
-    else
-      docker run ${INTERACTIVE} ${DOCKER_ARGS} --rm --platform ${TEST_PLATFORM} \
-        -v "$(realpath ${PACKAGE_DIR}/pkg/):${PORTS_DIR}/${PACKAGE}" \
-        -w "${PORTS_DIR}/${PACKAGE}" ${TEST_IMAGE} \
-        bash -c "IS_TEST_MODE=true bash \"./run\""
-      echo "run test passed"
-    fi
-    
-  fi
   
 }
 function build_env_docker_image() {
@@ -421,6 +377,56 @@ function build_env_docker_image() {
     echo "${PACKAGE_DIR}/Dockerfile does not exist"
     DOCKER_IMAGE=${IMAGE_BASE}:${BRANCH}
   fi
+}
+
+function package_port() {
+
+  PACKAGE="$1"
+  PACKAGE_DIR="$2"
+
+  mkdir -p "${PACKAGE_DIR}/pkg/"
+
+  if [[ -f "${PACKAGE_DIR}/run" ]]; then
+    cp "${PACKAGE_DIR}/run" "${PACKAGE_DIR}/pkg/run"
+  fi
+
+  for dep in ${PKG_DEPENDS_CALCULATED//,/ }
+  do
+    echo "copying dep: $dep"
+    cp -r ${PACKAGE_DIR}/../$dep/pkg/* ${PACKAGE_DIR}/pkg/
+  done
+
+  if [[ -f "${PACKAGE_SCRIPT}" ]]; then
+    echo "Running custom package script: ${PACKAGE_SCRIPT}"
+    pushd "${PACKAGE_DIR}/" &> /dev/null
+    bash ${PACKAGE_SCRIPT}
+    popd
+  fi
+
+  if [[ -f "${PACKAGE_DIR}/pkg/run" ]] && grep -q IS_TEST_MODE "${PACKAGE_DIR}/pkg/run"; then
+    echo "Running ${PACKAGE} run using IS_TEST_MODE=true"
+    PORTS_DIR=/opt/roms/ports
+
+    TEST_IMAGE=ghcr.io/${GITHUB_ORG}/portmaster:${BRANCH}
+    echo "Test Image: ${TEST_IMAGE}"
+    DOCKER_ARGS=""
+    if [[ "${DOCKER_REMOTE}" == "true" ]]; then
+      DOCKER_ARGS="--pull=always"
+    fi
+    if [[ "${USE_DOCKER}" == "false" ]]; then
+      pushd "$PACKAGE_DIR/pkg" &> /dev/null
+      IS_TEST_MODE=true bash ./run
+      popd &> /dev/null
+    else
+      docker run ${INTERACTIVE} ${DOCKER_ARGS} --rm --platform ${TEST_PLATFORM} \
+        -v "$(realpath ${PACKAGE_DIR}/pkg/):${PORTS_DIR}/${PACKAGE}" \
+        -w "${PORTS_DIR}/${PACKAGE}" ${TEST_IMAGE} \
+        bash -c "IS_TEST_MODE=true bash \"./run\""
+      echo "run test passed"
+    fi
+    
+  fi
+  
 }
 
 function parse_args() {
@@ -725,6 +731,8 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 
   echo "USE_DOCKER: ${USE_DOCKER} USE_DOCKER_PUSH: ${USE_DOCKER_PUSH} BUILD_PLATFORM: ${BUILD_PLATFORM}"
 
+  rm -rf "${PACKAGE_DIR}/pkg"
+  mkdir -p "${PACKAGE_DIR}/pkg/"
   #if the release git info matches (but not dependencies, or it would have been an exact match), we don't need to rebuild, just repackage
   if ! release_matches "${PACKAGE}" "${NEW_GIT_INFO}" "${RELEASE_GIT_INFO_LOCAL}"; then
     build_env_docker_image "$PACKAGE" "$PACKAGE_DIR"
@@ -732,6 +740,9 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   else
     echo "Dependencies changed - need to repackage"
   fi
+
+  package_port "$PACKAGE" "$PACKAGE_DIR"
+
   mkdir -p "${RELEASE_DIR}"
 
   GLOBAL_DIR="$(realpath ${PACKAGE_DIR}/../global)"
@@ -749,16 +760,19 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   
     mkdir -p "${RELEASE_DIR:?}/${PKG_NAME}/"
 
-    if [[ -f "${PACKAGE_DIR}/run-legacy" ]]; then
-      cp "${PACKAGE_DIR}/run-legacy" "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh"
+    MAIN_SCRIPT_LOCATION="${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh"
+    if [[ "${PKG_NO_MAIN_SCRIPT}" == "true" ]]; then
+      echo "Not creating a main: ${PKG_NAME}.sh script due to PKG_NO_MAIN_SCRIPT=true"
+    elif [[ -f "${PACKAGE_DIR}/run-legacy" ]]; then
+      cp "${PACKAGE_DIR}/run-legacy" "${MAIN_SCRIPT_LOCATION}"
     elif [[ "${LEGACY_PORTMASTER}"  == "true" \
            && -f "${PACKAGE_DIR}/source/${PKG_NAME}.sh" \
            && ! -f "${PACKAGE_DIR}/run" ]]; then
-      cp "${PACKAGE_DIR}/source/${PKG_NAME}.sh" "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh"
+      cp "${PACKAGE_DIR}/source/${PKG_NAME}.sh" "${MAIN_SCRIPT_LOCATION}"
     else
-      cp "${GLOBAL_DIR}/global-run.sh" "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh"
-      sed -i.bak "s/__PACKAGE__/${PACKAGE}/g" "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh"
-      rm -f "${RELEASE_DIR}/${PKG_NAME}/${PKG_NAME}.sh.bak"
+      cp "${GLOBAL_DIR}/global-run.sh" "${MAIN_SCRIPT_LOCATION}"
+      sed -i.bak "s/__PACKAGE__/${PACKAGE}/g" "${MAIN_SCRIPT_LOCATION}"
+      rm -f "${MAIN_SCRIPT_LOCATION}.bak"
     fi
   
     cp -r "./" "${RELEASE_DIR}/${PKG_NAME}/${PKG_DIRECTORY}"
