@@ -25,9 +25,11 @@ TITLE="PortMaster"
 
 if [ -f "${DIR}/global-functions" ]; then
   source "${DIR}/global-functions"
+  source "${DIR}/dialog-functions"
 elif [ -f "${DIR}/../global/global-functions" ]; then
   # This just allows testing directly from the ports/portmaster directory in git - not needed for most ports
   source "${DIR}/../global/global-functions"
+  source "${DIR}/../dialog/dialog-functions"
 fi
 
 OS=$(get_os)

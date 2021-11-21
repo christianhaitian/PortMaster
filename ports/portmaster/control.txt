@@ -1,13 +1,10 @@
 #! /bin/bash
-# This file is maintained for backwards compatibility. It is typically easier to use global-functions directly
-#
-# To do the equivalent of get_controls using global_functions, just run:
-# DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
-# source $DIR/global-functions
-# sdl_controllerconfig="$(get_sdl_controls)"
+# This file is maintained for backwards compatibility and simplicity if using global-functions
+# directly is not desired
 
 # The current directory of this script.  Works when run with bash or sourced.
 DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
+source $DIR/global-functions
 
 #controlfolder is provided for backwards compatibility as it was global
 controlfolder="$DIR"
@@ -16,21 +13,17 @@ controlfolder="$DIR"
 directory=$(get_arkos_roms_dir_name)
 
 ESUDO=$(get_sudo)
-if [[ "$ESUDO" == "sudo" ]]; then
-  ESUDOKILL="-sudokill" # for ArkOS use "-sudokill"
-else
-  ESUDOKILL="-1" # for EmuELEC use "-1" (numeric one) or "-k" 
-fi
+ESUDOKILL=$(get_sudo_kill)
 
-#SDL_GAMECONTROLLERCONFIG_FILE, SDLDB_FILE and SDBUSERFILE are kept for backwards compatibility as they were global
 export SDL_GAMECONTROLLERCONFIG_FILE="$controlfolder/gamecontrollerdb.txt"
 SDLDBFILE="${SDL_GAMECONTROLLERCONFIG_FILE}"
 [ -z "${SDLDBFILE}" ] && SDLDBFILE="${controlfolder}/gamecontrollerdb.txt"
 SDLDBUSERFILE="${HOME}/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 
 get_controls() {
-
-  #DEVICE, param_device and CONTROLS are kept for backwards compatiblity as they are global and could be used
+  LOWRES="$(get_low_res)"
+  ANALOGSTICKS="$(get_num_analog_sticks)"
+  
   DEVICE="$(get_sdl_device_id)"
   param_device="$(get_oga_device)"
   CONTROLS="$(get_sdl_controls)"

@@ -167,8 +167,10 @@ function echo_err() {
 function get_directory_git_hash() {
   local directory
   directory="$1"
+  local no_dependencies="${2-:}"
   local pkg_name
   pkg_name=$(basename "${directory}")
+  echo_err "pkgdeps pkg: ${pkg_name}" 
 
   pushd "${directory}"  &> /dev/null
   dirty="$(git ls-files --modified  --others --exclude-standard .)"
@@ -192,17 +194,23 @@ function get_directory_git_hash() {
   fi
   if [[ "$pkg_name" == "global" ]]; then
     return
+  else
+    echo_err "package name is: '${pkg_name}'"
   fi
-  echo_err "pkgdeps: ${PKG_DEPENDS}" 
+  echo_err "pkgdeps: ${PKG_DEPENDS} calc: $PKG_DEPENDS_CALCULATED" 
 
-  for dep in ${PKG_DEPENDS_CALCULATED//,/ }
-  do
-    if [[ "$dep" == "$pkg_name" ]]; then
-      continue
-    fi
-    echo_err "dep: ${dep}" 
-    echo -e "$(get_directory_git_hash "../$dep")"
-  done
+  if [[ "$no_dependencies" == "true" ]]; then
+    echo_err "not evaluating dependencies"
+  else
+    for dep in ${PKG_DEPENDS_CALCULATED//,/ }
+    do
+      if [[ "$dep" == "$pkg_name" ]]; then
+        continue
+      fi
+      echo_err "dep: ${dep}" 
+      echo -e "$(get_directory_git_hash "../$dep" "true")"
+    done
+  fi
 
   popd &> /dev/null
 
@@ -325,7 +333,7 @@ function build_package() {
         pushd "${PACKAGE_DIR}" &> /dev/null
         # Get .env file ready
         env | egrep "$ENV_OPTIONS" | grep "=" > .env
-        ${SUDO} ${DOCKER_CMD} run --platform ${TEST_PLATFORM} ${INTERACTIVE} --env-file .env --rm --user ${UID}:"${GID}" -v "${PACKAGE_DIR}:${DOCKER_WORK_DIR}" -w "${DOCKER_WORK_DIR}" ${DOCKER_IMAGE} bash -e ./test
+        ${SUDO} ${DOCKER_CMD} run --platform ${TEST_PLATFORM} ${INTERACTIVE} --env-file .env --rm --user ${UID}:"${GID}" -v "$(realpath ${PACKAGE_DIR}/..):${DOCKER_WORK_DIR}" -w "${DOCKER_WORK_DIR}/${PACKAGE}" ${DOCKER_IMAGE} bash -e ./test
         popd &> /dev/null
     fi
     echo "test done"

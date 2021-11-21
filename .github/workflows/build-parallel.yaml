@@ -10,8 +10,8 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.event.repository.name }}/portmaster
 
-#concurrency: 
-#  group: parallel
+concurrency: 
+  group: parallel
 
 jobs:
   build-base-images:
