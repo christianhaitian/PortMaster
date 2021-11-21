@@ -9,6 +9,7 @@ on:
     branches:
       - main
     types: [opened, synchronize]
+    
   workflow_dispatch:
     inputs:
       no_cache:
@@ -34,8 +35,13 @@ jobs:
     steps:
       - name: Checkout
         run: |
+          PR_SHA="${{ github.event.pull_request.head.sha }}"
+          echo "sha is: $PR_SHA"
           REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
           git clone --filter=blob:none $REPO .
+          if [[ -z "${PR_SHA}" ]]; then
+            git checkout "${PR_SHA}"
+          fi
 
       - name: Get date for artifacts
         id: date
