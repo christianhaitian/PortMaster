@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       no_cache:
-        description: "Do not use any build cache.  Useful if there is an issue in old builds and all ports should be fully rebuilt"
+        description: "Do not use any build cache and do full build.  Any value enables: (Y)"
         required: false
 env:
   REGISTRY: ghcr.io
