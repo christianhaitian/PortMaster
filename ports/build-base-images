@@ -1,6 +1,7 @@
 #! /bin/bash
 
 set -e
+set -u
 DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
 source "${DIR}/build"
 
@@ -44,32 +45,34 @@ echo "USE_DOCKER_PUSH: ${USE_DOCKER_PUSH} BUILD_PLATFORM: ${BUILD_PLATFORM}"
 source "${DIR}/ports.info"
 
 BRANCH="$GITHUB_BRANCH"
+
 IMAGE_BASE=ghcr.io/${GITHUB_ORG}/portmaster
+CACHE_FROM="$BRANCH"
+
+# Update things for Pull requests
+if [[ "$GITHUB_EVENT_NAME" == "pull_request" && -n "$GITHUB_BASE_REF" && -n "$GITHUB_REF_NAME" ]] ; then
+  PR_NUM=$(echo $GITHUB_REF_NAME | sed 's|/.*||g')
+  BRANCH="pr-${PR_NUM}"
+  CACHE_FROM="$GITHUB_BASE_REF"
+  echo "branch: ${BRANCH}"
+  echo "EVENT_NAME: ${GITHUB_EVENT_NAME} BASE_REF: $GITHUB_BASE_REF REF_NAME: $GITHUB_REF_NAME"
+
+fi
 IMAGE=${IMAGE_BASE}:${BRANCH}
-IMAGE_CACHE=${IMAGE_BASE}/cache:${BRANCH}
-
-IMAGE_BUILD=${IMAGE_BASE}/build:${BRANCH}
-IMAGE_BUILD_CACHE=${IMAGE_BASE}/build/cache:${BRANCH}
-IMAGE_TEST=${IMAGE_BASE}/test:${BRANCH}
-
-IMAGE_TEST_CACHE=${IMAGE_BASE}/test/cache:${BRANCH}
+IMAGE_CACHE_FROM=${IMAGE_BASE}/cache:${CACHE_FROM}
+IMAGE_CACHE_TO=${IMAGE_BASE}/cache:${BRANCH}
 
 if [[ "${USE_DOCKER_PUSH}" == "true" ]]; then
-  IMAGE_CACHE_TO="--pull --builder=portmaster-remote-builder --cache-to=type=registry,ref=${IMAGE_CACHE},mode=max --push"
-  IMAGE_BUILD_CACHE_TO="--pull --cache-to=type=registry,ref=${IMAGE_BUILD_CACHE},mode=max --push"
-  IMAGE_TEST_CACHE_TO="--pull --cache-to=type=registry,ref=${IMAGE_TEST_CACHE},mode=max --push"
+  IMAGE_CACHE_TO_ARGS="--pull --builder=portmaster-remote-builder --cache-to=type=registry,ref=${IMAGE_CACHE_TO},mode=max --push"
 else
-  #TODO: Think about builder initialization
-  IMAGE_CACHE_TO="--load --builder default"
-  IMAGE_BUILD_CACHE_TO="${IMAGE_CACHE_TO}"
-  IMAGE_TEST_CACHE_TO="${IMAGE_CACHE_TO}"
+  IMAGE_CACHE_TO_ARGS="--load --builder default"
 fi
 
-echo "IMAGE: ${IMAGE} IMAGE_CACHE: ${IMAGE_CACHE}"
+echo "IMAGE: ${IMAGE} IMAGE_CACHE_FROM: ${IMAGE_CACHE_FROM}"
 echo "IMAGE_CACHE_TO: ${IMAGE_CACHE_TO}"
 docker buildx build --tag ${IMAGE} \
-  --cache-from=type=registry,ref=${IMAGE_CACHE} \
-  ${IMAGE_CACHE_TO} \
+  --cache-from=type=registry,ref=${IMAGE_CACHE_FROM} \
+  ${IMAGE_CACHE_TO_ARGS} \
   --platform ${BUILD_PLATFORM} ${DIR}
 
 echo "built: ${IMAGE}"
