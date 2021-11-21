@@ -35,12 +35,10 @@ jobs:
     steps:
       - name: Checkout
         run: |
-          PR_SHA="${{ github.event.pull_request.head.sha }}"
-          echo "sha is: $PR_SHA"
           REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
           git clone --filter=blob:none $REPO .
-          if [[ -z "${PR_SHA}" ]]; then
-            git checkout "${PR_SHA}"
+          if [[ -n "${{ github.event.pull_request.head.sha }}" ]]; then
+            git checkout "${{ github.event.pull_request.head.sha }}"
           fi
 
       - name: Get date for artifacts
@@ -116,6 +114,9 @@ jobs:
         run: |
           REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
           git clone --filter=blob:none $REPO .
+          if [[ -n "${{ github.event.pull_request.head.sha }}" ]]; then
+            git checkout "${{ github.event.pull_request.head.sha }}"
+          fi
       - name: Get token
         id: token
         run: | 
@@ -175,6 +176,9 @@ jobs:
         run: |
           REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
           git clone --filter=blob:none $REPO .
+          if [[ -n "${{ github.event.pull_request.head.sha }}" ]]; then
+            git checkout "${{ github.event.pull_request.head.sha }}"
+          fi
       - name: Get token
         id: token
         run: | 
