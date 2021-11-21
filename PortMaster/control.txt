@@ -26,11 +26,11 @@ sudo echo "Testing for sudo..."
 if [ $? != 0 ]; then
   echo "No sudo present."
   ESUDO=""
-  ESUDOKILL="-1" # for EmuELEC use "-1" (numeric one) or "-k" 
+  ESUDOKILL="-1" # for 351Elec and EmuELEC use "-1" (numeric one) or "-k" 
   export SDL_GAMECONTROLLERCONFIG_FILE="$controlfolder/gamecontrollerdb.txt"
 else
   ESUDO="sudo"
-  ESUDOKILL="-sudokill" # for ArkOS use "-sudokill"
+  ESUDOKILL="-sudokill" # for ArkOS, RetroOZ, and TheRA use "-sudokill"
   export SDL_GAMECONTROLLERCONFIG_FILE="$controlfolder/gamecontrollerdb.txt"
 fi
 
@@ -46,10 +46,10 @@ LOWRES="N"
 if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
       DEVICE="03000000091200000031000011010000"
       param_device="anbernic"
-	  LOWRES="Y"
+      LOWRES="Y"
       if [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ $(cat "/storage/.config/.OS_ARCH") == "RG351V" ]; then
         ANALOGSTICKS="1"
-	    LOWRES="N"
+        LOWRES="N"
       fi
 elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; then
       if [[ ! -z $(cat /etc/emulationstation/es_input.cfg | grep "190000004b4800000010000001010000") ]]; then
@@ -61,10 +61,20 @@ elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; the
         param_device="rk2020"
       fi
       ANALOGSTICKS=1
-	  LOWRES="Y"
+      LOWRES="Y"
 elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; then
       DEVICE="190000004b4800000011000000010000"
       param_device="ogs"
+      if [[ -e "/opt/.retrooz/device" ]]; then
+        retrooztest="$(cat /opt/.retrooz/device)"
+        if [[ "$retrooztest" == *"rgb10max2native"* ]]; then
+          param_device="rgb10max2native"
+        elif [[ "$retrooztest" == *"rgb10max2top"* ]]; then
+          param_device="rgb10max2top"
+        else 
+          param_device="ogs"
+        fi
+      fi
 elif [[ -e "/dev/input/by-path/platform-gameforce-gamepad-event-joystick" ]]; then
       DEVICE="19000000030000000300000002030000"
       param_device="chi"
