@@ -7,6 +7,15 @@ source ${DIR}/clone-source
 source "${DIR}/ports.info"
 BRANCH="${GITHUB_BRANCH}"
 IMAGE_BASE=ghcr.io/${GITHUB_ORG}/portmaster
+CACHE_FROM="$BRANCH"
+# Update things for Pull requests
+if [[ "$GITHUB_EVENT_NAME" == "pull_request" && -n "$GITHUB_BASE_REF" && -n "$GITHUB_REF_NAME" ]] ; then
+  PR_NUM=$(echo $GITHUB_REF_NAME | sed 's|/.*||g')
+  BRANCH="pr-${PR_NUM}"
+  CACHE_FROM="$GITHUB_BASE_REF"
+  echo "branch: ${BRANCH}"
+  echo "EVENT_NAME: ${GITHUB_EVENT_NAME} BASE_REF: $GITHUB_BASE_REF REF_NAME: $GITHUB_REF_NAME"
+fi
 
 # Any environment variables which need to be persistend into the build/test environment containers
 # *must* be exporeted here and then added to ENV_OPTIONS.  Ex: ENV_OPTIONS="(CCACHE_DIR|ANOTHER|SOMETHING_ELSE)"
@@ -357,16 +366,17 @@ function build_env_docker_image() {
   if [[ -f "${DOCKERFILE}" ]]; then
     echo "${DOCKERFILE} exists"
 
-    DOCKER_IMAGE_CACHE=${IMAGE_BASE}/${PACKAGE}/cache:${BRANCH}
-  
+    DOCKER_IMAGE_CACHE_FROM=${IMAGE_BASE}/${PACKAGE}/cache:${CACHE_FROM}
+    DOCKER_IMAGE_CACHE_TO=${IMAGE_BASE}/${PACKAGE}/cache:${BRANCH}
+
     if [[ "${USE_DOCKER_PUSH}" == "true" ]]; then
-      IMAGE_CACHE_TO="--pull --builder=portmaster-remote-builder --cache-to=type=registry,ref=${DOCKER_IMAGE_CACHE},mode=max --push"
+      IMAGE_CACHE_TO="--pull --builder=portmaster-remote-builder --cache-to=type=registry,ref=${DOCKER_IMAGE_CACHE_TO},mode=max --push"
     else
       IMAGE_CACHE_TO="--load --builder default"
     fi
-    IMAGE_CACHE_FROM="--cache-from=type=registry,ref=${DOCKER_IMAGE_CACHE}"
+    IMAGE_CACHE_FROM="--cache-from=type=registry,ref=${DOCKER_IMAGE_CACHE_FROM}"
 
-    echo "docker image: ${DOCKER_IMAGE}"
+    echo "docker image: ${DOCKER_IMAGE} cache from: ${DOCKER_IMAGE_CACHE_FROM} cache to: ${DOCKER_IMAGE_CACHE_TO}"
 
     if [[ "${USE_DOCKER}" != "false" ]]; then
       pushd "${PACKAGE_DIR}" &> /dev/null
