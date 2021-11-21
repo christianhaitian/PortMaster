@@ -7,15 +7,26 @@
 # using 351Elec and Ubuntu based distrOS such as ArkOS, TheRA, and RetroOZ.
 #
 set -e
+set -o pipefail
 set -u
+
+ # Help out Mac users testing portmaster - no reason for most ports to do this
+if [[ $OSTYPE == 'darwin'* ]]; then
+  if ! which brew &> /dev/null; then
+   echo "ERROR: brew can be used to install packages needed to test portmaster on a Mac, but is not found.  Install from: https://brew.sh/"
+   exit 1
+  elif ! which realpath &> /dev/null; then
+    brew install coreutils
+  fi
+fi
+
 DIR="$(realpath $( dirname "${BASH_SOURCE[0]}" ))"
 TITLE="PortMaster"
 
-# shellcheck source=/dev/null
 if [ -f "${DIR}/global-functions" ]; then
   source "${DIR}/global-functions"
 elif [ -f "${DIR}/../global/global-functions" ]; then
-  # This just allows testing directly from the ports/portmaster directory in git
+  # This just allows testing directly from the ports/portmaster directory in git - not needed for most ports
   source "${DIR}/../global/global-functions"
 fi
 
@@ -26,8 +37,18 @@ HOTKEY=$(get_hotkey)
 CONSOLE=$(get_console)
 GITHUB_ORG=$(get_github_org)
 ESUDO="$(get_sudo)"
+WGET="$(get_wget)"
+GREP="$(get_grep)"
+PORTMASTER_TMP="/dev/shm"
 
-echo_err "OS: ${OS} ROMS_DIR: ${ROMS_DIR} TOOLS_DIR: ${TOOLS_DIR} CONSOLE: ${CONSOLE} HOTKEY: ${HOTKEY} SUDO: ${ESUDO}" 
+install_package wget
+if [[ "$OS" == "mac" ]]; then
+  PORTMASTER_TMP="/var/tmp"
+  if ! check_package "ggrep"; then
+    brew install "grep"
+  fi
+fi
+echo_err "OS: ${OS} ROMS_DIR: ${ROMS_DIR} TOOLS_DIR: ${TOOLS_DIR} CONSOLE: ${CONSOLE} HOTKEY: ${HOTKEY} SUDO: ${ESUDO} GREP: ${GREP}" 
 
 # If you set an environment variable LEGACY=true we will download from zips in the repo as before instead from releases
 # This is mostly for testing to ensure things are working as expected and maybe as a 'bridge' before we get to releases
@@ -50,16 +71,14 @@ fi
 
 initialize_permissions
 
-if [ ! -d "/dev/shm/portmaster" ]; then
-  $ESUDO mkdir /dev/shm/portmaster
+if [ ! -d "${PORTMASTER_TMP}/portmaster" ]; then
+  $ESUDO mkdir ${PORTMASTER_TMP}/portmaster
 fi
 
 CURRENT_VERSION="$(curl "file://$(realpath "${DIR}")/version")"
 echo_err "version: ${CURRENT_VERSION}"
 
 dialog_initialize "PortMaster v$CURRENT_VERSION"
-
-console_clear
 
 launch_with_oga_controls "Portmaster.sh"
 
@@ -80,7 +99,7 @@ dialog_clear
 function UpdateCheck() {
 
   local version_url="${WEBSITE}version"
-  local portmaster_download_zip=/dev/shm/portmaster/PortMaster.zip
+  local portmaster_download_zip=${PORTMASTER_TMP}/portmaster/PortMaster.zip
   local gitversion
   gitversion=$(curl -L -s --connect-timeout 30 -m 60 "${version_url}")
 
@@ -106,19 +125,19 @@ function UpdateCheck() {
 PortInfoInstall() {
   local choice="$1"
 
-  local portmaster_tmp=/dev/shm/portmaster
-  local ports_file=/dev/shm/portmaster/ports.md
+  local portmaster_tmp=${PORTMASTER_TMP}/portmaster
+  local ports_file=${PORTMASTER_TMP}/portmaster/ports.md
   
   local msgtxt
-  msgtxt=$(cat "$ports_file" | grep "$choice" | grep -oP '(?<=Desc=").*?(?=")')
+  msgtxt=$(cat "$ports_file" | grep "$choice" | ${GREP} -oP '(?<=Desc=").*?(?=")')
   local installloc
  
-  installloc=$(cat "$ports_file" | grep "$choice" | grep -oP '(?<=locat=").*?(?=")')
+  installloc=$(cat "$ports_file" | grep "$choice" | ${GREP}  -oP '(?<=locat=").*?(?=")')
   if [[ "${LEGACY}" != "true" ]]; then
    installloc="$( echo "$installloc" | sed 's/%20/./g' | sed 's/ /./g' )"  #Github releases convert space " " ("%20") to "."
   fi
   local porter
-  porter=$(cat "$ports_file" | grep "$choice" | grep -oP '(?<=porter=").*?(?=")')
+  porter=$(cat "$ports_file" | grep "$choice" | ${GREP} -oP '(?<=porter=").*?(?=")')
   local port_url="${WEBSITE}${installloc}"
 
   # LEGACY: Due to size limitation of github files (which don't apply to github releases) files above 100MB are downloaded from another server
@@ -165,7 +184,7 @@ Cleanup() {
   set +e
 
   echo_err "removing ports.md"
-  $ESUDO rm -f /dev/shm/portmaster/ports.md
+  $ESUDO rm -f ${PORTMASTER_TMP}/portmaster/ports.md
 
   echo_err "done"
   dialog_clear
@@ -174,7 +193,7 @@ Cleanup() {
 MainMenu() {
 
   local options=(
-   $($ESUDO cat /dev/shm/portmaster/ports.md | grep -oP '(?<=Title=").*?(?=")')
+   $($ESUDO cat ${PORTMASTER_TMP}/portmaster/ports.md | $(get_grep) -oP '(?<=Title=").*?(?=")')
   )
                                                                                                          
   while true; do
@@ -193,7 +212,7 @@ if [[ "${IS_TEST_MODE:-}" == "true" ]]; then
   exit 0
 fi
 
-$ESUDO wget -t 3 -T 60 --no-check-certificate "$WEBSITE"ports.md -O /dev/shm/portmaster/ports.md
+$ESUDO wget -t 3 -T 60 --no-check-certificate "$WEBSITE"ports.md -O ${PORTMASTER_TMP}/portmaster/ports.md
 echo_err "downloaded ports.md"
 
 run_at_exit Cleanup

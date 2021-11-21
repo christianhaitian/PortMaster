@@ -12,7 +12,7 @@ setup_file() {
   init_log
 }
 setup() {
-  export ROOT_DIR="$(temp_make)"
+  export __ROOT_DIR="$(temp_make)"
 }
 
 @test "get os - 351ELEC" {
