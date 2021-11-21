@@ -2,6 +2,10 @@ name: build-parallel
 
 on:
   workflow_dispatch:
+    inputs:
+      no_cache:
+        description: "Do not use any build cache.  Useful if there is an issue in old builds and all ports should be fully rebuilt"
+        required: false
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.event.repository.name }}/portmaster
@@ -61,7 +65,12 @@ jobs:
         run: |
          ./init-docker
          ./ports/build-base-images --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64
-         ./ports/build-all --libraries --push --remote-build-cache
+         REMOTE_BUILD_CACHE="--remote-build-cache"
+         if [[ -n "${{github.event.inputs.no_cache}}" ]]; then
+            REMOTE_BUILD_CACHE=""
+         fi
+         
+         ./ports/build-all --libraries --push ${REMOTE_BUILD_CACHE}
         env:
             GITHUB_TOKEN: ${{ steps.token.outputs.token }}
       - name: "Publish draft pre-release."
@@ -117,7 +126,11 @@ jobs:
         run: |
            set -e
            ./init-docker
-           ./ports/build-all --build-shard ${{ matrix.shard }} --build-shard-total 4 --legacy-default --legacy-url-override  --push --remote-build-cache
+           REMOTE_BUILD_CACHE="--remote-build-cache"
+           if [[ -n "${{github.event.inputs.no_cache}}" ]]; then
+              REMOTE_BUILD_CACHE=""
+           fi
+           ./ports/build-all --build-shard ${{ matrix.shard }} --build-shard-total 4 --legacy-default --legacy-url-override  --push ${REMOTE_BUILD_CACHE}
            
         env:
             GITHUB_TOKEN: ${{ steps.token.outputs.token }}
@@ -172,7 +185,11 @@ jobs:
         run: |
            set -e
            ./init-docker
-           ./ports/build ${{ matrix.package }} --push --remote-build-cache
+           REMOTE_BUILD_CACHE="--remote-build-cache"
+           if [[ -n "${{github.event.inputs.no_cache}}" ]]; then
+              REMOTE_BUILD_CACHE=""
+           fi
+           ./ports/build ${{ matrix.package }} --push ${REMOTE_BUILD_CACHE}
            
         env:
             GITHUB_TOKEN: ${{ steps.token.outputs.token }}
