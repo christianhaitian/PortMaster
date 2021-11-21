@@ -1,6 +1,14 @@
 name: build-parallel
 
 on:
+  pull_request:
+    # We don't need to run builds when these files change
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+    branches:
+      - main
+    types: [opened, synchronize]
   workflow_dispatch:
     inputs:
       no_cache:
@@ -75,6 +83,7 @@ jobs:
             GITHUB_TOKEN: ${{ steps.token.outputs.token }}
       - name: "Publish draft pre-release."
         uses: ncipollo/release-action@v1
+        if: github.event_name != 'pull_request'
         with:
           tag: "${{steps.date.outputs.date}}"
           name: "${{steps.date.outputs.date}}"
@@ -195,6 +204,7 @@ jobs:
             GITHUB_TOKEN: ${{ steps.token.outputs.token }}
       - name: "Update pre-release: ${{needs.build-base-images.outputs.date}}"
         uses: ncipollo/release-action@v1
+        if: github.event_name != 'pull_request'
         with:
           tag: "${{needs.build-base-images.outputs.date}}"
           allowUpdates: true
@@ -229,6 +239,7 @@ jobs:
           fi
       - name: "Publish pre-release: ${{needs.build-base-images.outputs.date}}"
         uses: ncipollo/release-action@v1
+        if: github.event_name != 'pull_request'
         with:
           tag: "${{needs.build-base-images.outputs.date}}"
           allowUpdates: true
