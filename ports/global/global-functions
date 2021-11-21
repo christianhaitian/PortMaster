@@ -493,7 +493,7 @@ function dialog_download() {
 function is_network_connected() {
   local gateway
   local os="$(get_os)"
-  if [[ "$os" == "mac" ]]; then
+  if [[ "$os" == "mac" ]] && ! which ip &> /dev/null; then
     install_package "ip" "iproute2mac"
   fi
   gateway=$(ip route | awk '/default/ { print $3 }')
@@ -541,7 +541,6 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   echo "IN_CHINA=$(in_china)"
   echo "OGA_DEVICE=$(get_oga_device)"
   echo "SDL_DEVICE_ID=$(get_sdl_device_id)"
-  echo "IS_NETWORK_CONNECTED=$(is_network_connected)"
   echo "GITHUB_ORG=$(get_github_org)"
 
 fi

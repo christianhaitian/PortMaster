@@ -646,6 +646,8 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 
   if [[ "$NO_BUILD_CACHE" == "true" ]]; then
     echo "Not using build cache..."
+  elif [[ ! -d "${PACKAGE_DIR}/pkg" ]] || [[ -z $(ls -A "${PACKAGE_DIR}/pkg") ]]; then
+    echo "pkg directory seems to have been removed - rebuilding"
   elif [[ "${NEW_GIT_INFO}" == "${RELEASE_GIT_INFO_LOCAL}" ]]; then
     echo "Build already exists - local"
     exit 0
@@ -735,10 +737,12 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 
   echo "USE_DOCKER: ${USE_DOCKER} USE_DOCKER_PUSH: ${USE_DOCKER_PUSH} BUILD_PLATFORM: ${BUILD_PLATFORM}"
 
-  rm -rf "${PACKAGE_DIR}/pkg"
-  mkdir -p "${PACKAGE_DIR}/pkg/"
   #if the release git info matches (but not dependencies, or it would have been an exact match), we don't need to rebuild, just repackage
-  if ! release_matches "${PACKAGE}" "${NEW_GIT_INFO}" "${RELEASE_GIT_INFO_LOCAL}"; then
+  # - Still rebuild on NO_BUILD_CACHE (--no-build-cache)
+  # - Still rebuild if the /pkg directory is empty for some reason
+  if ! release_matches "${PACKAGE}" "${NEW_GIT_INFO}" "${RELEASE_GIT_INFO_LOCAL}" || [[ "${NO_BUILD_CACHE}" == "true" ]] || [[ ! -d "${PACKAGE_DIR}/pkg" ]] || [[ -z $(ls -A "${PACKAGE_DIR}/pkg") ]]; then
+    rm -rf "${PACKAGE_DIR}/pkg"
+    mkdir -p "${PACKAGE_DIR}/pkg/"
     build_env_docker_image "$PACKAGE" "$PACKAGE_DIR"
     build_package "$PACKAGE" "$PACKAGE_DIR"
   else
