@@ -1,4 +1,4 @@
-Title="2048 ." Desc="The 2048 puzzle game" porter="Christian_Haitian" locat="2048.zip"
+Title="2048 ." Desc="2048: The 2048 puzzle game" porter="Christian_Haitian" locat="2048.zip"
 
 Title="Abuse ." Desc="A fork of the original Abuse SDL port from http://abuse.zoy.org/.  An intense 2D shooter.  Plays best on dual analog stick devices.  Just download and play." porter="romadu" locat="Abuse.zip"
 
