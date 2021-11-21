@@ -33,6 +33,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       date: ${{ steps.date.outputs.date }}
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         run: |
           REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
