@@ -37,9 +37,11 @@ jobs:
       - name: Checkout
         run: |
           REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
-          git clone --filter=blob:none $REPO .
+          git clone --no-checkout --filter=blob:none $REPO .
           if [[ -n "${{ github.event.pull_request.head.sha }}" ]]; then
             git checkout "${{ github.event.pull_request.head.sha }}"
+          else
+            git checkout
           fi
 
       - name: Get date for artifacts
@@ -114,9 +116,11 @@ jobs:
       - name: Checkout
         run: |
           REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
-          git clone --filter=blob:none $REPO .
+          git clone --no-checkout --filter=blob:none $REPO .
           if [[ -n "${{ github.event.pull_request.head.sha }}" ]]; then
             git checkout "${{ github.event.pull_request.head.sha }}"
+          else
+            git checkout
           fi
       - name: Get token
         id: token
@@ -176,9 +180,11 @@ jobs:
       - name: Checkout
         run: |
           REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
-          git clone --filter=blob:none $REPO .
+          git clone --no-checkout --filter=blob:none $REPO .
           if [[ -n "${{ github.event.pull_request.head.sha }}" ]]; then
             git checkout "${{ github.event.pull_request.head.sha }}"
+          else
+            git checkout
           fi
       - name: Get token
         id: token
