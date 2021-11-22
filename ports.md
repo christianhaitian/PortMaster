@@ -46,6 +46,10 @@ Title="Hurrican ." Desc="Turrican port by Thrimbor.  Just add the data and lang 
 
 Title="Hydra_Castle_Labyrinth ." Desc="Hydra Castle Labyrinth is a platform game with some old school action. It's also reminiscent of games of the 16 bit era." porter="Christian_Haitian" locat="Hydra%20Castle%20Labyrinth.zip"
 
+Title="Iconoclasts ." Desc="A platformer that offers fun and wacky gameplay.  Recommended only for 640x480 devices or better.  You must have a copy of Iconoclasts for Linux copied to the ports/iconoclasts/gamedata folder.  Be sure the folder contains subfolders named 32, 64 and data." porter="Johnny on Flame" locat="Iconoclasts.zip"
+
+Title="Invaders ." Desc="A memory accurate reimplementation of Space Invaders by loadzero.  You'll need to provide your own invaders.e, invaders.f, invaders.g, and invaders.h files from a MAME_078 romset into the invaders/inv1 folder." porter="romadu" locat="Invaders.zip"
+
 Title="Maldita_Castilla ." Desc="An arcade action video game developed by Locomalito and released in December 2012.  The gameplay is inspired by the games Shinobi and Ghost and Goblins." porter="krishenriksen (kreal)" locat="Maldita%20Castilla.zip"
 
 Title="Moonlight ." Desc="A free, open-source NVIDIA Gamestream Client.  For more info on the setup needs at https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#moonlight-nvidia-gamestreaming-app-available-through-portmaster." porter="Christian_Haitian" locat="Moonlight.zip"
@@ -55,6 +59,8 @@ Title="Mr_Boom ." Desc="A Bomberman clone." porter="Christian_Haitian" locat="Mr
 Title="NAM ." Desc="NAM using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version NAM.GRP and NAM.RTS and .CON files and optionally CD audio tracks as OGG file in the format trackXX.ogg (where XX is the track number) to the ports/rednukem-NAM/gamedata folder." porter="romadu" locat="NAM.zip"
 
 Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play." porter="Jetup" locat="nKaruga.zip"
+
+Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.  Just download and play." porter="Cebion" locat="Openclaw.zip"
 
 Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrabbit games by Alister Thomson.  Includes the Jazz Jackrabiit shareware files.  You can add your own full game Dos files to the ports/openjazz/gamedata folder." porter="Jetup" locat="OpenJazz.zip"
 
@@ -81,6 +87,8 @@ Title="Rick_Dangerous ." Desc="An open source implementation of the legendary ga
 Title="Rise_Of_The_Triad ." Desc="An open source port of Rise of the Triad by icculus.  The demo files are already included." porter="romadu" locat="ROTT.zip"
 
 Title="Rocks_N_Diamonds ." Desc="A Boulderdash type game by Holger Schemel with many unique features, such as the ability to play remade levels from Boulderdash, Emerald Mine and Supaplex and many more levels." porter="Christian_Haitian" locat="rocksndiamonds.zip"
+
+Title="RVGL ." Desc="An open source port of Re-Volt by the RV Team.  Necessary files will be downloaded and installed upon initial launch while connected to the internet." porter="romadu" locat="RVGL.zip"
 
 Title="Shadow_Warrior ." Desc="Shadow Warrior open source port by Jonathan Fowler.  You'll need to add your own full version SW.GRP and SW.RTS Shadow Warrior files to the ports/shadow-warrior folder." porter="Romadu" locat="Shadow%20Warrior.zip"
 

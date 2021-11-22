@@ -31,18 +31,18 @@ width="55"
 
 if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
   param_device="anbernic"
-  if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ] || [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ $(cat "/storage/.config/.OS_ARCH") == "RG351V" ]; then
+  if [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ $(cat "/storage/.config/.OS_ARCH") == "RG351V" ]; then
     $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
     height="20"
     width="60"
   fi
 elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; then
-    if [[ ! -z $(cat /etc/emulationstation/es_input.cfg | $GREP "190000004b4800000010000001010000") ]]; then
-      param_device="oga"
-	  hotkey="Minus"
-	else
-	  param_device="rk2020"
-	fi
+  if [[ ! -z $(cat /etc/emulationstation/es_input.cfg | $GREP "190000004b4800000010000001010000") ]]; then
+    param_device="oga"
+	hotkey="Minus"
+  else
+	param_device="rk2020"
+  fi
 elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; then
   param_device="ogs"
   $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
@@ -61,17 +61,17 @@ if [[ -e "/storage/.config/.OS_ARCH" ]]; then
 else
   isitthera=$($GREP "title=" "/usr/share/plymouth/themes/text.plymouth")
   if [[ $isitthera == *"TheRA"* ]]; then
-	if [ -d "/opt/tools/PortMaster/" ]; then
+    if [ -d "/opt/tools/PortMaster/" ]; then
       toolsfolderloc="/opt/tools"
-	else
-	  toolsfolderloc="/roms/ports"
-	fi
+    else
+      toolsfolderloc="/roms/ports"
+    fi
   else
-	if [ -d "/opt/system/Tools/PortMaster/" ]; then
+    if [ -d "/opt/system/Tools/PortMaster/" ]; then
       toolsfolderloc="/opt/system/Tools"
-	else
-	  toolsfolderloc="/roms/ports"
-	fi
+    else
+      toolsfolderloc="/roms/ports"
+    fi
   fi
 fi
 
@@ -123,9 +123,9 @@ if [ "$?" != "0" ]; then
   $ESUDO apt update && $ESUDO apt install -y dialog --no-install-recommends
   temp=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
   if [[ $temp == *"ArkOS 351P/M"* ]]; then
-	#Make sure sdl2 wasn't impacted by the install of dialog for the 351P/M
+    #Make sure sdl2 wasn't impacted by the install of dialog for the 351P/M
     $ESUDO ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.14.1 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0
-	$ESUDO ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.10.0 /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0
+    $ESUDO ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.10.0 /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0
   fi
 fi
 
@@ -144,8 +144,10 @@ UpdateCheck() {
 			  --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty0
 		if [ ${PIPESTATUS[0]} -eq 0 ]; then
 		  unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
+		  mv -f $toolsfolderloc/PortMaster/PortMaster.sh $toolsfolderloc/.
 		  if [ ! -z $isitext ]; then
 			$ESUDO chmod -R 777 $toolsfolderloc/PortMaster
+			$ESUDO chmod 777 $toolsfolderloc/PortMaster.sh
 		  fi
 		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty0
 		  $ESUDO kill -9 $(pidof oga_controls)
@@ -180,7 +182,7 @@ local unzipstatus
   installloc=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
   porter=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=porter=").*?(?=")')
   if [[ "$website" != "http://139.196.213.206/arkos/ports/" ]]; then
-    if [[ "$installloc" == "SuperTux.zip" ]] || [[ "$installloc" == "UQM.zip" ]]; then
+    if [[ "$installloc" == "SuperTux.zip" ]] || [[ "$installloc" == "UQM.zip" ]] || [[ "$installloc" == "srb2.zip" ]]; then
       website="http://139.196.213.206/arkos/ports/"
 	  setwebsiteback="Y"
     fi
@@ -194,12 +196,12 @@ local unzipstatus
 		"Downloading ${1} package..." $height $width > /dev/tty0
         unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > /dev/tty0
         unzipstatus=$?
-		if [ $unzipstatus -eq 0 ]; then
+		if [ $unzipstatus -eq 0 ] || [ $unzipstatus -eq 1 ]; then
 		  if [[ "$setwebsiteback" == "Y" ]]; then
 		    website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 		  fi
-	      if [ ! -z $isitext ]; then
-		    $ESUDO chmod -R 777 /roms/ports
+		  if [ ! -z $isitext ]; then
+		    $ESUDO chmod -R 777 /$whichsd/ports
 		  fi
 		  if [[ -e "/storage/.config/.OS_ARCH" ]]; then
 		    cd /$whichsd/ports/
@@ -208,7 +210,7 @@ local unzipstatus
 			  if [[ -z $(cat "$s" | $GREP "ESUDO") ]] || [[ -z $(cat "$s" | $GREP "controlfolder") ]]; then
 			    sed -i 's/sudo //g' /storage/roms/ports/"$s"
 			  fi
-			  done
+			done
 		  fi
 		  cd $toolsfolderloc
 		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
@@ -221,19 +223,19 @@ local unzipstatus
 		  \n\nYour roms partition seems to be full." $height $width 2>&1 > /dev/tty0
 		else
 		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
-		  \n\nThe reason is unknown. ¯\_(ツ)_/¯ " $height $width 2>&1 > /dev/tty0
+		  \n\nUnzip error code:$unzipstatus " $height $width 2>&1 > /dev/tty0
 		fi
 
 		if [[ "$setwebsiteback" == "Y" ]]; then
 		  website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 		fi
 
-        $ESUDO rm -f /dev/shm/portmaster/$installloc
+	    $ESUDO rm -f /dev/shm/portmaster/$installloc
 	    ;;
 	 *) if [[ "$setwebsiteback" == "Y" ]]; then
 		  website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
-		fi
-		;;
+	    fi
+	    ;;
   esac
 }
 
