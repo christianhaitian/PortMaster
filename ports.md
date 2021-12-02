@@ -90,6 +90,8 @@ Title="Return_to_Castle_Wolfenstein ." Desc="Return to Castle Wolfenstein using 
 
 Title="Rick_Dangerous ." Desc="An open source implementation of the legendary game "Rick Dangerous" using the xrick libretro retroarch core.  All necessary files are already included." porter="Christian_Haitian" locat="Rick%20Dangerous.zip"
 
+Title="Rigel_Engine ." Desc="A modern re-implementation of the classic DOS game Duke Nukem II.  You'll need to add your own full game files to the ports/RigelEngine/ folder." porter="romadu" locat="RigelEngine.zip"
+
 Title="Rise_Of_The_Triad ." Desc="An open source port of Rise of the Triad by icculus.  The demo files are already included." porter="romadu" locat="ROTT.zip"
 
 Title="Rocks_N_Diamonds ." Desc="A Boulderdash type game by Holger Schemel with many unique features, such as the ability to play remade levels from Boulderdash, Emerald Mine and Supaplex and many more levels." porter="Christian_Haitian" locat="rocksndiamonds.zip"
