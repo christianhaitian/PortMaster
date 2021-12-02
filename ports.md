@@ -4,6 +4,8 @@ Title="Abuse ." Desc="A fork of the original Abuse SDL port from http://abuse.zo
 
 Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip"
 
+Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip"
+
 Title="Blake_Stone_Aliens_of_Gold ." Desc="The unofficial source port for Blake Stone Aliens of Gold.  Includes the shareware files.  You can also add your own full version Blake Stone Aliens of Gold files to the ports/bstone-aog/gamedata/alien_of_gold folder." porter="Cebion and romadu" locat="bstone-aog.zip"
 
 Title="Blake_Stone_Planet_Strike ." Desc="The unofficial source port for Blake Stone Planet Strike.  You'll need to add your own full version Blake Stone Planet Strike files to the ports/bstone-ps/gamedata/planet_strike folder." porter="Cebion and romadu" locat="bstone-ps.zip"
@@ -35,6 +37,8 @@ Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery s
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip"
 
 Title="Exhumed ." Desc=" A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip"
+
+Title="F2bgl ." Desc=" A reimplementation of the Fade to Black game.  You will need the original files of the PC release or PC demo copied to the ports/f2bgl folder." porter="Romadu" locat="face_to_black.zip"
 
 Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Might and Magic 2 game engine by Ihar Hubchyk.  Just add the data and maps folders from your full version GOG HOMM2 to the ports/fheroes2 folder or just launch Fheroes2 to download the demo files." porter="romadu" locat="Fheroes2.zip"
 
@@ -80,6 +84,8 @@ Title="Redneck_Rampage_1 ." Desc="Redneck Rampage 1 using the rednukem build ope
 
 Title="Redneck_Rampage_2 ." Desc="Redneck Rampage 2 using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version REDNECK.GRP and REDNECK.RTS and .CON files and optionally CD audio tracks as OGG file in the format trackXX.ogg (where XX is the track number) to the ports/rednukem-redneck2/gamedata folder." porter="romadu" locat="Redneck%20Rampage%20Rides%20Again.zip"
 
+Title="Reminiscence ." Desc="A reimplementation of the Flashback game using the reminiscence engine by Alex Chermenin.  You will need the original files of the PC version copied to ports/reminiscence/gamedata folder." porter="jetup and romadu" locat="Reminiscence.zip"
+
 Title="Return_to_Castle_Wolfenstein ." Desc="Return to Castle Wolfenstein using the iortcw project.  With porting work done by JohnnyonFlame.  Packaged by Romadu. You'll need to add your own pak0.pk3, sp_pak1.pk3, sp_pak2.pk3, and sp_pak3.pk3 to the ports/iortcw/main folder." porter="JohnnyonFlame" locat="iortcw.zip"
 
 Title="Rick_Dangerous ." Desc="An open source implementation of the legendary game "Rick Dangerous" using the xrick libretro retroarch core.  All necessary files are already included." porter="Christian_Haitian" locat="Rick%20Dangerous.zip"
@@ -103,6 +109,8 @@ Title="Sonic_2 ." Desc="Sonic the Hedgehog 2 decompilation by Rubberduckycooly. 
 Title="Sonic_CD ." Desc="Sonic the Hedgehog CD decompilation by Rubberduckycooly.  Just add your own android Data.rsdk file to the ports/soniccd folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="Sonic%20CD.zip"
 
 Title="SRB2 ." Desc="Sonic Robo Blast 2 fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="srb2.zip"
+
+Title="SRB2Kart ." Desc="Sonic Robo Blast 2 Kart fangame by Sonic Team Junior.  All necessary files are already included." porter="romadu" locat="srb2kart.zip"
 
 Title="SorR ." Desc="Streets of Rage Remake.  Just add your own sorr.dat file, mod folder, and palettes folder into the ports/sorr folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="SorR.zip"
 
