@@ -104,6 +104,8 @@ Title="Shovel_Knight_Treasure_Trove ." Desc="Shovel Knight Treasure Trove loader
 
 Title="SDLPoP ." Desc="An open-source port of Prince of Persia, based on the disassembly of the DOS version, extended with new features by NagyD" porter="Christian_Haitian" locat="SDLPoP.zip"
 
+Title="SkiJump3 ." Desc="Ski Jump International v3" porter="Cebion" locat="skijump3.zip"
+
 Title="Sonic_1 ." Desc="Sonic the Hedgehog 1 decompilation by Rubberduckycooly.  Just add your own android Data.rsdk file to the ports/sonic1 folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="Sonic%201.zip"
 
 Title="Sonic_2 ." Desc="Sonic the Hedgehog 2 decompilation by Rubberduckycooly.  Just add your own android Data.rsdk file to the ports/sonic2 folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="Sonic%202.zip"
