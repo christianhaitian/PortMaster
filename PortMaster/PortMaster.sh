@@ -182,7 +182,7 @@ local unzipstatus
   installloc=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
   porter=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=porter=").*?(?=")')
   if [[ "$website" != "http://139.196.213.206/arkos/ports/" ]]; then
-    if [[ "$installloc" == "SuperTux.zip" ]] || [[ "$installloc" == "UQM.zip" ]] || [[ "$installloc" == "srb2.zip" ]]; then
+    if [[ "$installloc" == "SuperTux.zip" ]] || [[ "$installloc" == "UQM.zip" ]] || [[ "$installloc" == "srb2.zip" ]] || [[ "$installloc" == "srb2kart.zip" ]]; then
       website="http://139.196.213.206/arkos/ports/"
 	  setwebsiteback="Y"
     fi
