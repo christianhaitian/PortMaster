@@ -2,7 +2,7 @@ Title="2048 ." Desc="The 2048 puzzle game" porter="Christian_Haitian" locat="204
 
 Title="Abuse ." Desc="A fork of the original Abuse SDL port from http://abuse.zoy.org/.  An intense 2D shooter.  Plays best on dual analog stick devices.  Just download and play." porter="romadu" locat="Abuse.zip"
 
-Title="Aleph-One_Marathon ." Desc="An open source version of Bungie's Marathon 1 first person shooter. All files have been included." porter="romadu" locat="alephone-marathon.zip"
+Title="Aleph-One_Marathon_1 ." Desc="An open source version of Bungie's Marathon 1 first person shooter. All files have been included." porter="romadu" locat="alephone-marathon.zip"
 
 Title="Aleph-One_Marathon_2 ." Desc="An open source version of Bungie's Marathon 2 first person shooter. All files have been included." porter="romadu" locat="alephone-marathon2.zip"
 
