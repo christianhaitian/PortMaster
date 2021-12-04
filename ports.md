@@ -2,7 +2,11 @@ Title="2048 ." Desc="The 2048 puzzle game" porter="Christian_Haitian" locat="204
 
 Title="Abuse ." Desc="A fork of the original Abuse SDL port from http://abuse.zoy.org/.  An intense 2D shooter.  Plays best on dual analog stick devices.  Just download and play." porter="romadu" locat="Abuse.zip"
 
-Title="Aleph-One ." Desc="An open source version of Bungie's Marathon, Marathon 2, and Marathon Infinity first person shooter." porter="romadu" locat="alephone.zip"
+Title="Aleph-One_Marathon ." Desc="An open source version of Bungie's Marathon 1 first person shooter. All files have been included." porter="romadu" locat="alephone-marathon.zip"
+
+Title="Aleph-One_Marathon_2 ." Desc="An open source version of Bungie's Marathon 2 first person shooter. All files have been included." porter="romadu" locat="alephone-marathon2.zip"
+
+Title="Aleph-One_Marathon_Infinity ." Desc="An open source version of Bungie's Marathon Infinity first person shooter. All files have been included." porter="romadu" locat="alephone-marathoninfinity.zip"
 
 Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip"
 
