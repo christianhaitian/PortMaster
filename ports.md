@@ -114,7 +114,7 @@ Title="Sonic_CD ." Desc="Sonic the Hedgehog CD decompilation by Rubberduckycooly
 
 Title="Sonic_Robo_Blast_2 ." Desc="Sonic Robo Blast 2 fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="srb2.zip"
 
-Title="SRB2Kart ." Desc="Sonic Robo Blast 2 Kart fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="srb2kart.zip"
+Title="Sonic_Robo_Blast_2_Kart ." Desc="Sonic Robo Blast 2 Kart fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="srb2kart.zip"
 
 Title="SorR ." Desc="Streets of Rage Remake.  Just add your own sorr.dat file, mod folder, and palettes folder into the ports/sorr folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="SorR.zip"
 
