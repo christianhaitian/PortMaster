@@ -23,6 +23,7 @@ jobs:
       - uses: hmarr/debug-action@v2
         name: "debug: ${{github.event_name}}"
       - name: Valid proper secrets set
+        id: sync
         run: |
           valid=true
           if [[ -z "${{ secrets.RSYNC_USER }}" ]]; then

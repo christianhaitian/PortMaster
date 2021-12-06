@@ -116,12 +116,14 @@ if [ -z "$GW" ]; then
   exit 0
 fi
 
-website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
+website="https://github.com/PortsMaster/PortMaster-Releases/releases/latest/download/"
+isgithubrelease="true" #Github releases convert space " " ("%20") to "."
 
 ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | $GREP -Po '"country":.*?[^\\]"')
 
 if [[ "$ISITCHINA" == "\"country\":\"China\"" ]]; then
   website="http://139.196.213.206/arkos/ports/"
+  isgithubrelease="false"
 fi
 
 if [ ! -d "/dev/shm/portmaster" ]; then
@@ -130,12 +132,12 @@ fi
 
 UpdateCheck() {
 
-  gitversion=$(curl -s --connect-timeout 30 -m 60 ${website}version)
+  gitversion=$(curl -L -s --connect-timeout 30 -m 60 ${website}version)
 
   if [[ "$gitversion" != "$curversion" ]]; then
     
 	dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
---yesno "\nThere's an update for PortMaster.  Would you like to download it now?" $height $width 2>&1 > /dev/tty0
+--yesno "\nThere's an update for PortMaster ($gitversion).  Would you like to download it now?" $height $width 2>&1 > /dev/tty0
 
     case $? in
 	   0) 
@@ -180,12 +182,11 @@ local unzipstatus
   msgtxt=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=Desc=").*?(?=")')
   installloc=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
   porter=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=porter=").*?(?=")')
-  if [[ "$website" != "http://139.196.213.206/arkos/ports/" ]]; then
-    if [[ "$installloc" == "SuperTux.zip" ]] || [[ "$installloc" == "UQM.zip" ]] || [[ "$installloc" == "srb2.zip" ]] || [[ "$installloc" == "srb2kart.zip" ]]; then
-      website="http://139.196.213.206/arkos/ports/"
-	  setwebsiteback="Y"
-    fi
+
+  if [[ "$isgithubrelease" == "true" ]]; then
+    installloc="$( echo "$installloc" | sed 's/%20/./g' | sed 's/ /./g' )"  #Github releases convert space " " ("%20") to "."
   fi
+
   dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
   --yesno "\n$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?" $height $width 2>&1 > /dev/tty0
 
@@ -196,9 +197,6 @@ local unzipstatus
         unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > /dev/tty0
         unzipstatus=$?
 		if [ $unzipstatus -eq 0 ] || [ $unzipstatus -eq 1 ]; then
-		  if [[ "$setwebsiteback" == "Y" ]]; then
-		    website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
-		  fi
 		  if [ ! -z $isitext ]; then
 		    $ESUDO chmod -R 777 /$whichsd/ports
 		  fi
@@ -225,15 +223,9 @@ local unzipstatus
 		  \n\nUnzip error code:$unzipstatus " $height $width 2>&1 > /dev/tty0
 		fi
 
-		if [[ "$setwebsiteback" == "Y" ]]; then
-		  website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
-		fi
-
 	    $ESUDO rm -f /dev/shm/portmaster/$installloc
 	    ;;
-	 *) if [[ "$setwebsiteback" == "Y" ]]; then
-		  website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
-	    fi
+	 *) 
 	    ;;
   esac
 }
