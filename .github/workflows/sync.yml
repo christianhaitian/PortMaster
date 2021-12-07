@@ -46,7 +46,7 @@ jobs:
       - name: rsync files
         run: |
           rsync_user="${{ secrets.RSYNC_USER }}"
-          rsync_password="${{ secrets.RSYNC_PASSWORD }}"
+          rsync_password='${{ secrets.RSYNC_PASSWORD }}'
           rsync_path="${{ env.RSYNC_PATH }}"
           rsync_host="${{ env.RSYNC_HOST }}"
 
