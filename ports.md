@@ -42,7 +42,9 @@ Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery s
 
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip"
 
-Title="Exhumed ." Desc=" A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip"
+Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip"
+
+Title="Exult ." Desc="A port of Ultima 7.  You'll need A copy of the black gate and/or serpent isle added to ports/exult/data/blackgate and/or ports/exult/data/serpentisle." porter="nl255" locat="Exult.zip"
 
 Title="F2bgl ." Desc=" A reimplementation of the Fade to Black game.  You will need the original files of the PC release or PC demo copied to the ports/f2bgl folder." porter="Romadu" locat="face_to_black.zip"
 

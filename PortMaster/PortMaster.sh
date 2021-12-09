@@ -4,12 +4,13 @@
 # https://github.com/christianhaitian/arkos/wiki/PortMaster
 # Description : A simple tool that allows you to download
 # various game ports that are available for RK3326 devices
-# using 351Elec and Ubuntu based distros such as ArkOS, TheRA, and RetroOZ.
+# using 351Elec, ArkOS, EmuElec, RetroOZ, and TheRA.
 #
 
 ESUDO="sudo"
 GREP="grep"
 WGET="wget"
+
 sudo echo "Testing for sudo..."
 if [ $? != 0 ]; then
   ESUDO=""
@@ -17,6 +18,29 @@ if [ $? != 0 ]; then
   GREP="/storage/roms/ports/PortMaster/grep"
   WGET="/storage/roms/ports/PortMaster/wget"
   LANG=""
+else
+  dpkg -s "curl" &>/dev/null
+  if [ "$?" != "0" ]; then
+    $ESUDO apt update && $ESUDO apt install -y curl --no-install-recommends
+  fi
+
+  dpkg -s "dialog" &>/dev/null
+  if [ "$?" != "0" ]; then
+    $ESUDO apt update && $ESUDO apt install -y dialog --no-install-recommends
+    temp=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
+    if [[ $temp == *"ArkOS 351P/M"* ]]; then
+      #Make sure sdl2 wasn't impacted by the install of dialog for the 351P/M
+      $ESUDO ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.14.1 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0
+      $ESUDO ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.10.0 /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0
+    fi
+  fi
+
+  isitarkos=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
+  if [[ $isitarkos == *"ArkOS"* ]]; then
+    if [[ ! -z $( timedatectl | grep inactive ) ]]; then
+      $ESUDO timedatectl set-ntp 1
+	fi
+  fi
 fi
 
 $ESUDO chmod 666 /dev/tty0
@@ -92,15 +116,6 @@ if [ -z "$GW" ]; then
   exit 0
 fi
 
-if [[ -e "/storage/.config/.OS_ARCH" ]]; then
-  echo ""
-else
-  isitarkos=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
-  if [[ $isitarkos == *"ArkOS"* ]]; then
-    $ESUDO timedatectl set-ntp 1
-  fi
-fi
-
 website="https://raw.githubusercontent.com/christianhaitian/PortMaster/main/"
 
 ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | $GREP -Po '"country":.*?[^\\]"')
@@ -111,22 +126,6 @@ fi
 
 if [ ! -d "/dev/shm/portmaster" ]; then
   mkdir /dev/shm/portmaster
-fi
-
-dpkg -s "curl" &>/dev/null
-if [ "$?" != "0" ]; then
-  $ESUDO apt update && $ESUDO apt install -y curl --no-install-recommends
-fi
-
-dpkg -s "dialog" &>/dev/null
-if [ "$?" != "0" ]; then
-  $ESUDO apt update && $ESUDO apt install -y dialog --no-install-recommends
-  temp=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
-  if [[ $temp == *"ArkOS 351P/M"* ]]; then
-    #Make sure sdl2 wasn't impacted by the install of dialog for the 351P/M
-    $ESUDO ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.14.1 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0
-    $ESUDO ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.10.0 /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0
-  fi
 fi
 
 UpdateCheck() {
@@ -248,6 +247,66 @@ userExit() {
   exit 0
 }
 
+Settings() {
+  if [[ ! -z $(cat $toolsfolderloc/PortMaster/gamecontrollerdb.txt | $GREP x:b2) ]]; then
+    local curctrlcfg="Switch to Xbox 360 Control Layout"
+  else
+    local curctrlcfg="Switch to Default Control Layout"
+  fi
+  
+  local settingsoptions=( 1 "Restore Backup gamecontrollerdb.txt" 2 "$curctrlcfg" 3 "Go Back" )
+
+  while true; do
+    settingsselection=(dialog \
+   	--backtitle "PortMaster v$curversion" \
+   	--title "[ Settings Menu ]" \
+   	--no-collapse \
+   	--clear \
+	--cancel-label "$hotkey + Start to Exit" \
+    --menu "What do you want to do?" $height $width 15)
+	
+	settingschoices=$("${settingsselection[@]}" "${settingsoptions[@]}" 2>&1 > /dev/tty0) || TopLevel
+
+    for choice in $settingschoices; do
+      case $choice in
+        1) cp -f $toolsfolderloc/PortMaster/.Backup/donottouch.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+		   if [ $? == 0 ]; then
+		     dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nThe default gamecontrollerdb.txt has been successfully restored." $height $width 2>&1 > /dev/tty0
+		   else
+		     dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nThe default gamecontrollerdb.txt has failed to be restored.  Is the backup portmaster subfolder or it's contents missing?" $height $width 2>&1 > /dev/tty0
+		   fi
+		   Settings
+        ;;
+		2) if [[ $curctrlcfg == "Switch to Xbox 360 Control Layout" ]]; then
+		     sed -i 's/x:b2/x:b3/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 sed -i 's/y:b3/y:b2/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 if [[ $param_device != "anbernic" ]]; then
+			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 else
+			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 fi
+		   else
+		     sed -i 's/x:b3/x:b2/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 sed -i 's/y:b2/y:b3/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 if [[ $param_device != "anbernic" ]]; then
+			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 else
+			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 fi
+		   fi
+		   Settings
+		;;
+		3) TopLevel
+		;;
+      esac
+    done
+  done
+}
+
 MainMenu() {
   local options=(
    $(cat /dev/shm/portmaster/ports.md | $GREP -oP '(?<=Title=").*?(?=")')
@@ -262,7 +321,7 @@ MainMenu() {
 	--cancel-label "$hotkey + Start to Exit" \
     --menu "Available ports for install" $height $width 15)
 
-    choices=$("${selection[@]}" "${options[@]}" 2>&1 > /dev/tty0) || userExit
+    choices=$("${selection[@]}" "${options[@]}" 2>&1 > /dev/tty0) || TopLevel
 
     for choice in $choices; do
       case $choice in
@@ -272,5 +331,28 @@ MainMenu() {
   done
 }
 
+TopLevel() {
+  local topoptions=( 1 "Main Menu" 2 "Settings" )
+
+  while true; do
+    topselection=(dialog \
+   	--backtitle "PortMaster v$curversion" \
+   	--title "[ Top Level Menu ]" \
+   	--no-collapse \
+   	--clear \
+	--cancel-label "$hotkey + Start to Exit" \
+    --menu "Please make your selection" $height $width 15)
+	
+	topchoices=$("${topselection[@]}" "${topoptions[@]}" 2>&1 > /dev/tty0) || userExit
+
+    for choice in $topchoices; do
+      case $choice in
+        1) MainMenu ;;
+		2) Settings ;;
+      esac
+    done
+  done
+}
+
 UpdateCheck
-MainMenu
+TopLevel
