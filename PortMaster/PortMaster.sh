@@ -315,7 +315,7 @@ MainMenu() {
   while true; do
     selection=(dialog \
    	--backtitle "PortMaster v$curversion" \
-   	--title "[ Main Menu ]" \
+   	--title "[ Main Menu of all ports]" \
    	--no-collapse \
    	--clear \
 	--cancel-label "$hotkey + Start to Exit" \
@@ -331,8 +331,32 @@ MainMenu() {
   done
 }
 
+MainMenuRTR() {
+  local options=(
+   $(cat /dev/shm/portmaster/ports.md | grep 'runtype="rtr"' | grep -oP '(?<=Title=").*?(?=")')
+  )
+
+  while true; do
+    selection=(dialog \
+   	--backtitle "PortMaster v$curversion" \
+   	--title "[ Main Menu for Ready to Run ports ]" \
+   	--no-collapse \
+   	--clear \
+	--cancel-label "$hotkey + Start to Exit" \
+    --menu "Available Ready to Run ports for install" $height $width 15)
+
+    choices=$("${selection[@]}" "${options[@]}" 2>&1 > /dev/tty0) || TopLevel
+
+    for choice in $choices; do
+      case $choice in
+        *) PortInfoInstall $choice ;;
+      esac
+    done
+  done
+}
+
 TopLevel() {
-  local topoptions=( 1 "Main Menu" 2 "Settings" )
+  local topoptions=( 1 "All Available Ports" 2 "Ready to Run Ports" 3 "Settings" )
 
   while true; do
     topselection=(dialog \
@@ -348,7 +372,8 @@ TopLevel() {
     for choice in $topchoices; do
       case $choice in
         1) MainMenu ;;
-		2) Settings ;;
+		2) MainMenuRTR ;;
+		3) Settings ;;
       esac
     done
   done
