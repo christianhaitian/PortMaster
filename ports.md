@@ -46,7 +46,7 @@ Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  Y
 
 Title="Exult ." Desc="A port of Ultima 7.  You'll need A copy of the black gate and/or serpent isle added to ports/exult/data/blackgate and/or ports/exult/data/serpentisle." porter="nl255" locat="Exult.zip"
 
-Title="F2bgl ." Desc=" A reimplementation of the Fade to Black game.  You will need the original files of the PC release or PC demo copied to the ports/f2bgl folder." porter="Romadu" locat="face_to_black.zip"
+Title="F2bgl ." Desc=" A reimplementation of the Fade to Black game.  You will need the original files of the PC release or PC demo copied to the ports/f2bgl folder." porter="Romadu" locat="fade_to_black.zip"
 
 Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Might and Magic 2 game engine by Ihar Hubchyk.  Just add the data and maps folders from your full version GOG HOMM2 to the ports/fheroes2 folder or just launch Fheroes2 to download the demo files." porter="romadu" locat="Fheroes2.zip"
 
