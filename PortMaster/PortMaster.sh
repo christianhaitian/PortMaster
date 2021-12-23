@@ -184,7 +184,12 @@ local unzipstatus
   porter=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=porter=").*?(?=")')
 
   if [[ "$isgithubrelease" == "true" ]]; then
-    installloc="$( echo "$installloc" | sed 's/%20/./g' | sed 's/ /./g' )"  #Github releases convert space " " ("%20") to "."
+    #Github releases convert space " " ("%20") to "."
+    # Examples:
+    #  - "Bermuda%20Syndrome" -> "Bermuda.Syndrome"
+    #  - "Bermuda Syndrome" -> "Bermuda.Syndrome"
+    #  - "Mr. Boom" -> "Mr.Boom" (note how space is removed)
+    installloc="$( echo "$installloc" | sed 's/%20/./g' | sed 's/ /./g' | sed 's/\.\././g' )"
   fi
 
   dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
