@@ -1,0 +1,53 @@
+name: release
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency: 
+  group: release # only 1 release at a time
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: hmarr/debug-action@v2
+        name: "debug: ${{github.event_name}}"
+     
+      - uses: actions/checkout@v2
+ 
+      - uses: robinraju/release-downloader@v1.2
+        with:
+          repository: "${{env.LARGE_FILE_REPOSITORY}}"
+          tag: "${{env.LARGE_FILE_TAG}}"
+          fileName: "*"
+        env:
+          LARGE_FILE_REPOSITORY: "PortsMaster/PortMaster-Hosting"
+          LARGE_FILE_TAG: "large-files"
+      - name: Get release name for artifacts
+        id: date
+        run: |
+            echo "::set-output name=date::$(date +'%Y-%m-%d_%H%M')"
+      - name: Create PortMaster zip from PortMaster Folder
+        id: portmaster-zip
+        run: |
+          zip -9 -r ./PortMaster.zip PortMaster/
+      - name: "Publish release: ${{steps.date.outputs.date}}"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{steps.date.outputs.date}}"
+          allowUpdates: true
+          draft: false
+          prerelease: false
+          replacesArtifacts: false
+          omitNameDuringUpdate: true
+          artifacts: "ports.md, *.zip, version"
+          token: ${{ secrets.PORTMASTER_RELEASE_TOKEN }}
+          repo: PortMaster-Releases
+          owner: PortsMaster
+      - name: Release Info
+        id: info
+        run: |
+          echo "Published release: ${{steps.date.outputs.date}} to: https://github.com/PortsMaster/PortMaster-Releases"
