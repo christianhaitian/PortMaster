@@ -10,6 +10,8 @@
 ESUDO="sudo"
 GREP="grep"
 WGET="wget"
+export DIALOGRC=/
+app_colorscheme="Default"
 
 sudo echo "Testing for sudo..."
 if [ $? != 0 ]; then
@@ -243,6 +245,74 @@ userExit() {
   printf "\033c" > /dev/tty0
   exit 0
 }
+SetColorScheme() {
+  if [ "$app_colorscheme" == "Default" ]; then
+	export DIALOGRC=$toolsfolderloc/PortMaster/colorscheme/$app_colorscheme.dialogrc
+    if [[ -e "$toolsfolderloc/PortMaster/PortMaster.sh" ]]; then
+      sed -i "/export DIALOGRC\=\//c\export DIALOGRC\=\/" $toolsfolderloc/PortMaster/PortMaster.sh
+    fi
+    if [[ -e "$toolsfolderloc/PortMaster.sh" ]]; then
+      sed -i "/export DIALOGRC\=\//c\export DIALOGRC\=\/" $toolsfolderloc/PortMaster.sh
+    fi
+  else
+    export DIALOGRC=$toolsfolderloc/PortMaster/colorscheme/$app_colorscheme.dialogrc
+    if [[ -e "$toolsfolderloc/PortMaster/PortMaster.sh" ]]; then
+      sed -i "/export DIALOGRC\=\//c\export DIALOGRC\=$toolsfolderloc\/PortMaster\/colorscheme\/$app_colorscheme.dialogrc" $toolsfolderloc/PortMaster/PortMaster.sh
+    fi
+    if [[ -e "$toolsfolderloc/PortMaster.sh" ]]; then
+      sed -i "/export DIALOGRC\=\//c\export DIALOGRC\=$toolsfolderloc\/PortMaster\/colorscheme\/$app_colorscheme.dialogrc" $toolsfolderloc/PortMaster.sh
+    fi
+  fi
+}
+
+ColorSchemeMenu() {
+  local cmd
+  local options
+  local choice
+  local retval
+  local dialog_config
+  local temp
+
+  dialog_config=(${toolsfolderloc}/PortMaster/colorscheme/*.dialogrc) # This creates an array of the full paths to all .dialogrc files
+  dialog_config=("${dialog_config[@]##*/}") #Remove path prefix
+  dialog_config=("${dialog_config[@]%.*}") #Get filename without extension
+  cmd=(dialog \
+    --clear \
+	--backtitle "PortMaster v$curversion" \
+	--title " [ Color Scheme Selection ] " \
+	--no-collapse \
+	--cancel-label "Back" \
+	--menu "Select the PortMaster UI color scheme :" $height $width "15")
+
+  options+=(Default ".")
+
+  for temp in "${dialog_config[@]}"; do
+    if [ "$temp" == "Default" ]; then
+      echo "Skip default"
+    else
+      options+=($temp ".")
+    fi
+  done
+
+  choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty0)
+  retval=$?
+
+  case $retval in
+  0)
+    if [ "$choice" != "$app_colorscheme" ]; then
+      app_colorscheme=$choice
+      SetColorScheme
+    fi
+	ColorSchemeMenu
+    ;;
+  1)
+    Settings
+    ;;
+  *)
+    Settings
+    ;;
+  esac
+}
 
 Settings() {
   if [[ ! -z $(cat $toolsfolderloc/PortMaster/gamecontrollerdb.txt | $GREP x:b2) ]]; then
@@ -251,7 +321,7 @@ Settings() {
     local curctrlcfg="Switch to Default Control Layout"
   fi
   
-  local settingsoptions=( 1 "Restore Backup gamecontrollerdb.txt" 2 "$curctrlcfg" 3 "Go Back" )
+  local settingsoptions=( 1 "Restore Backup gamecontrollerdb.txt" 2 "$curctrlcfg" 3 "UI Color Scheme" 4 "Go Back" )
 
   while true; do
     settingsselection=(dialog \
@@ -297,7 +367,9 @@ Settings() {
 		   fi
 		   Settings
 		;;
-		3) TopLevel
+		3) ColorSchemeMenu
+		;;
+		4) TopLevel
 		;;
       esac
     done
