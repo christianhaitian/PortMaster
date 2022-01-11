@@ -81,6 +81,10 @@ elif [[ -e "/dev/input/by-path/platform-gameforce-gamepad-event-joystick" ]]; th
       DEVICE="19000000030000000300000002030000"
       param_device="chi"
       export HOTKEY="l3"
+elif [[ -e "/dev/input/by-path/platform-singleadc-joypad-event-joystick" ]]; then
+      DEVICE="190000004b4800000111000000010000"
+      param_device="rg552"
+      LOWRES="N"
 else
       DEVICE="${1}"
       param_device="${2}"
