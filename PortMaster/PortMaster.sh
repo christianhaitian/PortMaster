@@ -77,6 +77,11 @@ elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; the
   $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
   height="20"
   width="60"
+elif [[ -e "/dev/input/by-path/platform-singleadc-joypad-event-joystick" ]]; then
+  param_device="rg552"
+  $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
+  height="20"
+  width="60"
 else
   param_device="chi"
   hotkey="1"
