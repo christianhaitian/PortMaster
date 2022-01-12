@@ -112,7 +112,13 @@ fi
 isitext=$(df -PTh $toolsfolderloc | awk '{print $2}' | grep ext)
 
 cd $toolsfolderloc
-$ESUDO SDL_GAMECONTROLLERCONFIG_FILE="$toolsfolderloc/PortMaster/gamecontrollerdb.txt" $toolsfolderloc/PortMaster/gptokeyb $ESUDOKILL "PortMaster.sh" -c "$toolsfolderloc/PortMaster/PortMaster.gptk" > /dev/null 2>&1 &
+
+# SDL_GAMECONTROLLERCONFIG_FILE variable must be set before command when ESUDO="". To ensure that
+# the variable gets into the 'sudo' shell, we use the --preserve-env flag
+if [[ "$ESUDO" != "" ]]; then
+  ESUDO_ENV="$ESUDO --preserve-env"
+fi
+SDL_GAMECONTROLLERCONFIG_FILE="$toolsfolderloc/PortMaster/gamecontrollerdb.txt" $ESUDO_ENV $toolsfolderloc/PortMaster/gptokeyb $ESUDOKILL "PortMaster.sh" -c "$toolsfolderloc/PortMaster/PortMaster.gptk" > /dev/null 2>&1 &
 
 curversion="$(curl file://$toolsfolderloc/PortMaster/version)"
 
