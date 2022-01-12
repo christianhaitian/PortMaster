@@ -8,16 +8,14 @@
 #
 
 ESUDO="sudo"
-ESUDOKILL="-sudokill" # for ArkOS, RetroOZ, and TheRA use "-sudokill"
 GREP="grep"
 WGET="wget"
-export DIALOGRC=/
+export DIALOGRC=/opt/system/Tools/PortMaster/colorscheme/All_Black.dialogrc
 app_colorscheme="Default"
 
 sudo echo "Testing for sudo..."
 if [ $? != 0 ]; then
   ESUDO=""
-  ESUDOKILL="-1" # for 351Elec and EmuELEC use "-1" (numeric one) or "-k" 
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/storage/roms/ports/PortMaster/libs"
   GREP="/storage/roms/ports/PortMaster/grep"
   WGET="/storage/roms/ports/PortMaster/wget"
@@ -48,7 +46,6 @@ else
 fi
 
 $ESUDO chmod 666 /dev/tty0
-$ESUDO chmod 666 /dev/uinput
 export TERM=linux
 export XDG_RUNTIME_DIR=/run/user/$UID/
 printf "\033c" > /dev/tty0
@@ -111,8 +108,9 @@ fi
 
 isitext=$(df -PTh $toolsfolderloc | awk '{print $2}' | grep ext)
 
-cd $toolsfolderloc
-$ESUDO SDL_GAMECONTROLLERCONFIG_FILE="$toolsfolderloc/PortMaster/gamecontrollerdb.txt" $toolsfolderloc/PortMaster/gptokeyb $ESUDOKILL "PortMaster.sh" -c "$toolsfolderloc/PortMaster/PortMaster.gptk" > /dev/null 2>&1 &
+cd $toolsfolderloc/PortMaster
+
+$ESUDO $toolsfolderloc/PortMaster/oga_controls PortMaster.sh $param_device > /dev/null 2>&1 &
 
 curversion="$(curl file://$toolsfolderloc/PortMaster/version)"
 
@@ -121,7 +119,7 @@ if [ -z "$GW" ]; then
   dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
   --msgbox "\n\nYour network connection doesn't seem to be working. \
   \nDid you make sure to configure your wifi connection?" $height $width 2>&1 > /dev/tty0
-  $ESUDO kill -9 $(pidof gptokeyb)
+  $ESUDO kill -9 $(pidof oga_controls)
   $ESUDO systemctl restart oga_events &
   exit 0
 fi
@@ -161,7 +159,7 @@ UpdateCheck() {
 			$ESUDO chmod 777 $toolsfolderloc/PortMaster.sh
 		  fi
 		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty0
-		  $ESUDO kill -9 $(pidof gptokeyb)
+		  $ESUDO kill -9 $(pidof oga_controls)
 		  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
 		  $ESUDO systemctl restart oga_events &
 		  exit 0
@@ -247,7 +245,7 @@ local unzipstatus
 
 userExit() {
   rm -f /dev/shm/portmaster/ports.md
-  $ESUDO kill -9 $(pidof gptokeyb)
+  $ESUDO kill -9 $(pidof oga_controls)
   $ESUDO systemctl restart oga_events &
   dialog --clear
   printf "\033c" > /dev/tty0
