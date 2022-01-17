@@ -10,7 +10,7 @@
 ESUDO="sudo"
 GREP="grep"
 WGET="wget"
-export DIALOGRC=/opt/system/Tools/PortMaster/colorscheme/All_Black.dialogrc
+export DIALOGRC=/
 app_colorscheme="Default"
 
 sudo echo "Testing for sudo..."
