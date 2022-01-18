@@ -86,6 +86,8 @@ Title="Quake_1 ." Desc="Quake 1 is one of the first fully 3D First-person shoote
 
 Title="Quake_2 ." Desc="Quake 2 is the sequel to Quake 1, one of the first fully 3D First-person shooter games released by id software.  You need to add your own full game pak files to the ports/quake2/baseq2 folder." porter="romadu" locat="Quake%202.zip"
 
+Title="Quake_3 ." Desc="Quake III Arena is a 1999 multiplayer-focused first-person shooter developed by id Software.  You need to add your own full game pak files and product key to the ports/quake3/baseq3 folder." porter="brooksytech" locat="Quake3.zip"
+
 Title="RAWGL ." Desc="A re-implementation of the engine used in the game Another World aka Out of this World in the US.  Includes the Out of this World demo files.  You can add your own full game files to the ports/rawgl/gamedata/ folder.  See https://github.com/cyxx/rawgl#supported-versions for more supported files info." porter="Jetup" locat="RAWGL.zip" runtype="rtr"
 
 Title="Redneck_Rampage_1 ." Desc="Redneck Rampage 1 using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version REDNECK.GRP and REDNECK.RTS and .CON files and optionally CD audio tracks as OGG file in the format trackXX.ogg (where XX is the track number) to the ports/rednukem-redneck1/gamedata folder." porter="romadu" locat="Redneck%20Rampage.zip"
