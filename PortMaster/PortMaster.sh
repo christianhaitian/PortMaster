@@ -54,6 +54,7 @@ dialog --clear
 hotkey="Select"
 height="15"
 width="55"
+power=""
 
 if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
   param_device="anbernic"
@@ -79,6 +80,7 @@ elif [[ -e "/dev/input/by-path/platform-singleadc-joypad-event-joystick" ]]; the
   $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
   height="20"
   width="60"
+  power='(?<=Title_P=\").*?(?=\")'
 else
   param_device="chi"
   hotkey="1"
@@ -384,7 +386,7 @@ Settings() {
 
 MainMenu() {
   local options=(
-   $(cat /dev/shm/portmaster/ports.md | $GREP -oP '(?<=Title=").*?(?=")')
+   $(cat /dev/shm/portmaster/ports.md | $GREP -oP "(?<=Title=\").*?(?=\")|$power")
   )
 
   while true; do
@@ -408,7 +410,7 @@ MainMenu() {
 
 MainMenuRTR() {
   local options=(
-   $(cat /dev/shm/portmaster/ports.md | grep 'runtype="rtr"' | grep -oP '(?<=Title=").*?(?=")')
+   $(cat /dev/shm/portmaster/ports.md | $GREP 'runtype="rtr"' | $GREP -oP "(?<=Title=\").*?(?=\")|$power")
   )
 
   while true; do
