@@ -89,7 +89,7 @@ else
   width="60"
 fi
 
-if [[ -e "/storage/.config/.OS_ARCH" ]]; then
+if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ]; then
   toolsfolderloc="/storage/roms/ports"
 else
   isitthera=$($GREP "title=" "/usr/share/plymouth/themes/text.plymouth")
@@ -183,7 +183,7 @@ local unzipstatus
 
   if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ]; then
     whichsd="roms2"
-  elif [ -f "/storage/.config/.OS_ARCH" ]; then
+  elif [ -f "/storage/.config/.OS_ARCH" ] || [ "${OS_NAME}" == "JELOS" ]; then
     whichsd="storage/roms"
   else
     whichsd="roms"
@@ -215,7 +215,7 @@ local unzipstatus
 		  if [ ! -z $isitext ]; then
 		    $ESUDO chmod -R 777 /$whichsd/ports
 		  fi
-		  if [[ -e "/storage/.config/.OS_ARCH" ]]; then
+		  if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ]; then
 		    cd /$whichsd/ports/
 		    for s in *.sh
 			do
