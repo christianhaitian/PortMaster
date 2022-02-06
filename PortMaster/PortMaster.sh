@@ -45,6 +45,10 @@ else
   fi
 fi
 
+if [ -f "/etc/os-release" ]; then
+  source /etc/os-release
+fi
+
 $ESUDO chmod 666 /dev/tty0
 export TERM=linux
 export XDG_RUNTIME_DIR=/run/user/$UID/
