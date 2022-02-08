@@ -134,6 +134,10 @@ Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's 
 
 Title="Super_Mario_War ." Desc="Super Mario War is a fan-made multiplayer Super Mario Bros. style deathmatch game in which players try to beat one another in a variety of gameplay modes.  Great fun even in single player mode." porter="Christian_Haitian" locat="Super%20Mario%20War.zip" runtype="rtr"
 
+Title_P="Star_Wars_Jedi_Knight_-_Jedi_Academy ." Desc="An open source port of Jedi Academy using OpenJK by the JACoders team. Orginally developed by Raven Software. You need to add your own full game pak files to the ports/JediAcademy/base folder." porter="brooksytech" locat="JediAcademy.zip"
+
+Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of Jedi Outcast using OpenJK by the JACoders team. Orginally developed by Raven Software. You need to add your own full game pak files to the ports/JediOutcast/base folder." porter="brooksytech" locat="JediOutcast.zip""
+
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
 
 Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 1 files to the ports/tombraider1 folder." porter="Jetup" locat="Tomb%20Raider%201.zip"
