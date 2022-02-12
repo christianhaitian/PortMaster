@@ -76,7 +76,9 @@ Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.
 
 Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrabbit games by Alister Thomson.  Includes the Jazz Jackrabiit shareware files.  You can add your own full game Dos files to the ports/openjazz/gamedata folder." porter="Jetup" locat="OpenJazz.zip" runtype="rtr"
 
-Title="OpenOMF ." Desc="a Open Source remake of "One Must Fall 2097" by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr"
+Title="OpenOMF ." Desc="An Open Source remake of "One Must Fall 2097" by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr"
+
+Title="OpenTTD ." Desc="An open source simulation game based upon Transport Tycoon Deluxe." porter="Cebion" locat="Openttd.zip" runtype="rtr"
 
 Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyrian.  OpenTyrian 2.1 files are already included as they were made freeware sometime ago." porter="Christian_Haitian" locat="OpenTyrian.zip" runtype="rtr"
 
