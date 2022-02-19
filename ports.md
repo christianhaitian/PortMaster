@@ -40,6 +40,8 @@ Title="DevilutionX ." Desc="DevilutionX is a source port of Diablo from https://
 
 Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery surfaces." porter="Christian_Haitian" locat="Dinothawr.zip" runtype="rtr"
 
+Title_P="Doom 3 ." Desc="Doom 3 is a 2004 survival horror first-person shooter video game developed by id Software and published by Activision. You need to add your own full game pak files to the ports/doom3/base folder." porter="brooksytech" locat="doom3.zip"
+
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip"
 
 Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip"
