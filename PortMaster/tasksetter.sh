@@ -28,7 +28,7 @@ get_taskset () {
 	fi
 
 	# Query cpu info
-	cpus="$(lscpu -ap=CPU,MAXMHZ)"
+	cpus="$(lscpu -p=CPU,MAXMHZ)"
 	if [[ $? != 0 ]]; then
 		echo "lscpu failure, bailing... (TASKSET won't be available)"
 		return
