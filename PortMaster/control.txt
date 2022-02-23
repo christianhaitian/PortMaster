@@ -99,4 +99,4 @@ fi
     sdl_controllerconfig="${CONTROLS}"
 }
 
-GPTOKEYB="$controlfolder/gptokeyb $ESUDOKILL"
+GPTOKEYB="$ESUDO $controlfolder/gptokeyb $ESUDOKILL"
