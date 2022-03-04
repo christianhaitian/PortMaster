@@ -99,4 +99,13 @@ fi
     sdl_controllerconfig="${CONTROLS}"
 }
 
-GPTOKEYB="$ESUDO $controlfolder/gptokeyb $ESUDOKILL"
+if [[ -e "/usr/share/plymouth/themes/text.plymouth" ]]; then
+  isitretrooz=$(grep "title=" /usr/share/plymouth/themes/text.plymouth)
+  if [[ $isitretrooz == *"RetroOZ"* ]]; then
+    GPTOKEYB="$ESUDO $controlfolder/gptokeyb $ESUDOKILL"
+  else
+    GPTOKEYB="$controlfolder/gptokeyb $ESUDOKILL"
+  fi
+else
+  GPTOKEYB="$controlfolder/gptokeyb $ESUDOKILL"
+fi
