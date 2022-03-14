@@ -163,6 +163,9 @@ UpdateCheck() {
 		if [ ${PIPESTATUS[0]} -eq 0 ]; then
 		  unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
 		  mv -f $toolsfolderloc/PortMaster/PortMaster.sh $toolsfolderloc/.
+		  if [ -f "$toolsfolderloc/PortMaster/tasksetter.sh" ]; then
+		    rm -f "$toolsfolderloc/PortMaster/tasksetter.sh"
+		  fi
 		  if [ ! -z $isitext ]; then
 			$ESUDO chmod -R 777 $toolsfolderloc/PortMaster
 			$ESUDO chmod 777 $toolsfolderloc/PortMaster.sh
