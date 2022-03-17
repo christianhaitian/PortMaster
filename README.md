@@ -9,7 +9,8 @@ Most of the the ports available through PortMaster have been configured to launc
 ## Install info
 
 For ArkOS on supported devices, PortMaster was included with a recent online update.  You can locate it in the Options > Tools menu. \
-For 351Elec, just unzip the contents of PortMaster.zip to your storage/roms/ports folder then run PortMaster.sh from the Ports menu in 351Elec.  The .sh file **must** remain in the PortMaster folder!
+For 351Elec, just unzip the contents of PortMaster.zip to your storage/roms/ports folder then run PortMaster.sh from the Ports menu in 351Elec.  The .sh file **must** remain in the PortMaster folder! \
+For JelOS, it's been intergrated into their most recent releases.  Just launch from tools and enjoy!
 If you don't have PortMaster there or need to install it manually, you can do the following:
 * Place the PortMaster folder in /roms/tools.  The .sh file **must** remain in the PortMaster folder!
    * For ArkOS on the RG351V or RG351MP, if SD2 is being used for roms, installation must be in /roms2/tools/. The .sh file **must** remain in the PortMaster folder!
