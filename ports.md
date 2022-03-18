@@ -84,6 +84,8 @@ Title="OpenTTD ." Desc="An open source simulation game based upon Transport Tyco
 
 Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyrian.  OpenTyrian 2.1 files are already included as they were made freeware sometime ago." porter="Christian_Haitian" locat="OpenTyrian.zip" runtype="rtr"
 
+Title_P="Owlboy ." Desc="A story-driven platform adventure game, where you can fly and explore a brand new world in the clouds.  You must have a copy of Owlboy for Linux copied to the ports/owlboy/gamedata folder." porter="Johnny on Flame" locat="Owlboy.zip" mono="y"
+
 Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip" runtype="rtr"
 
 Title="Quake_1 ." Desc="Quake 1 is one of the first fully 3D First-person shooter games released by id software.  Includes shareware pak file.  You can add your own full game pak files to the ports/quake/quakepaks folder." porter="Christian_Haitian" locat="Quake.zip" runtype="rtr"

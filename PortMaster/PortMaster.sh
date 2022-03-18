@@ -12,6 +12,7 @@ GREP="grep"
 WGET="wget"
 export DIALOGRC=/
 app_colorscheme="Default"
+mono_version="mono-6.12.0.122-aarch64.squashfs"
 
 sudo echo "Testing for sudo..."
 if [ $? != 0 ]; then
@@ -138,10 +139,10 @@ isgithubrelease="true" #Github releases convert space " " ("%20") to "."
 
 ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | $GREP -Po '"country":.*?[^\\]"')
 
-if [[ "$ISITCHINA" == "\"country\":\"China\"" ]]; then
-  website="http://139.196.213.206/arkos/ports/"
-  isgithubrelease="false"
-fi
+#if [[ "$ISITCHINA" == "\"country\":\"China\"" ]]; then
+#  website="http://139.196.213.206/arkos/ports/"
+#  isgithubrelease="false"
+#fi
 
 if [ ! -d "/dev/shm/portmaster" ]; then
   mkdir /dev/shm/portmaster
@@ -202,6 +203,12 @@ local unzipstatus
   msgtxt=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=Desc=").*?(?=")')
   installloc=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
   porter=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=porter=").*?(?=")')
+  needmono=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=mono=").*?(?=")')
+  if [[ -f "$toolsfolderloc/PortMaster/libs/$mono_version" ]]; then
+    ismonothere="y"
+  else
+    ismonothere="n"
+  fi
 
   if [[ "$isgithubrelease" == "true" ]]; then
     #Github releases convert space " " ("%20") to "."
@@ -212,43 +219,63 @@ local unzipstatus
     installloc="$( echo "$installloc" | sed 's/%20/./g' | sed 's/ /./g' | sed 's/\.\././g' )"
   fi
 
-  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
-  --yesno "\n$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?" $height $width 2>&1 > /dev/tty0
-
+  if [[ "${needmono,,}" == "y" ]] && [[ "$ismonothere" == "n" ]]; then
+    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
+    --yesno "\n$msgtxt \n\nPorted By: $porter\n\nThis port also requires the download and install 
+	of the mono library which is over 200MBs in size.  This download may take a while.
+	\n\nWould you like to continue to install this port?" $height $width 2>&1 > /dev/tty0
+  else
+    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
+    --yesno "\n$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?" $height $width 2>&1 > /dev/tty0
+  fi
+  
   case $? in
-     0) $WGET -t 3 -T 60 -q --show-progress "$website$installloc" -O \
-	    /dev/shm/portmaster/$installloc 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog --progressbox \
-		"Downloading ${1} package..." $height $width > /dev/tty0
-        unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > /dev/tty0
-        unzipstatus=$?
-		if [ $unzipstatus -eq 0 ] || [ $unzipstatus -eq 1 ]; then
-		  if [ ! -z $isitext ]; then
-		    $ESUDO chmod -R 777 /$whichsd/ports
+     0)
+	    if [ ${needmono,,} == "y" ] && [ $ismonothere == "n" ]; then
+	      $WGET -t 3 -T 60 -q --show-progress "$website$mono_version" -O \
+	      $toolsfolderloc/PortMaster/libs/$mono_version 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog --progressbox \
+		  "Downloading ${mono_version} package..." $height $width > /dev/tty0
+        fi
+        if [ ${needmono,,} == "y" ] && [ $ismonothere == "n" ] && [ $? -ne 0 ]; then
+          dialog --clear --backtitle "PortMaster v$curversion" --title "$mono_version" --clear --msgbox "\n\n$mono_version did NOT download. \
+          \n\nIt did not download correctly.  Please verify that you have at least 500MBs of space left in your roms parition
+          and your internet connection is stable and try again." $height $width 2>&1 > /dev/tty0
+          $ESUDO rm -f $toolsfolderloc/PortMaster/libs/$mono_version
+        else
+	      $WGET -t 3 -T 60 -q --show-progress "$website$installloc" -O \
+	      /dev/shm/portmaster/$installloc 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog --progressbox \
+	      "Downloading ${1} package..." $height $width > /dev/tty0
+	      unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > /dev/tty0
+	      unzipstatus=$?
+		  if [ $unzipstatus -eq 0 ] || [ $unzipstatus -eq 1 ]; then
+		    if [ ! -z $isitext ]; then
+		      $ESUDO chmod -R 777 /$whichsd/ports
+		    fi
+		    if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ]; then
+		      cd /$whichsd/ports/
+		      for s in *.sh
+			  do
+			    if [[ -z $(cat "$s" | $GREP "ESUDO") ]] || [[ -z $(cat "$s" | $GREP "controlfolder") ]]; then
+			      sed -i 's/sudo //g' /storage/roms/ports/"$s"
+			    fi
+			  done
+		    fi
+		    cd $toolsfolderloc
+		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
+		    \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > /dev/tty0
+		  elif [ $unzipstatus -eq 2 ] || [ $unzipstatus -eq 3 ] || [ $unzipstatus -eq 9 ] || [ $unzipstatus -eq 51 ]; then
+		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
+		    \n\nIt did not download correctly.  Please check your internet connection and try again." $height $width 2>&1 > /dev/tty0
+		  elif [ $unzipstatus -eq 50 ]; then
+		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
+		    \n\nYour roms partition seems to be full." $height $width 2>&1 > /dev/tty0
+		  else
+		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
+		    \n\nUnzip error code:$unzipstatus " $height $width 2>&1 > /dev/tty0
 		  fi
-		  if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ]; then
-		    cd /$whichsd/ports/
-		    for s in *.sh
-			do
-			  if [[ -z $(cat "$s" | $GREP "ESUDO") ]] || [[ -z $(cat "$s" | $GREP "controlfolder") ]]; then
-			    sed -i 's/sudo //g' /storage/roms/ports/"$s"
-			  fi
-			done
-		  fi
-		  cd $toolsfolderloc
-		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
-		  \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > /dev/tty0
-		elif [ $unzipstatus -eq 2 ] || [ $unzipstatus -eq 3 ] || [ $unzipstatus -eq 9 ] || [ $unzipstatus -eq 51 ]; then
-		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
-		  \n\nIt did not download correctly.  Please check your internet connection and try again." $height $width 2>&1 > /dev/tty0
-		elif [ $unzipstatus -eq 50 ]; then
-		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
-		  \n\nYour roms partition seems to be full." $height $width 2>&1 > /dev/tty0
-		else
-		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
-		  \n\nUnzip error code:$unzipstatus " $height $width 2>&1 > /dev/tty0
-		fi
 
-	    $ESUDO rm -f /dev/shm/portmaster/$installloc
+	      $ESUDO rm -f /dev/shm/portmaster/$installloc
+        fi
 	    ;;
 	 *) 
 	    ;;
