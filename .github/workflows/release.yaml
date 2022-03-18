@@ -43,7 +43,7 @@ jobs:
           prerelease: false
           replacesArtifacts: false
           omitNameDuringUpdate: true
-          artifacts: "ports.md, *.zip, version"
+          artifacts: "ports.md, *.zip, version, *.squashfs"
           token: ${{ secrets.PORTMASTER_RELEASE_TOKEN }}
           repo: PortMaster-Releases
           owner: PortsMaster
