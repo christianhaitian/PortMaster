@@ -138,6 +138,8 @@ Title="Space_Cadet_Pinball ." Desc="A reversed engineered version Space Cadet Pi
 
 Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's game Spelunky Classic. Based on the source code published in Humble Weekly Bundle: Play and Create with GameMaker (not original 1.1 release)." porter="Christian_Haitian" locat="Spelunky.zip" runtype="rtr"
 
+Title_P="Steel_Assault ." Desc="Punch, whip, and zipline your way through a post-apocalyptic America in this 16-bit retro-style action platformer!  You must have a copy of Steel Assault for Linux copied to the ports/steelassault/gamedata folder." porter="Johnny on Flame" locat="SteelAssault.zip" mono="y"
+
 Title="Super_Mario_War ." Desc="Super Mario War is a fan-made multiplayer Super Mario Bros. style deathmatch game in which players try to beat one another in a variety of gameplay modes.  Great fun even in single player mode." porter="Christian_Haitian" locat="Super%20Mario%20War.zip" runtype="rtr"
 
 Title_P="Star_Wars_Jedi_Knight_-_Jedi_Academy ." Desc="An open source port of Jedi Academy using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediAcademy/base folder." porter="brooksytech" locat="JediAcademy.zip"
