@@ -84,6 +84,8 @@ Title="OpenTTD ." Desc="An open source simulation game based upon Transport Tyco
 
 Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyrian.  OpenTyrian 2.1 files are already included as they were made freeware sometime ago." porter="Christian_Haitian" locat="OpenTyrian.zip" runtype="rtr"
 
+Title="OpenXcom Extended" Desc="OXCE is an open source engine for running XCOM:Ufo Defense and Terror From the Deep.  You will need to provide your own UFO Defense/TFTD game files.  Read the README-port.txt file for details." porter="nl255" locat="Openxcom.zip"
+
 Title="Owlboy ." Desc="A story-driven platform adventure game, where you can fly and explore a brand new world in the clouds.  Text is not readable on devices with screens less than 5 inches.  You must have a copy of Owlboy for Linux copied to the ports/owlboy/gamedata folder." porter="Johnny on Flame" locat="Owlboy.zip" mono="y"
 
 Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip" runtype="rtr"
