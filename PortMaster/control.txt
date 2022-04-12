@@ -73,6 +73,7 @@ elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; the
       param_device="ogs"
 	  if [ "$(cat ~/.config/.OS)" == "ArkOS" ] && [ "$(cat ~/.config/.DEVICE)" == "RGB10MAX" ]; then
 		sed -i 's/back:b12,guide:b16,start:b13/back:b14,guide:b12,start:b15/' ${controlfolder}/gamecontrollerdb.txt
+		sed -i 's/leftstick:b14,rightstick:b15/leftstick:b16,rightstick:b17/' ${controlfolder}/gamecontrollerdb.txt
         export HOTKEY="guide"
 	  fi
       if [[ -e "/opt/.retrooz/device" ]]; then
