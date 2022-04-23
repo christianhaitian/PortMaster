@@ -35,7 +35,7 @@ if [ $? != 0 ]; then
   ESUDOKILL="-1" # for 351Elec and EmuELEC use "-1" (numeric one) or "-k" 
   export SDL_GAMECONTROLLERCONFIG_FILE="$controlfolder/gamecontrollerdb.txt"
 else
-  ESUDO="sudo"
+  ESUDO="sudo --preserve-env=SDL_GAMECONTROLLERCONFIG_FILE,DEVICE,param_device,HOTKEY,ANALOGSTICKS"
   ESUDOKILL="-sudokill" # for ArkOS, RetroOZ, and TheRA use "-sudokill"
   export SDL_GAMECONTROLLERCONFIG_FILE="$controlfolder/gamecontrollerdb.txt"
 fi
@@ -104,13 +104,4 @@ fi
     sdl_controllerconfig="${CONTROLS}"
 }
 
-if [[ -e "/usr/share/plymouth/themes/text.plymouth" ]]; then
-  isitretrooz=$(grep "title=" /usr/share/plymouth/themes/text.plymouth)
-  if [[ $isitretrooz == *"RetroOZ"* ]]; then
-    GPTOKEYB="$ESUDO $controlfolder/gptokeyb $ESUDOKILL"
-  else
-    GPTOKEYB="$controlfolder/gptokeyb $ESUDOKILL"
-  fi
-else
-  GPTOKEYB="$controlfolder/gptokeyb $ESUDOKILL"
-fi
+GPTOKEYB="$ESUDO $controlfolder/gptokeyb $ESUDOKILL"
