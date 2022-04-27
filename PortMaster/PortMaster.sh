@@ -77,6 +77,14 @@ elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; the
   fi
 elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; then
   param_device="ogs"
+  if [[ -e "/opt/.retrooz/device" ]]; then
+    param_device="$(cat /opt/.retrooz/device)"
+    if [[ "$param_device" == *"rgb10max2native"* ]]; then
+      param_device="rgb10maxnative"
+    elif [[ "$param_device" == *"rgb10max2top"* ]]; then
+      param_device="rgb10maxtop"
+    fi
+  fi
   $ESUDO setfont /usr/share/consolefonts/Lat7-Terminus20x10.psf.gz
   height="20"
   width="60"
