@@ -48,6 +48,9 @@ if [[ -e "/usr/share/plymouth/themes/text.plymouth" ]]; then
   elif [[ $whichos == *"RetroOZ"* ]]; then
     raloc="/opt/retroarch/bin"
     raconf="--config /home/odroid/.config/retroarch/retroarch.cfg"
+  else
+    raloc="/usr/local/bin"
+    raconf=""
   fi
 elif [ "${OS_NAME}" == "JELOS" ]; then
   raloc="/usr/bin"
@@ -55,9 +58,6 @@ elif [ "${OS_NAME}" == "JELOS" ]; then
 elif [[ -e "/storage/.config/.OS_ARCH" ]] || [ -z $ESUDO ]; then
   raloc="/usr/bin"
   raconf="--config /storage/roms/gamedata/retroarch/config/retroarch.cfg"
-else
-  raloc="/usr/local/bin"
-  raconf=""
 fi
 
 SDLDBFILE="${SDL_GAMECONTROLLERCONFIG_FILE}"
