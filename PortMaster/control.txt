@@ -40,6 +40,26 @@ else
   export SDL_GAMECONTROLLERCONFIG_FILE="$controlfolder/gamecontrollerdb.txt"
 fi
 
+if [[ -e "/usr/share/plymouth/themes/text.plymouth" ]]; then
+  whichos=$(grep "title=" "/usr/share/plymouth/themes/text.plymouth")
+  if [[ $whichos == *"TheRA"* ]]; then
+    raloc="/opt/retroarch/bin"
+    raconf=""
+  elif [[ $whichos == *"RetroOZ"* ]]; then
+    raloc="/opt/retroarch/bin"
+    raconf="--config /home/odroid/.config/retroarch/retroarch.cfg"
+  fi
+elif [ "${OS_NAME}" == "JELOS" ]; then
+  raloc="/usr/bin"
+  raconf="--config /storage/.config/retroarch/retroarch.cfg"
+elif [[ -e "/storage/.config/.OS_ARCH" ]] || [ -z $ESUDO ]; then
+  raloc="/usr/bin"
+  raconf="--config /storage/roms/gamedata/retroarch/config/retroarch.cfg"
+else
+  raloc="/usr/local/bin"
+  raconf=""
+fi
+
 SDLDBFILE="${SDL_GAMECONTROLLERCONFIG_FILE}"
 [ -z "${SDLDBFILE}" ] && SDLDBFILE="${controlfolder}/gamecontrollerdb.txt"
 SDLDBUSERFILE="${HOME}/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
