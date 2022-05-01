@@ -55,6 +55,7 @@ if [[ -e "/usr/share/plymouth/themes/text.plymouth" ]]; then
 elif [ "${OS_NAME}" == "JELOS" ]; then
   raloc="/usr/bin"
   raconf="--config /storage/.config/retroarch/retroarch.cfg"
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib32
 elif [[ -e "/storage/.config/.OS_ARCH" ]] || [ -z $ESUDO ]; then
   raloc="/usr/bin"
   raconf="--config /storage/roms/gamedata/retroarch/config/retroarch.cfg"
