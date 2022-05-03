@@ -1,0 +1,126 @@
+#!/bin/bash
+
+# File to manage swap files
+# Please, load after PortMaster control.txt
+# Command line schema
+# -s = Swap file size in MB, example: -s 512
+# -p = Swap file path, example: -p /roms/swapfile
+# -m = Minimum RAM memory in KB, example: -m 512000
+# -d = Delete Swap file
+
+# booleans
+true=1
+false=0
+
+SWAP_FILE_SIZE=512  # in MB
+SWAP_FILE_PATH="/swapfile"
+MINIMUN_RAM_MEMORY=1024000  # 1GB in KB
+DELETE_SWAP_FILE=false
+sfp_seted=false
+dsf_seted=false
+
+create_swap_file() {
+
+  while getopts 's:p:m:dh' opt; do
+    case "$opt" in
+      s)
+        arg="$OPTARG"
+        echo "Processing option 's' (Swap file size in MB) with '${OPTARG}' argument"
+        if [[ ! -z "$arg" ]]; then
+          SWAP_FILE_SIZE=$arg
+        fi
+        ;;
+
+      p)
+        arg="$OPTARG"
+        echo "Processing option 'p' (Swap file path) with '${OPTARG}' argument"
+        if [[ ! -z "$arg" ]]; then
+          SWAP_FILE_PATH="$arg"
+          sfp_seted=true
+        fi
+        ;;
+
+      m)
+        arg="$OPTARG"
+        echo "Processing option 'm' (Minimum RAM memory in KB) with '${OPTARG}' argument"
+        if [[ ! -z "$arg" ]]; then
+          MINIMUN_RAM_MEMORY=$arg
+        fi
+        ;;
+
+      d)
+        echo "Processing option 'd' (NO delete Swap file)"
+        DELETE_SWAP_FILE=false
+        dsf_seted=true
+        ;;
+
+      ?|h)
+        echo "Usage: $(basename $0) [-s arg] [-p arg] [-m arg] [-d]"
+        exit 1
+        ;;
+    esac
+  done
+  shift "$(($OPTIND -1))"
+
+  # only for devices without enough amount Ram
+  total_ram_mem=$(cat /proc/meminfo | head -n 3 | grep -i 'MemTotal' | awk '{print $2}')
+  if ((total_ram_mem < MINIMUN_RAM_MEMORY)); then
+    if (( !sfp_seted)); then
+      whichos=$(grep "title=" "/usr/share/plymouth/themes/text.plymouth")
+      if [[ $whichos == *"TheRA"* ]] || [[ $whichos == *"ArkOS"* ]] || [[ $whichos == *"RetroOZ"* ]]; then
+        # get free space on / and /roms o /roms2
+        disk_free_space=$(df -m / | grep -v Filesystem | awk '{print $4}')
+        if ((disk_free_space < SWAP_FILE_SIZE)); then
+          disk_free_space=$(df -m /roms | grep -v Filesystem | awk '{print $4}')
+          if ((disk_free_space > SWAP_FILE_SIZE)); then
+            SWAP_FILE_PATH="/roms/swapfile"
+          elif [ $(df | grep /roms2) != "" ]; then
+            disk_free_space=$(df -m /roms2 | grep -v Filesystem | awk '{print $4}')
+          if ((disk_free_space > SWAP_FILE_SIZE)); then
+            SWAP_FILE_PATH="/roms2/swapfile"
+          fi
+        fi
+      fi
+      elif [[ -e "/storage/.config/.OS_ARCH" ]] || [ -z $ESUDO ]; then
+        # JelOS, AmberELEC, ...
+        SWAP_FILE_PATH="/storage/swapfile"
+      fi
+    fi
+    if [ ! -f "$SWAP_FILE_PATH" ]; then
+      # create swap file
+      FALLOCATE=$(command -v fallocate)
+      if [ -z "$FALLOCATE" ]; then
+        FALLOCATE="$controlfolder/fallocate"
+      fi
+      # Preallocate space for the swap file, fallocate may sometime not be used, use dd instead in this case
+      if ! $ESUDO $FALLOCATE -xl "$SWAP_FILE_SIZE"M "$SWAP_FILE_PATH"; then
+        echo "Warning: fallocate not exits, creating swap file with dd"
+        $ESUDO dd if=/dev/urandom of="$SWAP_FILE_PATH" bs=1MB count=$SWAP_FILE_SIZE
+      fi
+      ((! dsf_seted)) && DELETE_SWAP_FILE=true
+      $ESUDO chmod 600 "$SWAP_FILE_PATH"
+    fi
+
+    if free | awk '/^Swap:/ {exit !$2}'; then
+      # clean existing swap file
+      $ESUDO swapoff -a
+      $ESUDO swapon -a
+    else
+      # configure created swap file
+      $ESUDO mkswap "$SWAP_FILE_PATH"
+      $ESUDO swapon "$SWAP_FILE_PATH"
+    fi
+  fi
+}
+
+delete_swap_file() {
+  # only for devices with 1'5 GB of Ram
+  if ((DELETE_SWAP_FILE)) && [ -f "$SWAP_FILE_PATH" ]; then
+    if free | awk '/^Swap:/ {exit !$2}'; then
+      # disable swap
+      $ESUDO swapoff -v "$SWAP_FILE_PATH"
+    fi
+    # delete existing swap file
+    $ESUDO rm -f "$SWAP_FILE_PATH" &
+  fi
+}
