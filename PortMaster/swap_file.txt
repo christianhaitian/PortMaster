@@ -1,12 +1,13 @@
 #!/bin/bash
 
 # File to manage swap files
-# Please, load after PortMaster control.txt
-# Command line schema
-# -s = Swap file size in MB, example: -s 512
-# -p = Swap file path, example: -p /roms/swapfile
-# -m = Minimum RAM memory in KB, example: -m 512000
-# -d = Delete Swap file
+# load after PortMaster control.txt
+# Command line schema (optionals)
+# -s = Swap file size in MB, default to 512. Example: -s 512
+# -p = Swap file path, default to /swapfile. Example: -p /roms/swapfile
+# -m = Minimum RAM memory in KB, default to 1024000. Example: -m 512000
+# -d = no delete Swap file, the default flow delete the swap file
+
 
 # booleans
 true=1
