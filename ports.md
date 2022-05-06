@@ -54,6 +54,8 @@ Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Mi
 
 Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have a copy of Freedom Planet for Linux copied to the ports/freedomplanet/gamedata folder." porter="Johnny on Flame" locat="Freedom%20Planet.zip"
 
+Title="FreedroidRPG ." Desc="FreedroidRPG files are already included and ready to go." porter="Cebion" locat="freedroid.zip" runtype="rtr"
+
 Title="Heart_of_Darkness ." Desc="Heart of Darkness using the hode reimplementation of the engine developed by Amazing Studio.  Just add your own Heart of Darkness game files to the ports/hode/gamedata folder." porter="Jetup" locat="Heart%20of%20Darkness.zip"
 
 Title="Hurrican ." Desc="Turrican port by Thrimbor.  Just add the data and lang folders from here to the ports/hurrican folder or just launch Hurrican from the ports menu in Emulationstation and it will download the files and install them automatically." porter="romadu" locat="Hurrican.zip"
