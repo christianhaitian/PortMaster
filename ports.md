@@ -152,6 +152,8 @@ Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of
 
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
 
+Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge.  It was written by Brian Raiter.  Sommerville, the original author of Chip's Challenge, supported his plan and convinced him to make it possible to also emulate the Lynx set of rules.  The first version of Tile World was released in 2002.  The almost complete SDL2 conversion used: https://github.com/rangeli/tileworld" porter="Slayer366" locat="TileWorld.zip"
+
 Title="Timespinner ." Desc="Travel back in time to change fate itself, in this beautifully crafted story-driven adventure, inspired by classic 90s action-platformers.  You must have a copy of Timespinner for Linux copied to the ports/timespinner/gamedata folder." porter="Johnny on Flame" locat="Timespinner.zip" mono="y"
 
 Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 1 files to the ports/tombraider1 folder." porter="Jetup" locat="Tomb%20Raider%201.zip"
