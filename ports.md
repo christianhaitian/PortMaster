@@ -120,6 +120,8 @@ Title="RVGL ." Desc="An open source port of Re-Volt by the RV Team.  Necessary f
 
 Title="Shadow_Warrior ." Desc="Shadow Warrior open source port by Jonathan Fowler.  You'll need to add your own full version SW.GRP and SW.RTS Shadow Warrior files to the ports/shadow-warrior folder." porter="Romadu" locat="Shadow%20Warrior.zip"
 
+Title="Shipwreck ." Desc="Shipwreck is a top down adventure game in which you must travel the land, explore dungeons, and defeat monsters to earn safe passage off the island on which you are stranded.  Note there are several games called Shipwreck, this is the one by Brushfire Games.  You must have a copy of Shipwreck for Linux copied to the ports/shipwreck/gamedata folder." porter="jtothebell" locat="Shipwreck.zip" mono="y"
+
 Title="Shovel_Knight_Treasure_Trove ." Desc="Shovel Knight Treasure Trove loader.  You must have a copy of Shovel Knight Treasure Trove for Linux copied to the ports/shovelknight/gamedata folder.  For more info on the setup needs, see https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information" porter="Johnny on Flame" locat="Shovel%20Knight.zip"
 
 Title="SDLPoP ." Desc="An open-source port of Prince of Persia, based on the disassembly of the DOS version, extended with new features by NagyD" porter="Christian_Haitian" locat="SDLPoP.zip" runtype="rtr"
@@ -152,7 +154,7 @@ Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of
 
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
 
-Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge.  It was written by Brian Raiter.  Sommerville, the original author of Chip's Challenge, supported his plan and convinced him to make it possible to also emulate the Lynx set of rules.  The first version of Tile World was released in 2002.  The almost complete SDL2 conversion used: github.com/rangeli/tileworld" porter="Slayer366" locat="TileWorld.zip"
+Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge.  It was written by Brian Raiter.  Sommerville, the original author of Chip's Challenge, supported his plan and convinced him to make it possible to also emulate the Lynx set of rules.  The first version of Tile World was released in 2002.  The almost complete SDL2 conversion used: github.com/rangeli/tileworld" porter="Slayer366" locat="TileWorld.zip" runtype="rtr"
 
 Title="Timespinner ." Desc="Travel back in time to change fate itself, in this beautifully crafted story-driven adventure, inspired by classic 90s action-platformers.  You must have a copy of Timespinner for Linux copied to the ports/timespinner/gamedata folder." porter="Johnny on Flame" locat="Timespinner.zip" mono="y"
 
