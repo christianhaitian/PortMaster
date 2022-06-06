@@ -10,9 +10,38 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
+
+      - name: env - better defaulting of env vars;
+        id: env
+        run: |
+
+            LARGE_FILE_REPOSITORY="${{ secrets.LARGE_FILE_REPOSITORY }}"
+            if [[ -z "$LARGE_FILE_REPOSITORY" ]]; then
+              LARGE_FILE_REPOSITORY="PortsMaster/PortMaster-Hosting"
+            fi
+            echo "::set-output name=LARGE_FILE_REPOSITORY::$LARGE_FILE_REPOSITORY"
+
+            LARGE_FILE_TAG="${{ secrets.LARGE_FILE_TAG }}"
+            if [[ -z "$LARGE_FILE_TAG" ]]; then
+              LARGE_FILE_TAG="large-files"
+            fi
+            echo "::set-output name=LARGE_FILE_TAG::$LARGE_FILE_TAG"
+
+            RELEASE_REPO="${{ secrets.RELEASE_REPO }}"
+            if [[ -z "$RELEASE_REPO" ]]; then
+              RELEASE_REPO="PortMaster-Releases"
+            fi
+            echo "::set-output name=RELEASE_REPO::$RELEASE_REPO"
+
+            RELEASE_ORG="${{ secrets.RELEASE_ORG }}"
+            if [[ -z "$RELEASE_ORG" ]]; then
+              RELEASE_ORG="PortsMaster"
+            fi
+            echo "::set-output name=RELEASE_ORG::$RELEASE_ORG"
+
       - uses: hmarr/debug-action@v2
         name: "debug: ${{github.event_name}}"
      
@@ -20,12 +49,10 @@ jobs:
  
       - uses: robinraju/release-downloader@v1.2
         with:
-          repository: "${{env.LARGE_FILE_REPOSITORY}}"
-          tag: "${{env.LARGE_FILE_TAG}}"
+          repository: "${{ steps.env.outputs.LARGE_FILE_REPOSITORY}}"
+          tag: "${{steps.env.outputs.LARGE_FILE_TAG}}"
           fileName: "*"
-        env:
-          LARGE_FILE_REPOSITORY: "PortsMaster/PortMaster-Hosting"
-          LARGE_FILE_TAG: "large-files"
+
       - name: Get release name for artifacts
         id: date
         run: |
@@ -34,7 +61,17 @@ jobs:
         id: portmaster-zip
         run: |
           zip -9 -r ./PortMaster.zip PortMaster/
-      - name: "Publish release: ${{steps.date.outputs.date}}"
+      - name: Create md5 hashes
+        id: md5
+        run: |
+            for file in *.zip *.squashfs; do
+              if [ ! -f "$file" ]; then
+                continue
+              fi
+              echo "file: $file"
+              md5sum "$file" | cut -f1 -d' ' > "$file.md5"
+            done
+      - name: "Publish release"
         uses: ncipollo/release-action@v1
         with:
           tag: "${{steps.date.outputs.date}}"
@@ -43,11 +80,11 @@ jobs:
           prerelease: false
           replacesArtifacts: false
           omitNameDuringUpdate: true
-          artifacts: "ports.md, *.zip, version, *.squashfs"
+          artifacts: "ports.md, *.zip, version, *.squashfs, *.md5"
           token: ${{ secrets.PORTMASTER_RELEASE_TOKEN }}
-          repo: PortMaster-Releases
-          owner: PortsMaster
+          repo: ${{ steps.env.outputs.RELEASE_REPO}}
+          owner: ${{ steps.env.outputs.RELEASE_ORG}}
       - name: Release Info
         id: info
         run: |
-          echo "Published release: ${{steps.date.outputs.date}} to: https://github.com/PortsMaster/PortMaster-Releases"
+          echo "Published release: ${{steps.date.outputs.date}} to: https://github.com/${{ steps.env.outputs.RELEASE_ORG}}/${{ steps.env.outputs.RELEASE_REPO}}"
