@@ -97,6 +97,7 @@ elif [[ -e "/dev/input/by-path/platform-singleadc-joypad-event-joystick" ]]; the
   height="20"
   width="60"
   power='(?<=Title_P=\").*?(?=\")'
+  hotkey="L3"
 else
   param_device="chi"
   hotkey="1"
@@ -401,21 +402,21 @@ Settings() {
 		     sed -i 's/x:b2/x:b3/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 sed -i 's/y:b3/y:b2/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 if [[ $param_device != "anbernic" ]]; then
-			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 else
 			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 else
+			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 fi
 		   else
 		     sed -i 's/x:b3/x:b2/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 sed -i 's/y:b2/y:b3/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 if [[ $param_device != "anbernic" ]]; then
-			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 else
 			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 else
+			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 fi
 		   fi
 		   Settings
