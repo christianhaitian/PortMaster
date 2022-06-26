@@ -30,12 +30,6 @@ else
   dpkg -s "dialog" &>/dev/null
   if [ "$?" != "0" ]; then
     $ESUDO apt update && $ESUDO apt install -y dialog --no-install-recommends
-    temp=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
-    if [[ $temp == *"ArkOS 351P/M"* ]]; then
-      #Make sure sdl2 wasn't impacted by the install of dialog for the 351P/M
-      $ESUDO ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.14.1 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0
-      $ESUDO ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.10.0 /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0
-    fi
   fi
 
   isitarkos=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
@@ -54,6 +48,8 @@ $ESUDO chmod 666 /dev/tty0
 export TERM=linux
 export XDG_RUNTIME_DIR=/run/user/$UID/
 printf "\033c" > /dev/tty0
+# hide cursor
+printf "\e[?25l" > /dev/tty0
 dialog --clear
 
 hotkey="Select"
