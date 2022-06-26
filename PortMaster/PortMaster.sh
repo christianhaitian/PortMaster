@@ -49,7 +49,7 @@ export TERM=linux
 export XDG_RUNTIME_DIR=/run/user/$UID/
 printf "\033c" > /dev/tty0
 # hide cursor
-printf "\e[?25l" > /dev/tty0
+printf "\e[?25h" > /dev/tty0
 dialog --clear
 
 hotkey="Select"
