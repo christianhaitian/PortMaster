@@ -144,7 +144,7 @@ Title="Space_Cadet_Pinball ." Desc="A reversed engineered version Space Cadet Pi
 
 Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's game Spelunky Classic. Based on the source code published in Humble Weekly Bundle: Play and Create with GameMaker (not original 1.1 release)." porter="Christian_Haitian" locat="Spelunky.zip" runtype="rtr"
 
-Title="Stardew_Valley ." Desc="An open-ended country-life RPG!  You must have a copy of Stardew Valley for Linux copied to the ports/stardewvalley/gamedata folder." porter="Johnny on Flame" locat="StardewValley.zip" mono="y"
+Title="Stardew_Valley ." Desc="An open-ended country-life RPG!  You must have a copy of the compatibility version of Stardew Valley copied to the ports/stardewvalley/gamedata folder." porter="Johnny on Flame" locat="StardewValley.zip" mono="y"
 
 Title_P="Steel_Assault ." Desc="Punch, whip, and zipline your way through a post-apocalyptic America in this 16-bit retro-style action platformer!  You must have a copy of Steel Assault for Linux copied to the ports/steelassault/gamedata folder." porter="Johnny on Flame" locat="SteelAssault.zip" mono="y"
 
