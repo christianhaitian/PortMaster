@@ -134,9 +134,9 @@ Title="Sonic_2 ." Desc="Sonic the Hedgehog 2 decompilation by Rubberduckycooly. 
 
 Title="Sonic_CD ." Desc="Sonic the Hedgehog CD decompilation by Rubberduckycooly.  Just add your own android Data.rsdk file to the ports/soniccd folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="Sonic%20CD.zip"
 
-Title="Sonic_Robo_Blast_2 ." Desc="Sonic Robo Blast 2 fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="srb2.zip" runtype="rtr"
+Title="Sonic_Robo_Blast_2 ." Desc="Sonic Robo Blast 2 fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install." porter="romadu" locat="srb2.zip" runtype="rtr"
 
-Title="Sonic_RB2_Kart ." Desc="Sonic Robo Blast 2 Kart fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="srb2kart.zip" runtype="rtr"
+Title="Sonic_RB2_Kart ." Desc="Sonic Robo Blast 2 Kart fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install." porter="romadu" locat="srb2kart.zip" runtype="rtr"
 
 Title="SorR ." Desc="Streets of Rage Remake.  Just add your own sorr.dat file, mod folder, and palettes folder into the ports/sorr folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="SorR.zip"
 
@@ -154,7 +154,7 @@ Title_P="Star_Wars_Jedi_Knight_-_Jedi_Academy ." Desc="An open source port of Je
 
 Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of Jedi Outcast using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediOutcast/base folder." porter="brooksytech" locat="JediOutcast.zip""
 
-Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
+Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
 
 Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge.  To play the original Chip's Challenge levels, copy your "chips.dat" into 'ports/tileworld/data' and make sure it's lowercase.  The almost complete SDL2 conversion used: github.com/rangeli/tileworld" porter="Slayer366" locat="TileWorld.zip" runtype="rtr"
 
@@ -164,7 +164,7 @@ Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLar
 
 Title="Undertale ." Desc="Undertale loader.  You must have a copy of Undertale Linux version assets copied to the ports/undertale/assets folder.  For more info on the setup needs, see https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information" porter="krishenriksen (kreal)" locat="Undertale.zip"
 
-Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="UQM.zip" runtype="rtr"
+Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install." porter="romadu" locat="UQM.zip" runtype="rtr"
 
 Title="VVVVVV ." Desc="VVVVVV is a 2010 puzzle-platform game created by Terry Cavanagh.  The free Make and Play Edition data.zip file is already included.  You can also add your own purchased copy of the data.zip from your VVVVVV into the ports/VVVVVV folder if you prefer that version instead." porter="Christian_Haitian" locat="VVVVVV.zip" runtype="rtr"
 
