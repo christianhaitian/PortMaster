@@ -44,6 +44,8 @@ Title_P="Doom_3 ." Desc="Doom 3 is a 2004 survival horror first-person shooter v
 
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip"
 
+Title="DungeonRush ." Desc="A game inspired by Snake, in pure C with SDL2." porter="lualiliu" locat="DungeonRush.zip"
+
 Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip"
 
 Title="Exult ." Desc="A port of Ultima 7.  You'll need A copy of the black gate and/or serpent isle added to ports/exult/data/blackgate and/or ports/exult/data/serpentisle." porter="nl255" locat="Exult.zip"
