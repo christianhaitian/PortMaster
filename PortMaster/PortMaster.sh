@@ -197,7 +197,7 @@ PortInfoInstall() {
 local setwebsiteback="N"
 local unzipstatus
 
-  if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ]; then
+  if [ ! -z $(cat /etc/fstab | $GREP roms2 | tr -d '\0') ]; then
     whichsd="roms2"
   elif [ -f "/storage/.config/.OS_ARCH" ] || [ "${OS_NAME}" == "JELOS" ]; then
     whichsd="storage/roms"
