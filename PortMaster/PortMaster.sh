@@ -30,12 +30,6 @@ else
   dpkg -s "dialog" &>/dev/null
   if [ "$?" != "0" ]; then
     $ESUDO apt update && $ESUDO apt install -y dialog --no-install-recommends
-    temp=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
-    if [[ $temp == *"ArkOS 351P/M"* ]]; then
-      #Make sure sdl2 wasn't impacted by the install of dialog for the 351P/M
-      $ESUDO ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.14.1 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0
-      $ESUDO ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.10.0 /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0
-    fi
   fi
 
   isitarkos=$($GREP "title=" /usr/share/plymouth/themes/text.plymouth)
@@ -54,6 +48,8 @@ $ESUDO chmod 666 /dev/tty0
 export TERM=linux
 export XDG_RUNTIME_DIR=/run/user/$UID/
 printf "\033c" > /dev/tty0
+# hide cursor
+printf "\e[?25h" > /dev/tty0
 dialog --clear
 
 hotkey="Select"
@@ -97,6 +93,7 @@ elif [[ -e "/dev/input/by-path/platform-singleadc-joypad-event-joystick" ]]; the
   height="20"
   width="60"
   power='(?<=Title_P=\").*?(?=\")'
+  hotkey="L3"
 else
   param_device="chi"
   hotkey="1"
@@ -200,7 +197,7 @@ PortInfoInstall() {
 local setwebsiteback="N"
 local unzipstatus
 
-  if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ]; then
+  if [ ! -z $(cat /etc/fstab | $GREP roms2 | tr -d '\0') ]; then
     whichsd="roms2"
   elif [ -f "/storage/.config/.OS_ARCH" ] || [ "${OS_NAME}" == "JELOS" ]; then
     whichsd="storage/roms"
@@ -401,21 +398,21 @@ Settings() {
 		     sed -i 's/x:b2/x:b3/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 sed -i 's/y:b3/y:b2/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 if [[ $param_device != "anbernic" ]]; then
-			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 else
 			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 else
+			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 fi
 		   else
 		     sed -i 's/x:b3/x:b2/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 sed -i 's/y:b2/y:b3/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 if [[ $param_device != "anbernic" ]]; then
-			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 else
 			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			 else
+			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 			 fi
 		   fi
 		   Settings

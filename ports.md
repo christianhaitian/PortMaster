@@ -122,6 +122,8 @@ Title="RVGL ." Desc="An open source port of Re-Volt by the RV Team.  Necessary f
 
 Title="Shadow_Warrior ." Desc="Shadow Warrior open source port by Jonathan Fowler.  You'll need to add your own full version SW.GRP and SW.RTS Shadow Warrior files to the ports/shadow-warrior folder." porter="Romadu" locat="Shadow%20Warrior.zip"
 
+Title="Shipwreck ." Desc="Shipwreck is a top down adventure game in which you must travel the land, explore dungeons, and defeat monsters to earn safe passage off the island on which you are stranded.  Note there are several games called Shipwreck, this is the one by Brushfire Games.  You must have a copy of Shipwreck for Linux copied to the ports/shipwreck/gamedata folder." porter="jtothebell" locat="Shipwreck.zip" mono="y"
+
 Title="Shovel_Knight_Treasure_Trove ." Desc="Shovel Knight Treasure Trove loader.  You must have a copy of Shovel Knight Treasure Trove for Linux copied to the ports/shovelknight/gamedata folder.  For more info on the setup needs, see https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information" porter="Johnny on Flame" locat="Shovel%20Knight.zip"
 
 Title="SDLPoP ." Desc="An open-source port of Prince of Persia, based on the disassembly of the DOS version, extended with new features by NagyD" porter="Christian_Haitian" locat="SDLPoP.zip" runtype="rtr"
@@ -134,15 +136,17 @@ Title="Sonic_2 ." Desc="Sonic the Hedgehog 2 decompilation by Rubberduckycooly. 
 
 Title="Sonic_CD ." Desc="Sonic the Hedgehog CD decompilation by Rubberduckycooly.  Just add your own android Data.rsdk file to the ports/soniccd folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="Sonic%20CD.zip"
 
-Title="Sonic_Robo_Blast_2 ." Desc="Sonic Robo Blast 2 fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="srb2.zip" runtype="rtr"
+Title="Sonic_Robo_Blast_2 ." Desc="Sonic Robo Blast 2 fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install." porter="romadu" locat="srb2.zip" runtype="rtr"
 
-Title="Sonic_RB2_Kart ." Desc="Sonic Robo Blast 2 Kart fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="srb2kart.zip" runtype="rtr"
+Title="Sonic_RB2_Kart ." Desc="Sonic Robo Blast 2 Kart fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install." porter="romadu" locat="srb2kart.zip" runtype="rtr"
 
 Title="SorR ." Desc="Streets of Rage Remake.  Just add your own sorr.dat file, mod folder, and palettes folder into the ports/sorr folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="SorR.zip"
 
 Title="Space_Cadet_Pinball ." Desc="A reversed engineered version Space Cadet Pinball.  Just add your own Space Cadet Pinball PINBALL.DAT files and sound files to the spacecadetpinball folder." porter="Jetup and Romadu" locat="Space%20Cadet%20Pinball.zip"
 
 Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's game Spelunky Classic. Based on the source code published in Humble Weekly Bundle: Play and Create with GameMaker (not original 1.1 release)." porter="Christian_Haitian" locat="Spelunky.zip" runtype="rtr"
+
+Title="Stardew_Valley ." Desc="An open-ended country-life RPG!  You must have a copy of the compatibility version of Stardew Valley copied to the ports/stardewvalley/gamedata folder." porter="Johnny on Flame" locat="StardewValley.zip" mono="y"
 
 Title_P="Steel_Assault ." Desc="Punch, whip, and zipline your way through a post-apocalyptic America in this 16-bit retro-style action platformer!  You must have a copy of Steel Assault for Linux copied to the ports/steelassault/gamedata folder." porter="Johnny on Flame" locat="SteelAssault.zip" mono="y"
 
@@ -152,7 +156,9 @@ Title_P="Star_Wars_Jedi_Knight_-_Jedi_Academy ." Desc="An open source port of Je
 
 Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of Jedi Outcast using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediOutcast/base folder." porter="brooksytech" locat="JediOutcast.zip""
 
-Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
+Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
+
+Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge.  To play the original Chip's Challenge levels, copy your "chips.dat" into 'ports/tileworld/data' and make sure it's lowercase.  The almost complete SDL2 conversion used: github.com/rangeli/tileworld" porter="Slayer366" locat="TileWorld.zip" runtype="rtr"
 
 Title="Timespinner ." Desc="Travel back in time to change fate itself, in this beautifully crafted story-driven adventure, inspired by classic 90s action-platformers.  You must have a copy of Timespinner for Linux copied to the ports/timespinner/gamedata folder." porter="Johnny on Flame" locat="Timespinner.zip" mono="y"
 
@@ -160,7 +166,7 @@ Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLar
 
 Title="Undertale ." Desc="Undertale loader.  You must have a copy of Undertale Linux version assets copied to the ports/undertale/assets folder.  For more info on the setup needs, see https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information" porter="krishenriksen (kreal)" locat="Undertale.zip"
 
-Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install.  It will also be downloaded from a server in China due to Github file size restrictions." porter="romadu" locat="UQM.zip" runtype="rtr"
+Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install." porter="romadu" locat="UQM.zip" runtype="rtr"
 
 Title="VVVVVV ." Desc="VVVVVV is a 2010 puzzle-platform game created by Terry Cavanagh.  The free Make and Play Edition data.zip file is already included.  You can also add your own purchased copy of the data.zip from your VVVVVV into the ports/VVVVVV folder if you prefer that version instead." porter="Christian_Haitian" locat="VVVVVV.zip" runtype="rtr"
 
