@@ -9,7 +9,7 @@
 # https://github.com/christianhaitian/oga_controls
 
 if [[ -e "/usr/share/plymouth/themes/text.plymouth" ]]; then
-  if [ ! -z $(cat /etc/fstab | grep roms2 | tr -d '\0') ]; then
+  if [ ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')" ]; then
     directory="roms2"
   else
     directory="roms"
