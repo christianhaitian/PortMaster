@@ -58,6 +58,8 @@ Title="FreedroidRPG ." Desc="FreedroidRPG files are already included and ready t
 
 Title="Heart_of_Darkness ." Desc="Heart of Darkness using the hode reimplementation of the engine developed by Amazing Studio.  Just add your own Heart of Darkness game files to the ports/hode/gamedata folder." porter="Jetup" locat="Heart%20of%20Darkness.zip"
 
+Title="Hocoslamfy ." Desc="You are a small bee and you must fly to avoid the bamboo shoots.  Hocoslamfy files are already included and ready to go." porter="Cebion" locat="hocoslamfy.zip" runtype="rtr"
+
 Title="Hurrican ." Desc="Turrican port by Thrimbor.  Just add the data and lang folders from here to the ports/hurrican folder or just launch Hurrican from the ports menu in Emulationstation and it will download the files and install them automatically." porter="romadu" locat="Hurrican.zip"
 
 Title="Hydra_Castle_Labyrinth ." Desc="Hydra Castle Labyrinth is a platform game with some old school action. It's also reminiscent of games of the 16 bit era." porter="Christian_Haitian" locat="Hydra%20Castle%20Labyrinth.zip" runtype="rtr"
