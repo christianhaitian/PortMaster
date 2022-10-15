@@ -70,6 +70,8 @@ Title="Invaders ." Desc="A memory accurate reimplementation of Space Invaders by
 
 Title="Maldita_Castilla ." Desc="An arcade action video game developed by Locomalito and released in December 2012.  The gameplay is inspired by the games Shinobi and Ghost and Goblins." porter="krishenriksen (kreal)" locat="Maldita%20Castilla.zip" runtype="rtr"
 
+Title="Meritous ." Desc="Action-adventure dungeon crawl game.  Meritous files are already included and ready to go." porter="Cebion" locat="Meritous.zip" runtype="rtr"
+
 Title="Moonlight ." Desc="A free, open-source NVIDIA Gamestream Client.  For more info on the setup needs at https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#moonlight-nvidia-gamestreaming-app-available-through-portmaster." porter="Christian_Haitian" locat="Moonlight.zip" runtype="rtr"
 
 Title="Mr_Boom ." Desc="A Bomberman clone." porter="Christian_Haitian" locat="Mr.%20Boom.zip" runtype="rtr"
