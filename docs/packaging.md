@@ -31,7 +31,7 @@ if [ -d "/opt/system/Tools/PortMaster/" ]; then
 elif [ -d "/opt/tools/PortMaster/" ]; then
   controlfolder="/opt/tools/PortMaster" # Location for TheRA
 else
-  controlfolder="/roms/ports/PortMaster" # Location for 351Elec and RetroOZ
+  controlfolder="/roms/ports/PortMaster" # Location for 351Elec/AmberElec, JelOS and RetroOZ
 fi
 
 source $controlfolder/control.txt # We source the control.txt file contents here
@@ -47,7 +47,7 @@ cd /$directory/ports/blobbyvolley2
 $ESUDO rm -rf ~/.blobby
 ln -sfv /$directory/ports/blobbyvolley2/conf/.blobby ~/
 
-# Make sure uinput is accessible so we can make use of the gptokeyb controls.  351Elec always runs in root, naughty naughty.  
+# Make sure uinput is accessible so we can make use of the gptokeyb controls.  351Elec/AmberElec and JelOS always runs in root, naughty naughty.  
 # The other distros don't so the $ESUDO variable provides the sudo or not dependant on the OS this script is run from.
 $ESUDO chmod 666 /dev/uinput
 
@@ -75,9 +75,9 @@ printf "\033c" >> /dev/tty1
 
 ### (Historical information below.  No longer needed or should be included in port scripts!)
 
-Because the intention of the ports in PortMaster is to be as broadly compatible as possible with 351Elec and Ubuntu based custom firmwares for the RK3326 devices, there are some prerequisites the packages ports have to meet which are as follows
+Because the intention of the ports in PortMaster is to be as broadly compatible as possible with 351Elec/AmberElec and Ubuntu based custom firmwares for the RK3326 devices, there are some prerequisites the packages ports have to meet which are as follows
 
-### 351Elec runs everything as root.  sudo is not needed nor does it work on 351Elec.  Ubuntu based distros like ArkOS, TheRA and RetroOZ does support sudo though.~~
+### 351Elec/AmberElec and JelOS runs everything as root.  sudo is not needed nor does it work on 351Elec/AmberElec and JelOS.  Ubuntu based distros like ArkOS, TheRA and RetroOZ does support sudo though.~~
 
 So it's important to accomodate these differences as certain commands, as you'll read below, need sudo on Ubuntu based distros and some don't.  We need to make sudo available as an updatable variable instead.  A good solution for this is to check if the distro has a .OS_ARCH file located in a /storage/.config location.  Only 351Elec has such a file and such a location for that matter between among these defined distros.
 ```
@@ -87,7 +87,7 @@ if [ -f "/storage/.config/.OS_ARCH" ]; then
   export LD_LIBRARY_PATH="/storage/roms/ports/shadow-warrior/libs"
 fi
 ```
-As a side note, you can also `cat` that .OS_ARCH file to find out which unit 351Elec is running on such as RG351V or RG351MP.  
+As a side note, you can also `cat` that .OS_ARCH file to find out which unit 351Elec/AmberElec is running on such as RG351V or RG351MP.  
 ```
 if [ $(cat "/storage/.config/.OS_ARCH") == "RG351V" ]; then
   echo "Do something"
@@ -262,13 +262,13 @@ $ESUDO systemctl restart oga_events &
 printf "\033c" > /dev/tty1
 ```
 
+Handling port availability depending on functional needs:
+- For ports that work best on more powerful devices like the RG552, the port can be set to only be visible on that device by adding a `Title_P` to the ports description within the ports.md file.  See the Doom3 entry in the [ports.md](https://github.com/christianhaitian/PortMaster/blob/main/ports.md) for an example of this.
+- For ports that will only run on devices with full OpenGL capability and not just OpenGLES, the port can be set to only be visible on devices and Operating Systems with full OpenGL capability by adding a `Title_F` to the ports description within the ports.md file.
+- For ports that include the necessary assets to run upon installation, adding `runtype="rtr"` at the end of the description of the ports within the ports.md file will show up in the Ready to Run menu.  See the FreedroidRPG entry in the [ports.md](https://github.com/christianhaitian/PortMaster/blob/main/ports.md) for an example of this.
+
 Notes:  
 -  Note that in order to properly assign keys during execution for oga_controls, we have it assigned as a variable depending on what rk3326 device is detected during execution.  
 -  We also add an additional kill process for oga_controls because the user may decide to exit a port properly through the port's exit menu.  If that happens, we still need to kill oga_controls or it may cause double key press issues in various menus or if another port is run, double up on the number of oga_controls are still running in memory.
 - We're restarting oga_events because for some reason in ArkOS, the use of oga_controls can impact the oga_events which is responsible for system global hotkeys like volume and brightness controls.  This is at least the case for ArkOS.
 - The printf command at the bottom is to clean up the terminal tty1 screen so potential key press screen junk doesn't remain and make the screen look messy between other various system functions.  Many people care about this.  ¯\_(ツ)_/¯
-
-Handling port availability depending on functional needs:
-- For ports that work best on more powerful devices like the RG552, the port can be set to only be visible on that device by adding a `Title_P` to the ports description within the ports.md file.  See the Doom3 entry in the [ports.md](https://github.com/christianhaitian/PortMaster/blob/main/ports.md) for an example of this.
-- For ports that will only run on devices with full OpenGL capability and not just OpenGLES, the port can be set to only be visible on devices and Operating Systems with full OpenGL capability by adding a `Title_F` to the ports description within the ports.md file.
-- For ports that include the necessary assets to run upon installation, adding `runtype="rtr"` at the end of the description of the ports within the ports.md file will show up in the Ready to Run menu.  See the FreedroidRPG entry in the [ports.md](https://github.com/christianhaitian/PortMaster/blob/main/ports.md) for an example of this.
