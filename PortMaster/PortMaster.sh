@@ -56,6 +56,7 @@ hotkey="Select"
 height="15"
 width="55"
 power=""
+opengl=""
 
 if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
   param_device="anbernic"
@@ -102,6 +103,10 @@ else
   width="60"
 fi
 
+if [ "${UI_SERVICE}" == *"weston.service"* ]; then
+  opengl='(?<=Title_F=\").*?(?=\")'
+fi
+
 if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ]; then
   toolsfolderloc="/storage/roms/ports"
 else
@@ -135,7 +140,9 @@ if [ -z "$GW" ]; then
   --msgbox "\n\nYour network connection doesn't seem to be working. \
   \nDid you make sure to configure your wifi connection?" $height $width 2>&1 > /dev/tty0
   $ESUDO kill -9 $(pidof oga_controls)
-  $ESUDO systemctl restart oga_events &
+  if [ ! -z "$ESUDO" ]; then
+    $ESUDO systemctl restart oga_events &
+  fi
   exit 0
 fi
 
@@ -168,9 +175,11 @@ UpdateCheck() {
 			  --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty0
 		if [ ${PIPESTATUS[0]} -eq 0 ]; then
 		  unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
-		  mv -f $toolsfolderloc/PortMaster/PortMaster.sh $toolsfolderloc/.
-		  if [ -f "$toolsfolderloc/PortMaster/tasksetter.sh" ]; then
-		    rm -f "$toolsfolderloc/PortMaster/tasksetter.sh"
+		  if [ "${OS_NAME}" != "JELOS" ]; then
+		    mv -f $toolsfolderloc/PortMaster/PortMaster.sh $toolsfolderloc/.
+		    if [ -f "$toolsfolderloc/PortMaster/tasksetter.sh" ]; then
+		      rm -f "$toolsfolderloc/PortMaster/tasksetter.sh"
+		    fi
 		  fi
 		  if [ ! -z $isitext ]; then
 			$ESUDO chmod -R 777 $toolsfolderloc/PortMaster
@@ -179,7 +188,9 @@ UpdateCheck() {
 		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty0
 		  $ESUDO kill -9 $(pidof oga_controls)
 		  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
-		  $ESUDO systemctl restart oga_events &
+		  if [ ! -z "$ESUDO" ]; then
+		    $ESUDO systemctl restart oga_events &
+		  fi
 		  exit 0
 		else
 		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster failed to update." $height $width 2>&1 > /dev/tty0
@@ -290,7 +301,9 @@ local unzipstatus
 userExit() {
   rm -f /dev/shm/portmaster/ports.md
   $ESUDO kill -9 $(pidof oga_controls)
-  $ESUDO systemctl restart oga_events &
+  if [ ! -z "$ESUDO" ]; then
+    $ESUDO systemctl restart oga_events &
+  fi
   dialog --clear
   printf "\033c" > /dev/tty0
   exit 0
@@ -428,7 +441,7 @@ Settings() {
 
 MainMenu() {
   local options=(
-   $(cat /dev/shm/portmaster/ports.md | $GREP -oP "(?<=Title=\").*?(?=\")|$power")
+   $(cat /dev/shm/portmaster/ports.md | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl")
   )
 
   while true; do
@@ -452,7 +465,7 @@ MainMenu() {
 
 MainMenuRTR() {
   local options=(
-   $(cat /dev/shm/portmaster/ports.md | $GREP 'runtype="rtr"' | $GREP -oP "(?<=Title=\").*?(?=\")|$power")
+   $(cat /dev/shm/portmaster/ports.md | $GREP 'runtype="rtr"' | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl")
   )
 
   while true; do
