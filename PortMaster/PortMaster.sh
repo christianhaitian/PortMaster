@@ -7,6 +7,10 @@
 # using 351Elec, ArkOS, EmuElec, RetroOZ, and TheRA.
 #
 
+if [ -f "/etc/profile" ]; then
+  source /etc/profile
+fi
+
 ESUDO="sudo"
 GREP="grep"
 WGET="wget"
@@ -55,8 +59,8 @@ dialog --clear
 hotkey="Select"
 height="15"
 width="55"
-power=""
-opengl=""
+power="None"
+opengl="None"
 
 if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick" ]]; then
   param_device="anbernic"
@@ -103,7 +107,7 @@ else
   width="60"
 fi
 
-if [ "${UI_SERVICE}" == *"weston.service"* ]; then
+if [[ "${UI_SERVICE}" =~ weston.service ]]; then
   opengl='(?<=Title_F=\").*?(?=\")'
 fi
 
@@ -174,12 +178,18 @@ UpdateCheck() {
 		$WGET -t 3 -T 60 -q --show-progress "${website}PortMaster.zip" -O /dev/shm/portmaster/PortMaster.zip 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog \
 			  --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty0
 		if [ ${PIPESTATUS[0]} -eq 0 ]; then
+		  if [[ ! -z $(cat $toolsfolderloc/PortMaster/gamecontrollerdb.txt | $GREP 'Xbox 360 Layout') ]]; then
+		   local x360="Yes"
+		  fi
 		  unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
 		  if [ "${OS_NAME}" != "JELOS" ]; then
 		    mv -f $toolsfolderloc/PortMaster/PortMaster.sh $toolsfolderloc/.
 		    if [ -f "$toolsfolderloc/PortMaster/tasksetter.sh" ]; then
 		      rm -f "$toolsfolderloc/PortMaster/tasksetter.sh"
 		    fi
+		  fi
+		  if [[ "${x360}" == "Yes" ]]; then
+			 cp -f $toolsfolderloc/PortMaster/.Backup/donottouch_x.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 		  fi
 		  if [ ! -z $isitext ]; then
 			$ESUDO chmod -R 777 $toolsfolderloc/PortMaster
@@ -378,7 +388,7 @@ ColorSchemeMenu() {
 }
 
 Settings() {
-  if [[ ! -z $(cat $toolsfolderloc/PortMaster/gamecontrollerdb.txt | $GREP x:b2) ]]; then
+  if [[ ! -z $(cat $toolsfolderloc/PortMaster/gamecontrollerdb.txt | $GREP 'Default Layout') ]]; then
     local curctrlcfg="Switch to Xbox 360 Control Layout"
   else
     local curctrlcfg="Switch to Default Control Layout"
@@ -408,25 +418,9 @@ Settings() {
 		   Settings
         ;;
 		2) if [[ $curctrlcfg == "Switch to Xbox 360 Control Layout" ]]; then
-		     sed -i 's/x:b2/x:b3/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 sed -i 's/y:b3/y:b2/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 if [[ $param_device != "anbernic" ]]; then
-			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 else
-			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 fi
+			 cp -f $toolsfolderloc/PortMaster/.Backup/donottouch_x.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 		   else
-		     sed -i 's/x:b3/x:b2/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 sed -i 's/y:b2/y:b3/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 if [[ $param_device != "anbernic" ]]; then
-			   sed -i 's/a:b0/a:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			   sed -i 's/b:b1/b:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 else
-			   sed -i 's/a:b1/a:b0/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			   sed -i 's/b:b0/b:b1/g' $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-			 fi
+			 cp -f $toolsfolderloc/PortMaster/.Backup/donottouch.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
 		   fi
 		   Settings
 		;;
