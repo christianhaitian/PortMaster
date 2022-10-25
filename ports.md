@@ -78,11 +78,15 @@ Title="Maldita_Castilla ." Desc="An arcade action video game developed by Locoma
 
 Title="Meritous ." Desc="Action-adventure dungeon crawl game.  Meritous files are already included and ready to go." porter="Cebion" locat="Meritous.zip" runtype="rtr"
 
+Title_F="Mighty Mike ." Desc="This is Pangea Software's Mighty Mike (also known as Power Pete). Set in a toy store, this top-down action game is a staple of 90's Macintosh games." porter="brooksytech" locat="mightymike.zip" runtype="rtr"
+
 Title="Moonlight ." Desc="A free, open-source NVIDIA Gamestream Client.  For more info on the setup needs at https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#moonlight-nvidia-gamestreaming-app-available-through-portmaster." porter="Christian_Haitian" locat="Moonlight.zip" runtype="rtr"
 
 Title="Mr_Boom ." Desc="A Bomberman clone." porter="Christian_Haitian" locat="Mr.%20Boom.zip" runtype="rtr"
 
 Title="NAM ." Desc="NAM using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version NAM.GRP and NAM.RTS and .CON files and optionally CD audio tracks as OGG file in the format trackXX.ogg (where XX is the track number) to the ports/rednukem-NAM/gamedata folder." porter="romadu" locat="NAM.zip"
+
+Title_F="Nanosaur ." Desc="This is Pangea Software’s Nanosaur, which casts a cybernetic dinosaur from the future who’s sent back in time 20 minutes before a giant asteroid hits the Earth." porter="brooksytech" locat="nanosaur.zip" runtype="rtr"
 
 Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play." porter="Jetup" locat="nKaruga.zip" runtype="rtr"
 
