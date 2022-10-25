@@ -78,7 +78,7 @@ Title="Maldita_Castilla ." Desc="An arcade action video game developed by Locoma
 
 Title="Meritous ." Desc="Action-adventure dungeon crawl game.  Meritous files are already included and ready to go." porter="Cebion" locat="Meritous.zip" runtype="rtr"
 
-Title_F="Mighty Mike ." Desc="This is Pangea Software's Mighty Mike (also known as Power Pete). Set in a toy store, this top-down action game is a staple of 90's Macintosh games." porter="brooksytech" locat="mightymike.zip" runtype="rtr"
+Title_F="Mighty_Mike ." Desc="This is Pangea Software's Mighty Mike (also known as Power Pete). Set in a toy store, this top-down action game is a staple of 90's Macintosh games." porter="brooksytech" locat="mightymike.zip" runtype="rtr"
 
 Title="Moonlight ." Desc="A free, open-source NVIDIA Gamestream Client.  For more info on the setup needs at https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#moonlight-nvidia-gamestreaming-app-available-through-portmaster." porter="Christian_Haitian" locat="Moonlight.zip" runtype="rtr"
 
