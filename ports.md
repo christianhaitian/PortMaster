@@ -140,6 +140,8 @@ Title="Sonic_2 ." Desc="Sonic the Hedgehog 2 decompilation by Rubberduckycooly. 
 
 Title="Sonic_CD ." Desc="Sonic the Hedgehog CD decompilation by Rubberduckycooly.  Just add your own android Data.rsdk file to the ports/soniccd folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="Sonic%20CD.zip"
 
+Title="Sonic_Mania ." Desc="Sonic the Hedgehog Mania decompilation by Rubberduckycooly.  Just add your own android Data.rsdk file to the ports/sonicmania folder.  See the wiki for more info on this" porter="TheGammaSqueeze" locat="Sonic%20Mania.zip"
+
 Title="Sonic_Robo_Blast_2 ." Desc="Sonic Robo Blast 2 fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install." porter="romadu" locat="srb2.zip" runtype="rtr"
 
 Title="Sonic_RB2_Kart ." Desc="Sonic Robo Blast 2 Kart fangame by Sonic Team Junior.  All necessary files are already included.  !!!Warning!!! This is a 184MB package and will take a while to download and install." porter="romadu" locat="srb2kart.zip" runtype="rtr"
