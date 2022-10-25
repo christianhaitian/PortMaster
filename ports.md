@@ -52,6 +52,8 @@ Title="Exult ." Desc="A port of Ultima 7.  You'll need A copy of the black gate 
 
 Title="F2bgl ." Desc=" A reimplementation of the Fade to Black game.  You will need the original files of the PC release or PC demo copied to the ports/f2bgl folder." porter="Romadu" locat="fade_to_black.zip"
 
+Title="Falling_Time ." Desc="Arcade game inspired by Fall Down.  Falling Time files are already included and ready to go." porter="Cebion" locat="falling_time.zip" runtype="rtr"
+
 Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Might and Magic 2 game engine by Ihar Hubchyk.  Just add the data and maps folders from your full version GOG HOMM2 to the ports/fheroes2 folder or just launch Fheroes2 to download the demo files." porter="romadu" locat="Fheroes2.zip"
 
 Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have a copy of Freedom Planet for Linux copied to the ports/freedomplanet/gamedata folder." porter="Johnny on Flame" locat="Freedom%20Planet.zip"
@@ -59,6 +61,8 @@ Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have
 Title="FreedroidRPG ." Desc="FreedroidRPG files are already included and ready to go." porter="Cebion" locat="freedroid.zip" runtype="rtr"
 
 Title="Heart_of_Darkness ." Desc="Heart of Darkness using the hode reimplementation of the engine developed by Amazing Studio.  Just add your own Heart of Darkness game files to the ports/hode/gamedata folder." porter="Jetup" locat="Heart%20of%20Darkness.zip"
+
+Title="Hex-A-Hop ." Desc="Hex-a-hop is a puzzle game in which a girl has to destroy green hexagons by stepping on them.  Hex-a-Hop files are already included and ready to go." porter="Cebion" locat="hex-a-hop.zip" runtype="rtr"
 
 Title="Hocoslamfy ." Desc="You are a small bee and you must fly to avoid the bamboo shoots.  Hocoslamfy files are already included and ready to go." porter="Cebion" locat="hocoslamfy.zip" runtype="rtr"
 
