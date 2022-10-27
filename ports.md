@@ -110,6 +110,8 @@ Title_F="Otto_Matic ." Desc="This is Pangea Software’s Otto Matic. Take contro
 
 Title="Owlboy ." Desc="A story-driven platform adventure game, where you can fly and explore a brand new world in the clouds.  Text is not readable on devices with screens less than 5 inches.  You must have a copy of Owlboy for Linux copied to the ports/owlboy/gamedata folder." porter="Johnny on Flame" locat="Owlboy.zip" mono="y"
 
+Title="Powder ." Desc="A roguelike is a dungeon crawler where no two games are the same. The maps are different, the items are different, there are no guaranteed win paths.  Powder files are already included and ready to go." porter="Cebion" locat="powder.zip" runtype="rtr"
+
 Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip" runtype="rtr"
 
 Title="Quake_1 ." Desc="Quake 1 is one of the first fully 3D First-person shooter games released by id software.  Includes shareware pak file.  You can add your own full game pak files to the ports/quake/quakepaks folder." porter="Christian_Haitian" locat="Quake.zip" runtype="rtr"
