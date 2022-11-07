@@ -10,6 +10,8 @@ Title="Aleph-One_Marathon_2 ." Desc="An open source version of Bungie's Marathon
 
 Title="Aleph-One_Marathon_Infinity ." Desc="An open source version of Bungie's Marathon Infinity first person shooter. All files have been included." porter="romadu" locat="alephone-marathoninfinity.zip" runtype="rtr"
 
+Title="Alien_vs_Predator ." Desc="The three most ferocious species in the universe in a bloodthirsty battle for the ultimate prize: survival. Take your pick: be a Colonial Marine, a Predator or an Alien. Fight through suspense-filled environments: from starships and space stations to colonial bases and eerie planetscapes. One wrong move turns you from hunter to prey.  You will need the original files of the PC release copied to the ports/avp folder." porter="Cebion" locat="avp.zip"
+
 Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip"
 
 Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip"
