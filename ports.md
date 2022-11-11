@@ -70,6 +70,8 @@ Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have
 
 Title="FreedroidRPG ." Desc="FreedroidRPG files are already included and ready to go." porter="Cebion" locat="freedroid.zip" runtype="rtr"
 
+Title="Gigalomania ." Desc="Gigalomania is an open source 2D Real Time Strategy god game.  Gigalomania files are already included and ready to go." porter="Cebion" locat="gigalomania.zip" runtype="rtr"
+
 Title="Heart_of_Darkness ." Desc="Heart of Darkness using the hode reimplementation of the engine developed by Amazing Studio.  Just add your own Heart of Darkness game files to the ports/hode/gamedata folder." porter="Jetup" locat="Heart%20of%20Darkness.zip"
 
 Title="Hex-A-Hop ." Desc="Hex-a-hop is a puzzle game in which a girl has to destroy green hexagons by stepping on them.  Hex-a-Hop files are already included and ready to go." porter="Cebion" locat="hex-a-hop.zip" runtype="rtr"
