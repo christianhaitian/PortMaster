@@ -16,6 +16,8 @@ Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game develop
 
 Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip"
 
+Title_F="Billy_Frontier ." Desc="This is Pangea Software's Billy Frontier updated to run on modern operating systems. Use the touchscreen to navigate the UI and gameplay." porter="brooksytech" locat="billyfrontier.zip" runtype="rtr"
+
 Title="Blake_Stone_Aliens_of_Gold ." Desc="The unofficial source port for Blake Stone Aliens of Gold.  Includes the shareware files.  You can also add your own full version Blake Stone Aliens of Gold files to the ports/bstone-aog/gamedata/alien_of_gold folder." porter="Cebion and romadu" locat="bstone-aog.zip" runtype="rtr"
 
 Title="Blake_Stone_Planet_Strike ." Desc="The unofficial source port for Blake Stone Planet Strike.  You'll need to add your own full version Blake Stone Planet Strike files to the ports/bstone-ps/gamedata/planet_strike folder." porter="Cebion and romadu" locat="bstone-ps.zip"
