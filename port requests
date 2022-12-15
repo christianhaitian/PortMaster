@@ -1,0 +1,16 @@
+so ill preface this with im new to this whole github thing and new to coding in general,
+
+General Requests:
+1) could someone make a tutorial somewhere on how to make a port for portmaster and what exactly is needed,
+ ie. the source code of an existing game, dependencies for such etc.
+2) could someone add a place for contact in order for those of us less savvy with code to request any specific ports,
+  those with enough interest or those that catch an interested coders eye becoming additions to the project
+
+Game port requests: id make these myself if i knew what i was doing
+1) Ikemen-GO - its an opensource port that basically emulates MUGEN (fighting game) and can utilize mugen assets.
+  https://github.com/ikemen-engine/Ikemen-GO
+2) Freeciv - its an opensource clone of the civilization games.
+  https://github.com/freeciv
+3) The XTech - its a newer version of supermariobrosx and the source is available.
+  https://github.com/Wohlstand/TheXTech
+  
