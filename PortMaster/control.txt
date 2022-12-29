@@ -56,7 +56,7 @@ if [[ -e "/usr/share/plymouth/themes/text.plymouth" ]]; then
     raloc="/usr/local/bin"
     raconf=""
   fi
-elif [ "${OS_NAME}" == "JELOS" ]; then
+elif [ "${OS_NAME}" == "JELOS" ] || [ "${OS_NAME}" == "UnofficialOS" ]; then
   raloc="/usr/bin"
   raconf="--config /storage/.config/retroarch/retroarch.cfg"
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib32
