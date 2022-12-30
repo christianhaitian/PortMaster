@@ -111,7 +111,7 @@ if [[ "${UI_SERVICE}" =~ weston.service ]]; then
   opengl='(?<=Title_F=\").*?(?=\")'
 fi
 
-if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ]; then
+if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ] || [ "${OS_NAME}" == "UnofficialOS" ]; then
   toolsfolderloc="/storage/roms/ports"
 else
   isitthera=$($GREP "title=" "/usr/share/plymouth/themes/text.plymouth")
@@ -182,7 +182,7 @@ UpdateCheck() {
 		   local x360="Yes"
 		  fi
 		  unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
-		  if [ "${OS_NAME}" != "JELOS" ]; then
+		  if [ "${OS_NAME}" != "JELOS" ] || [ "${OS_NAME}" != "UnofficialOS" ]; then
 		    mv -f $toolsfolderloc/PortMaster/PortMaster.sh $toolsfolderloc/.
 		    if [ -f "$toolsfolderloc/PortMaster/tasksetter.sh" ]; then
 		      rm -f "$toolsfolderloc/PortMaster/tasksetter.sh"
@@ -220,7 +220,7 @@ local unzipstatus
 
   if [ ! -z "$(cat /etc/fstab | $GREP roms2 | tr -d '\0')" ]; then
     whichsd="roms2"
-  elif [ -f "/storage/.config/.OS_ARCH" ] || [ "${OS_NAME}" == "JELOS" ]; then
+  elif [ -f "/storage/.config/.OS_ARCH" ] || [ "${OS_NAME}" == "JELOS" ] || [ "${OS_NAME}" == "UnofficialOS" ]; then
     whichsd="storage/roms"
   else
     whichsd="roms"
@@ -277,7 +277,7 @@ local unzipstatus
 		    if [ ! -z $isitext ]; then
 		      $ESUDO chmod -R 777 /$whichsd/ports
 		    fi
-		    if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ]; then
+		    if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ] || [ "${OS_NAME}" == "UnofficialOS" ]; then
 		      cd /$whichsd/ports/
 		      for s in *.sh
 			  do
