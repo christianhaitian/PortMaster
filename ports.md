@@ -74,6 +74,8 @@ Title="FreedroidRPG ." Desc="FreedroidRPG files are already included and ready t
 
 Title="Gigalomania ." Desc="Gigalomania is an open source 2D Real Time Strategy god game.  Gigalomania files are already included and ready to go." porter="Cebion" locat="gigalomania.zip" runtype="rtr"
 
+Title="Half-Life ." Desc="Half-Life is Valve's debut title which blends blends action and adventure with award-winning technology to create a frighteningly realistic world where players must think to survive. You need to have your own copy of the game. You need to copy the steam valve directory from your steam installation into ports/Half-Life/valve directory. You can also run Half-Life Blue Shift/Opposing Forces by copying the contents of the bshift/gearbox steam files into their respective ports/Half-Life/ directory." porter="kloptops" locat="Half-Life.zip"
+
 Title="Heart_of_Darkness ." Desc="Heart of Darkness using the hode reimplementation of the engine developed by Amazing Studio.  Just add your own Heart of Darkness game files to the ports/hode/gamedata folder." porter="Jetup" locat="Heart%20of%20Darkness.zip"
 
 Title="Hex-A-Hop ." Desc="Hex-a-hop is a puzzle game in which a girl has to destroy green hexagons by stepping on them.  Hex-a-Hop files are already included and ready to go." porter="Cebion" locat="hex-a-hop.zip" runtype="rtr"
