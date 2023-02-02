@@ -207,3 +207,5 @@ Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangam
 Title="VVVVVV ." Desc="VVVVVV is a 2010 puzzle-platform game created by Terry Cavanagh.  The free Make and Play Edition data.zip file is already included.  You can also add your own purchased copy of the data.zip from your VVVVVV into the ports/VVVVVV folder if you prefer that version instead." porter="Christian_Haitian" locat="VVVVVV.zip" runtype="rtr"
 
 Title="World_War_II_GI ." Desc="World War 2 GI using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version WW2GI.GRP and WW2DI.RTS and .CON files and optionally CD audio tracks as OGG file in the format trackXX.ogg (where XX is the track number) to the ports/rednukem-WWII/gamedata folder." porter="romadu" locat="World%20War%20II%20GI.zip"
+
+Title="Worship_Vector ." Desc="Worship Vector is a Tower Defense type game. The game is based upon a unique map, which extends automatically.  Just download and play." porter="Cebion" locat="worship_vector.zip" runtype="rtr"
