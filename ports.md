@@ -66,6 +66,8 @@ Title="F2bgl ." Desc=" A reimplementation of the Fade to Black game.  You will n
 
 Title="Falling_Time ." Desc="Arcade game inspired by Fall Down.  Falling Time files are already included and ready to go." porter="Cebion" locat="falling_time.zip" runtype="rtr"
 
+Title="Fallout_2 ." Desc="Fallout 2 is a post nuclear RPG.  You need to copy critter.dat, master.dat, patch000.dat and data from the original game to ports/fallout2 folder." porter="Orson" locat="Fallout2.zip"
+
 Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Might and Magic 2 game engine by Ihar Hubchyk.  Just add the data and maps folders from your full version GOG HOMM2 to the ports/fheroes2 folder or just launch Fheroes2 to download the demo files." porter="romadu" locat="Fheroes2.zip"
 
 Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have a copy of Freedom Planet for Linux copied to the ports/freedomplanet/gamedata folder." porter="Johnny on Flame" locat="Freedom%20Planet.zip"
