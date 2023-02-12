@@ -74,6 +74,8 @@ Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have
 
 Title="FreedroidRPG ." Desc="FreedroidRPG files are already included and ready to go." porter="Cebion" locat="freedroid.zip" runtype="rtr"
 
+Title="GemRB ." Desc="GemRB (Game Engine Made with preRendered Background) is a portable open-source reimplementation of the Infinity Engine that underpinned Baldur's Gate, Icewind Dale and Planescape: Torment. Add your game files to the ports/gemrb/games/GAMEID directory, multiple games can be installed and you will get a choice of which game you want to play at launch." porter="kloptops" locat="GemRB.zip"
+
 Title="Gigalomania ." Desc="Gigalomania is an open source 2D Real Time Strategy god game.  Gigalomania files are already included and ready to go." porter="Cebion" locat="gigalomania.zip" runtype="rtr"
 
 Title="Half-Life ." Desc="Half-Life is Valve's debut title which blends blends action and adventure with award-winning technology to create a frighteningly realistic world where players must think to survive. You need to have your own copy of the game. You need to copy the steam valve directory from your steam installation into ports/Half-Life/valve directory. You can also run Half-Life Blue Shift/Opposing Forces by copying the contents of the bshift/gearbox steam files into their respective ports/Half-Life/ directory." porter="kloptops" locat="Half-Life.zip"
