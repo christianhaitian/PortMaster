@@ -2,6 +2,8 @@ Title="2048 ." Desc="The 2048 puzzle game" porter="Christian_Haitian" locat="204
 
 Title="Abe's_Amazing_Adventure ." Desc="A scrolling, platform-jumping, key-collecting, ancient pyramid exploring game, vaguely in the style of similar games for the Commodore+4.  Abe's Adventure files are already included and ready to go." porter="Cebion" locat="abes_adventure.zip" runtype="rtr"
 
+Title="Abu_Simbel_Profanation_Deluxe ." Desc="An open-source, freeware remake of the Spanish platform game from 1985 replaces the graphics and sounds with new enhanced assets, while maintaining the same unforgiving gameplay of the original.  Just download and play." porter="Cebion" locat="profadeluxe.zip" runtype="rtr"
+
 Title="Abuse ." Desc="A fork of the original Abuse SDL port from http://abuse.zoy.org/.  An intense 2D shooter.  Plays best on dual analog stick devices.  Just download and play." porter="romadu" locat="Abuse.zip"
 
 Title="Aleph-One_Marathon_1 ." Desc="An open source version of Bungie's Marathon 1 first person shooter. All files have been included." porter="romadu" locat="alephone-marathon.zip" runtype="rtr"
