@@ -208,6 +208,8 @@ Title="Timespinner ." Desc="Travel back in time to change fate itself, in this b
 
 Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 1 files to the ports/tombraider1 folder." porter="Jetup" locat="Tomb%20Raider%201.zip"
 
+Title="Ultimate_Tapan_Kaikki ." Desc="A simple top-down shooter.  Just download and play." porter="Cebion" locat="ultimatetapankaikki.zip" runtype="rtr"
+
 Title="Undertale ." Desc="Undertale loader.  You must have a copy of Undertale Linux version assets copied to the ports/undertale/assets folder.  For more info on the setup needs, see https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information" porter="krishenriksen (kreal)" locat="Undertale.zip"
 
 Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install." porter="romadu" locat="UQM.zip" runtype="rtr"
