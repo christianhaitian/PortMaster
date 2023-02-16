@@ -154,6 +154,8 @@ Title="Return_to_Castle_Wolfenstein ." Desc="Return to Castle Wolfenstein using 
 
 Title="Rick_Dangerous ." Desc="An open source implementation of the legendary game "Rick Dangerous" using the xrick libretro retroarch core.  All necessary files are already included." porter="Christian_Haitian" locat="Rick%20Dangerous.zip" runtype="rtr"
 
+Title="Ri-li ." Desc="A simple and fun arcade-style game in which you control a wooden toy train and collect wooden letters while avoiding obstacles.  Just download and play." porter="Cebion" locat="ri_li.zip" runtype="rtr"
+
 Title="Rigel_Engine ." Desc="A modern re-implementation of the classic DOS game Duke Nukem II.  You'll need to add your own full game files to the ports/RigelEngine/ folder." porter="romadu" locat="RigelEngine.zip"
 
 Title="Rise_Of_The_Triad ." Desc="An open source port of Rise of the Triad by icculus.  The demo files are already included." porter="romadu" locat="ROTT.zip" runtype="rtr"
