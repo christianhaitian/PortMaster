@@ -89,7 +89,11 @@ elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; the
         param_device="oga"
         export HOTKEY="l3"
       else
-        DEVICE="190000004b4800000010000000010000"
+        if [ -f "/usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.2600.2" ]; then
+          DEVICE="19005b284b4800000010000000010000"
+        else
+          DEVICE="190000004b4800000010000000010000"
+        fi
         param_device="rk2020"
       fi
       ANALOGSTICKS=1
