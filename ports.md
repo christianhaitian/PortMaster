@@ -126,6 +126,8 @@ Title="OpenTTD ." Desc="An open source simulation game based upon Transport Tyco
 
 Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyrian.  OpenTyrian 2.1 files are already included as they were made freeware sometime ago." porter="Christian_Haitian" locat="OpenTyrian.zip" runtype="rtr"
 
+Title="OpenRCD2 ." Desc="OpenRCT2 is Open source re-implementation of RollerCoaster Tycoon 2. Add your Roller Coaster Tycoon 2 game files to the ports/openrct2/RCT2 directory, and optionally add your Roller Coaster Tycoon 1 files to ports/openrct2/RCT1" porter="Kloptops" locat="OpenRCT2.zip"
+
 Title="OpenXcom_Extended ." Desc="OXCE is an open source engine for running XCOM:Ufo Defense and Terror From the Deep.  You will need to provide your own UFO Defense/TFTD game files.  Read the README-port.txt file for details." porter="nl255" locat="Openxcom.zip"
 
 Title_F="Otto_Matic ." Desc="This is Pangea Software’s Otto Matic. Take control of the robot Otto Matic and save earth from aliens from Planet X" porter="brooksytech" locat="ottomatic.zip" runtype="rtr"
