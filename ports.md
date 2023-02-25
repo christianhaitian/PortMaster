@@ -138,7 +138,7 @@ Title="Powder ." Desc="A roguelike is a dungeon crawler where no two games are t
 
 Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip" runtype="rtr"
 
-Title="Quake_1 ." Desc="Quake 1 is one of the first fully 3D First-person shooter games released by id software.  Includes shareware pak file.  You can add your own full game pak files to the ports/quake/quakepaks folder." porter="Christian_Haitian" locat="Quake.zip" runtype="rtr"
+Title="Quake_1 ." Desc="Quake 1 is one of the first fully 3D First-person shooter games released by id software.  Includes shareware pak file.  You can add your own full game pak files to the ports/quake/quakepaks/id1 folder." porter="Christian_Haitian" locat="Quake.zip" runtype="rtr"
 
 Title="Quake_2 ." Desc="Quake 2 is the sequel to Quake 1, one of the first fully 3D First-person shooter games released by id software.  You need to add your own full game pak files to the ports/quake2/baseq2 folder." porter="romadu" locat="Quake%202.zip"
 
