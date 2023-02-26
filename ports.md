@@ -16,6 +16,8 @@ Title="Alien_vs_Predator ." Desc="The three most ferocious species in the univer
 
 Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip"
 
+Title="Augustus ." Desc="A reimplemntation of the Caeser 3 engine.  You will need the original files of the PC release copied to the ports/augustus/data folder." porter="Kloptops and Cebion" locat="Augustus.zip"
+
 Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip"
 
 Title_F="Billy_Frontier ." Desc="This is Pangea Software's Billy Frontier updated to run on modern operating systems. Use the touchscreen to navigate the UI and gameplay." porter="brooksytech" locat="billyfrontier.zip" runtype="rtr"
