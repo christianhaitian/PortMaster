@@ -134,7 +134,7 @@ Title="OpenXcom_Extended ." Desc="OXCE is an open source engine for running XCOM
 
 Title_F="Otto_Matic ." Desc="This is Pangea Software’s Otto Matic. Take control of the robot Otto Matic and save earth from aliens from Planet X" porter="brooksytech" locat="ottomatic.zip" runtype="rtr"
 
-Title="Oddworld: Abe's_Oddysee/Exoddus ." Desc="It is a platformer with puzzle-solving elements. You need to copy all .lvl and .ddv files (and sound.dat for Exoddus) from the original game(s) to either ports/oddysee or ports/exoddus directory." porter="Orson" locat="Oddworld.zip" runtype="rtr"
+Title="Oddworld: Abe's_Oddysee/Exoddus ." Desc="It is a platformer with puzzle-solving elements. You need to copy all .lvl and .ddv files (and sound.dat for Exoddus) from the original game(s) to either ports/oddysee or ports/exoddus directory." porter="Orson" locat="Oddworld.zip"
 
 Title="Owlboy ." Desc="A story-driven platform adventure game, where you can fly and explore a brand new world in the clouds.  Text is not readable on devices with screens less than 5 inches.  You must have a copy of Owlboy for Linux copied to the ports/owlboy/gamedata folder." porter="Johnny on Flame" locat="Owlboy.zip" mono="y"
 
