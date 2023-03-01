@@ -1,6 +1,6 @@
 Title="2048 ." Desc="The 2048 puzzle game" porter="Christian_Haitian" locat="2048.zip" runtype="rtr"
 
-Title="Abe's_Amazing_Adventure ." Desc="A scrolling, platform-jumping, key-collecting, ancient pyramid exploring game, vaguely in the style of similar games for the Commodore+4.  Abe's Adventure files are already included and ready to go." porter="Cebion" locat="abes_adventure.zip"
+Title="Abe's_Amazing_Adventure ." Desc="A scrolling, platform-jumping, key-collecting, ancient pyramid exploring game, vaguely in the style of similar games for the Commodore+4.  Abe's Adventure files are already included and ready to go." porter="Cebion" locat="abes_adventure.zip" runtype="rtr"
 
 Title="Abu_Simbel_Profanation_Deluxe ." Desc="An open-source, freeware remake of the Spanish platform game from 1985 replaces the graphics and sounds with new enhanced assets, while maintaining the same unforgiving gameplay of the original.  Just download and play." porter="Cebion" locat="profadeluxe.zip" runtype="rtr"
 
@@ -134,7 +134,7 @@ Title="OpenXcom_Extended ." Desc="OXCE is an open source engine for running XCOM
 
 Title_F="Otto_Matic ." Desc="This is Pangea Software’s Otto Matic. Take control of the robot Otto Matic and save earth from aliens from Planet X" porter="brooksytech" locat="ottomatic.zip" runtype="rtr"
 
-Title="Oddworld: Abe's_Oddysee/Exoddus ." Desc="It is a platformer with puzzle-solving elements. You need to copy all .lvl and .ddv files (and sound.dat for Exoddus) from the original game(s) to either ports/oddysee or ports/exoddus directory." porter="Orson" locat="Oddworld.zip"
+Title="Oddworld:_Abes_Oddysee_Exoddus ." Desc="It is a platformer with puzzle-solving elements. You need to copy all .lvl and .ddv files (and sound.dat for Exoddus) from the original game(s) to either ports/oddysee or ports/exoddus directory." porter="Orson" locat="Oddworld.zip"
 
 Title="Owlboy ." Desc="A story-driven platform adventure game, where you can fly and explore a brand new world in the clouds.  Text is not readable on devices with screens less than 5 inches.  You must have a copy of Owlboy for Linux copied to the ports/owlboy/gamedata folder." porter="Johnny on Flame" locat="Owlboy.zip" mono="y"
 
