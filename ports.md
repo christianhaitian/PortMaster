@@ -54,6 +54,8 @@ Title="CorsixTH ." Desc="An opensource clone of Theme Hospital.  Load your Theme
 
 Title_F="Cro-Mag_Rally ." Desc="This is a port of Pangea Software’s racing game Cro-Mag Rally. Take control of the caveman Brog as you race through the  Stone, Bronze, and Iron Ages in primitive vehicles." porter="brooksytech" locat="cromagrally.zip" runtype="rtr"
 
+Title="Der_Clou! ." Desc="A burglary simulation game originally created by neo Software Produktions GmbH.  Der Clou!'s files are already included and ready to go." porter="Cebion" locat="derclou.zip" runtype="rtr"
+
 Title="DevilutionX ." Desc="DevilutionX is a source port of Diablo from https://github.com/diasurgical/devilutionX.  Includes the Diablo shareware version.  You can add your own full version DIABDAT.MPQ file to the ports/devilution folder.  To run the Diablo: Hellfire expansion you will need to also copy hellfire.mpq, hfmonk.mpq, hfmusic.mpq, hfvoice.mpq" porter="Christian_Haitian" locat="Devilutionx.zip" runtype="rtr"
 
 Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery surfaces." porter="Christian_Haitian" locat="Dinothawr.zip" runtype="rtr"
