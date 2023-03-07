@@ -82,6 +82,8 @@ Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have
 
 Title="FreedroidRPG ." Desc="FreedroidRPG files are already included and ready to go." porter="Cebion" locat="freedroid.zip" runtype="rtr"
 
+Title="FreeSerf ." Desc="FreeSerf is a faithful clone of the brilliant simulation game The Settlers 1 aka Serf City. In oder to play you need to copy the DOS data file is called SPAE.PA, SPAD.PA, SPAF.PA, or SPAU.PA, depending on the language of the game; or Amiga files gfxheader, gfxfast, gfxchip, gfxpics, sounds, and music. into ports/freeserf folder." porter="Kloptops" locat="FreeSerf.zip"
+
 Title="GemRB ." Desc="GemRB (Game Engine Made with preRendered Background) is a portable open-source reimplementation of the Infinity Engine that underpinned Baldur's Gate, Icewind Dale and Planescape: Torment. Add your game files to the ports/gemrb/games/GAMEID directory, multiple games can be installed and you will get a choice of which game you want to play at launch." porter="kloptops" locat="GemRB.zip"
 
 Title="Gigalomania ." Desc="Gigalomania is an open source 2D Real Time Strategy god game.  Gigalomania files are already included and ready to go." porter="Cebion" locat="gigalomania.zip" runtype="rtr"
