@@ -104,6 +104,8 @@ Title="Hydra_Castle_Labyrinth ." Desc="Hydra Castle Labyrinth is a platform game
 
 Title="Iconoclasts ." Desc="A platformer that offers fun and wacky gameplay.  Recommended only for 640x480 devices or better.  You must have a copy of Iconoclasts for Linux copied to the ports/iconoclasts/gamedata folder.  Be sure the folder contains subfolders named 32, 64 and data." porter="Johnny on Flame" locat="Iconoclasts.zip"
 
+Title="iiChantra ." Desc="iiChantra is a cross-platform 2D-Action, «retro» in style but modern in gameplay.  iiChantra files are already included and ready to go." porter="Cebion" locat="iichantra_pear.zip" runtype="rtr"
+
 Title="Invaders ." Desc="A memory accurate reimplementation of Space Invaders by loadzero.  You'll need to provide your own invaders.e, invaders.f, invaders.g, and invaders.h files from a MAME_078 romset into the invaders/inv1 folder." porter="romadu" locat="Invaders.zip"
 
 Title="Maldita_Castilla ." Desc="An arcade action video game developed by Locomalito and released in December 2012.  The gameplay is inspired by the games Shinobi and Ghost and Goblins." porter="krishenriksen (kreal)" locat="Maldita%20Castilla.zip" runtype="rtr"
