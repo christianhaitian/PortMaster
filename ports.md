@@ -230,6 +230,9 @@ Title="Undertale ." Desc="Undertale loader.  You must have a copy of Undertale L
 
 Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install." porter="romadu" locat="UQM.zip" runtype="rtr"
 
+Title="VanillaRA ." Desc="Vanilla Conquer is a fully portable version Command and Conquer Red Alert. 
+You will need to place at least MAIN.MIX & READALERT.MIX into ports/vanillara/data/vanillara. If you want to install multiple cds read the README for more detailed information." porter="kloptops and Snoopy" locat="VanillaRA.zip"
+
 Title="VVVVVV ." Desc="VVVVVV is a 2010 puzzle-platform game created by Terry Cavanagh.  The free Make and Play Edition data.zip file is already included.  You can also add your own purchased copy of the data.zip from your VVVVVV into the ports/VVVVVV folder if you prefer that version instead." porter="Christian_Haitian" locat="VVVVVV.zip" runtype="rtr"
 
 Title="Wetspot_2 ." Desc="A port of QuickBasic 4.5 game Wetspot 2 by Angelo Mottola.  Just download and play." porter="Cebion" locat="wetspot2.zip" runtype="rtr"
