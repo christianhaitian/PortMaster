@@ -218,6 +218,8 @@ Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of
 
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
 
+Title="Tamatool ." Desc="Tamatool is a Tamagotchi P1 emulator. Tamatool requires a compatible Tamagotchi P1 ROM called rom.bin in its folder" porter="Bamboozler" locat="Tamatool.zip"
+
 Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge.  To play the original Chip's Challenge levels, copy your "chips.dat" into 'ports/tileworld/data' and make sure it's lowercase.  The almost complete SDL2 conversion used: github.com/rangeli/tileworld" porter="Slayer366" locat="TileWorld.zip" runtype="rtr"
 
 Title="Timespinner ." Desc="Travel back in time to change fate itself, in this beautifully crafted story-driven adventure, inspired by classic 90s action-platformers.  You must have a copy of Timespinner for Linux copied to the ports/timespinner/gamedata folder." porter="Johnny on Flame" locat="Timespinner.zip" mono="y"
