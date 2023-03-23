@@ -16,7 +16,7 @@ Title="Alien_vs_Predator ." Desc="The three most ferocious species in the univer
 
 Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip"
 
-Title_="Anarch ." Desc="Anarch is extremely small, completely public domain, no-dependency, no-file, portable suckless anarcho-pacifist from-scratch 90s-style Doom clone that runs everywhere, made for the benefit of all living beings" porter="Bamboozler" locat="Anarch.zip" runtype="rtr"
+Title="Anarch ." Desc="Anarch is extremely small, completely public domain, no-dependency, no-file, portable suckless anarcho-pacifist from-scratch 90s-style Doom clone that runs everywhere, made for the benefit of all living beings" porter="Bamboozler" locat="Anarch.zip" runtype="rtr"
 
 Title="Augustus ." Desc="A reimplemntation of the Caeser 3 engine.  You will need the original files of the PC release copied to the ports/augustus/data folder." porter="Kloptops and Cebion" locat="Augustus.zip"
 
