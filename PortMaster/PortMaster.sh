@@ -23,7 +23,7 @@ if [ $? != 0 ]; then
   ESUDO=""
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/storage/roms/ports/PortMaster/libs"
   GREP="/storage/roms/ports/PortMaster/grep"
-  WGET="/storage/roms/ports/PortMaster/wget"
+  #WGET="/storage/roms/ports/PortMaster/wget"
   LANG=""
 else
   dpkg -s "curl" &>/dev/null
