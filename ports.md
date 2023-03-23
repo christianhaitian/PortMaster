@@ -16,6 +16,8 @@ Title="Alien_vs_Predator ." Desc="The three most ferocious species in the univer
 
 Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip"
 
+Title="Anarch ." Desc="Anarch is extremely small, completely public domain, no-dependency, no-file, portable suckless anarcho-pacifist from-scratch 90s-style Doom clone that runs everywhere, made for the benefit of all living beings" porter="Bamboozler" locat="Anarch.zip" runtype="rtr"
+
 Title="Augustus ." Desc="A reimplemntation of the Caeser 3 engine.  You will need the original files of the PC release copied to the ports/augustus/data folder." porter="Kloptops and Cebion" locat="Augustus.zip"
 
 Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip"
@@ -63,6 +65,8 @@ Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery s
 Title_P="Doom_3 ." Desc="Doom 3 is a 2004 survival horror first-person shooter video game developed by id Software and published by Activision. You need to add your own full game pak files to the ports/doom3/base folder." porter="brooksytech" locat="doom3.zip"
 
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip"
+
+Title_="DungeonRush ." Desc="A opensource game inspired by Snake, written in pure C with SDL" porter="Bamboozler" locat="DungeonRush.zip" runtype="rtr"
 
 Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip"
 
