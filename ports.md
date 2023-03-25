@@ -86,9 +86,9 @@ Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Mi
 
 Title="Freedom_Planet ." Desc="A combat-based platform adventure.  You must have a copy of Freedom Planet for Linux copied to the ports/freedomplanet/gamedata folder." porter="Johnny on Flame" locat="Freedom%20Planet.zip"
 
-Title="Freegemas ." Desc="Freegemas is an open source version of the well known Bejeweled." porter="Bamboozler" locat="Freegemas.zip" runtype="rtr"
-
 Title="FreedroidRPG ." Desc="FreedroidRPG files are already included and ready to go." porter="Cebion" locat="freedroid.zip" runtype="rtr"
+
+Title="Freegemas ." Desc="Freegemas is an open source version of the well known Bejeweled." porter="Bamboozler" locat="Freegemas.zip" runtype="rtr"
 
 Title="FreeSerf ." Desc="FreeSerf is a faithful clone of the brilliant simulation game The Settlers 1 aka Serf City. In oder to play you need to copy the DOS data file is called SPAE.PA, SPAD.PA, SPAF.PA, or SPAU.PA, depending on the language of the game; or Amiga files gfxheader, gfxfast, gfxchip, gfxpics, sounds, and music. into ports/freeserf folder." porter="Kloptops" locat="FreeSerf.zip"
 
