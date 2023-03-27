@@ -56,7 +56,7 @@ Title="CorsixTH ." Desc="An opensource clone of Theme Hospital.  Load your Theme
 
 Title_F="Cro-Mag_Rally ." Desc="This is a port of Pangea Software’s racing game Cro-Mag Rally. Take control of the caveman Brog as you race through the  Stone, Bronze, and Iron Ages in primitive vehicles." porter="brooksytech" locat="cromagrally.zip" runtype="rtr"
 
-Title="Dave Gnukem ." Desc="Dave Gnukem is a cross-platform 2D scrolling platform shooter inspired by Duke Nukem 1." porter="Bamboozler" locat="Davegnukem.zip" runtype="rtr"
+Title="Dave_Gnukem ." Desc="Dave Gnukem is a cross-platform 2D scrolling platform shooter inspired by Duke Nukem 1." porter="Bamboozler" locat="Davegnukem.zip" runtype="rtr"
 
 Title="Der_Clou! ." Desc="A burglary simulation game originally created by neo Software Produktions GmbH.  Der Clou!'s files are already included and ready to go." porter="Cebion" locat="derclou.zip" runtype="rtr"
 
@@ -126,7 +126,7 @@ Title="Meritous ." Desc="Action-adventure dungeon crawl game.  Meritous files ar
 
 Title_F="Mighty_Mike ." Desc="This is Pangea Software's Mighty Mike (also known as Power Pete). Set in a toy store, this top-down action game is a staple of 90's Macintosh games." porter="brooksytech" locat="mightymike.zip" runtype="rtr"
 
-Title="Mirror Magic ." Desc="Arcade style game for in the tradition of Deflektor (C 64) and Mindbender (Amiga)." porter="Bamboozler" locat="Mirrormagic.zip" runtype="rtr"
+Title="Mirror_Magic ." Desc="Arcade style game for in the tradition of Deflektor (C 64) and Mindbender (Amiga)." porter="Bamboozler" locat="Mirrormagic.zip" runtype="rtr"
 
 Title="Moonlight ." Desc="A free, open-source NVIDIA Gamestream Client.  For more info on the setup needs at https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#moonlight-nvidia-gamestreaming-app-available-through-portmaster." porter="Christian_Haitian" locat="Moonlight.zip" runtype="rtr"
 
