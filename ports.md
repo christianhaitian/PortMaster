@@ -56,6 +56,8 @@ Title="CorsixTH ." Desc="An opensource clone of Theme Hospital.  Load your Theme
 
 Title_F="Cro-Mag_Rally ." Desc="This is a port of Pangea Software’s racing game Cro-Mag Rally. Take control of the caveman Brog as you race through the  Stone, Bronze, and Iron Ages in primitive vehicles." porter="brooksytech" locat="cromagrally.zip" runtype="rtr"
 
+Title="Dave Gnukem ." Desc="Dave Gnukem is a cross-platform 2D scrolling platform shooter inspired by Duke Nukem 1." porter="Bamboozler" locat="Davegnukem.zip" runtype="rtr"
+
 Title="Der_Clou! ." Desc="A burglary simulation game originally created by neo Software Produktions GmbH.  Der Clou!'s files are already included and ready to go." porter="Cebion" locat="derclou.zip" runtype="rtr"
 
 Title="DevilutionX ." Desc="DevilutionX is a source port of Diablo from https://github.com/diasurgical/devilutionX.  Includes the Diablo shareware version.  You can add your own full version DIABDAT.MPQ file to the ports/devilution folder.  To run the Diablo: Hellfire expansion you will need to also copy hellfire.mpq, hfmonk.mpq, hfmusic.mpq, hfvoice.mpq" porter="Christian_Haitian" locat="Devilutionx.zip" runtype="rtr"
@@ -124,15 +126,21 @@ Title="Meritous ." Desc="Action-adventure dungeon crawl game.  Meritous files ar
 
 Title_F="Mighty_Mike ." Desc="This is Pangea Software's Mighty Mike (also known as Power Pete). Set in a toy store, this top-down action game is a staple of 90's Macintosh games." porter="brooksytech" locat="mightymike.zip" runtype="rtr"
 
+Title="Mirror Magic ." Desc="Arcade style game for in the tradition of Deflektor (C 64) and Mindbender (Amiga)." porter="Bamboozler" locat="Mirrormagic.zip" runtype="rtr"
+
 Title="Moonlight ." Desc="A free, open-source NVIDIA Gamestream Client.  For more info on the setup needs at https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#moonlight-nvidia-gamestreaming-app-available-through-portmaster." porter="Christian_Haitian" locat="Moonlight.zip" runtype="rtr"
 
 Title="Mr_Boom ." Desc="A Bomberman clone." porter="Christian_Haitian" locat="Mr.%20Boom.zip" runtype="rtr"
+
+Title="Multris ." Desc="A version of Tetris with randomly generated polyominoes of varying sizes." porter="Bamboozler" locat="Multris.zip" runtype="rtr"
 
 Title="NAM ." Desc="NAM using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version NAM.GRP and NAM.RTS and .CON files and optionally CD audio tracks as OGG file in the format trackXX.ogg (where XX is the track number) to the ports/rednukem-NAM/gamedata folder." porter="romadu" locat="NAM.zip"
 
 Title_F="Nanosaur ." Desc="This is Pangea Software’s Nanosaur, which casts a cybernetic dinosaur from the future who’s sent back in time 20 minutes before a giant asteroid hits the Earth." porter="brooksytech" locat="nanosaur.zip" runtype="rtr"
 
 Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play." porter="Jetup" locat="nKaruga.zip" runtype="rtr"
+
+Title="OpenBlok ." Desc="A customizable, cross platform, open-source falling block game, packed with a bunch of features." porter="Bamboozler" locat="Openblok.zip" runtype="rtr"
 
 Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.  Just download and play." porter="Cebion" locat="Openclaw.zip" runtype="rtr"
 
