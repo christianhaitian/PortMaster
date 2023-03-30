@@ -23,6 +23,7 @@ if [ $? != 0 ]; then
   ESUDO=""
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/storage/roms/ports/PortMaster/libs"
   GREP="/storage/roms/ports/PortMaster/grep"
+  #WGET="/storage/roms/ports/PortMaster/wget"
   LANG=""
 else
   dpkg -s "curl" &>/dev/null
@@ -110,40 +111,30 @@ if [[ "${UI_SERVICE}" =~ weston.service ]]; then
   opengl='(?<=Title_F=\").*?(?=\")'
 fi
 
-toolsfolderloc=$(dirname -- "$0")
+if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ] || [ "${OS_NAME}" == "UnofficialOS" ]; then
+  toolsfolderloc="/storage/roms/ports"
+else
+  isitthera=$($GREP "title=" "/usr/share/plymouth/themes/text.plymouth")
+  if [[ $isitthera == *"TheRA"* ]]; then
+    if [ -d "/opt/tools/PortMaster/" ]; then
+      toolsfolderloc="/opt/tools"
+    else
+      toolsfolderloc="/roms/ports"
+    fi
+  else
+    if [ -d "/opt/system/Tools/PortMaster/" ]; then
+      toolsfolderloc="/opt/system/Tools"
+    else
+      toolsfolderloc="/roms/ports"
+    fi
+  fi
+fi
 
 isitext=$(df -PTh $toolsfolderloc | awk '{print $2}' | grep ext)
 
 cd $toolsfolderloc/PortMaster
 
-if [ $? != 0 ]; then
-  cd $toolsfolderloc
-  curversion="$(curl file://$toolsfolderloc/version)"
-  $ESUDO $toolsfolderloc/oga_controls PortMaster.sh $param_device > /dev/null 2>&1 &
-  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
-  --msgbox "\n\nPlease move the PortMaster.sh file outside of the PortMaster folder. \
-  \nThe PortMaster.sh file needs to be located next to the PortMaster folder NOT within it." $height $width 2>&1 > /dev/tty0
-  $ESUDO kill -9 $(pidof oga_controls)
-  if [ ! -z "$ESUDO" ]; then
-    $ESUDO systemctl restart oga_events &
-  fi
-  exit 0
-fi
-
 $ESUDO $toolsfolderloc/PortMaster/oga_controls PortMaster.sh $param_device > /dev/null 2>&1 &
-
-if [ ! -z $ESUDO ] && [[ $isitarkos == *"ArkOS"* ]]; then
-  if [[ $toolsfolderloc != "/opt/system/Tools" ]]; then
-    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
-  --msgbox "\n\nYou seem to be running PortMaster on ArkOS from an unsupported location. \
-  \nPlease run PortMaster from the Options/Tools section." $height $width 2>&1 > /dev/tty0
-  $ESUDO kill -9 $(pidof oga_controls)
-  if [ ! -z "$ESUDO" ]; then
-    $ESUDO systemctl restart oga_events &
-  fi
-  exit 0
-  fi
-fi
 
 curversion="$(curl file://$toolsfolderloc/PortMaster/version)"
 

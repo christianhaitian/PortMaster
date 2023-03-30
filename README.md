@@ -9,11 +9,12 @@ Most of the the ports available through PortMaster have been configured to launc
 ## Install info
 
 For ArkOS on supported devices, PortMaster was included with a recent online update.  You can locate it in the Options > Tools menu. \
-For AmberElec, JelOS or unofficialOS, just unzip the contents of PortMaster.zip to your storage/roms/ports, move the PortMaster.sh file outside of the PortMaster folder then run PortMaster.sh from the Ports menu. \
+For 351Elec/AmberElec, just unzip the contents of PortMaster.zip to your storage/roms/ports folder then run PortMaster.sh from the Ports menu in 351Elec. \
+For JelOS, it's been intergrated into their most recent releases.  Just launch from tools and enjoy! \
 If you don't have PortMaster there or need to install it manually, you can do the following:
-* Place the PortMaster folder in /roms/tools.  The PortMaster.sh file must be within /roms/tools next to the PortMaster folder.  Not within the PortMaster Folder!
-   * For ArkOS on the RG351V, RG351MP, RG353M, RG353V/VS, or RG503,  if SD2 is being used for roms, installation must be in /roms2/tools/.  The PortMaster.sh file must be in the within /roms2/tools next to the PortMaster folder. NOT within the PortMaster folder!
-* Run PortMaster from ArkOS, TheRA or RetroOZ through Options > Tools menu, AmberElec, JelOS or unofficialOS from the Ports menu.
+* Place the PortMaster folder in /roms/tools.  The .sh file **must** remain in the PortMaster folder!
+   * For ArkOS on the RG351V, RG351MP, RG353M, RG353V/VS, or RG503,  if SD2 is being used for roms, installation must be in /roms2/tools/. The .sh file **must** remain in the PortMaster folder!
+* Run PortMaster from ArkOS, TheRA or RetroOZ through Options > Tools > PortMaster menu, 351Elec/AmberElec from Ports > PortMaster menu
 
 ## Do I have to use PortMaster to install ports?
 
@@ -31,4 +32,4 @@ Just run PortMaster and reinstall the port.  You can also unzip the associated .
 
 ## How can I help add ports to PortMaster?
 
-See the packaging documentation [here](https://github.com/christianhaitian/PortMaster/blob/main/docs/packaging.md) for more info on this.  Once you're port packaging has met these minimum requirements, you can either submit a Pull Request of this port package with details about the port such as a description of it and how to add any gamefiles or assets if needed or contact us on the [RGHandhelds](https://discord.gg/Jd2azKX) discord for further review and advisement.
+See the packaging documentation [here](https://github.com/christianhaitian/PortMaster/blob/main/docs/packaging.md) for more info on this.  Once you're port packaging has met these minimum requirements, you can either submit a Pull Request of this port package with details about the port such as a description of it and how to add any gamefiles or assets if needed or contact me on the [RGHandhelds](https://discord.gg/Jd2azKX) discord for further review and advisement.
