@@ -254,6 +254,8 @@ Title="VanillaRA ." Desc="Vanilla Conquer is a fully portable version Command an
 
 Title="VanillaTD ." Desc="Vanilla Conquer is a fully portable version Command and Conquer Tiberium Dawn. The game comes with the demo files, read the README for detailed information on installing the full game." porter="kloptops and Snoopy" locat="VanillaTD.zip" runtype="rtr"
 
+Title="VCMI ." Desc="VCMI is a fully portable version of Heroes of Might and Magic III. Copy the GoG installer files to ports/vcmi and it will install the game files as required, see the README for more information." porter="kloptops" locat="VCMI.zip"
+
 Title="VVVVVV ." Desc="VVVVVV is a 2010 puzzle-platform game created by Terry Cavanagh.  The free Make and Play Edition data.zip file is already included.  You can also add your own purchased copy of the data.zip from your VVVVVV into the ports/VVVVVV folder if you prefer that version instead." porter="Christian_Haitian" locat="VVVVVV.zip" runtype="rtr"
 
 Title="Wetspot_2 ." Desc="A port of QuickBasic 4.5 game Wetspot 2 by Angelo Mottola.  Just download and play." porter="Cebion" locat="wetspot2.zip" runtype="rtr"
