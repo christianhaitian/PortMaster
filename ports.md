@@ -64,6 +64,8 @@ Title="DevilutionX ." Desc="DevilutionX is a source port of Diablo from https://
 
 Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery surfaces." porter="Christian_Haitian" locat="Dinothawr.zip" runtype="rtr"
 
+Title="Diver_Down ." Desc="Diver Down is a stealth-platformer. Avoid the lights on 20 different stages using your mysterious Diver Down ability, that allows you to dive onto solids! ." porter="Cebion" locat="diverdown.zip" runtype="rtr"
+
 Title_P="Doom_3 ." Desc="Doom 3 is a 2004 survival horror first-person shooter video game developed by id Software and published by Activision. You need to add your own full game pak files to the ports/doom3/base folder." porter="brooksytech" locat="doom3.zip"
 
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip"
@@ -223,6 +225,8 @@ Title="SorR ." Desc="Streets of Rage Remake.  Just add your own sorr.dat file, m
 Title="Space_Cadet_Pinball ." Desc="A reversed engineered version Space Cadet Pinball.  Just add your own Space Cadet Pinball PINBALL.DAT files and sound files to the spacecadetpinball folder." porter="Jetup and Romadu" locat="Space%20Cadet%20Pinball.zip"
 
 Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's game Spelunky Classic. Based on the source code published in Humble Weekly Bundle: Play and Create with GameMaker (not original 1.1 release)." porter="Christian_Haitian" locat="Spelunky.zip" runtype="rtr"
+
+Title="Starcatcher ." Desc="Starcatcher is a platformer inspired by Kirby, Metroid, Gravitron Experiment. Your goal: Collect stars in outer space." porter="Cebion" locat="starcatcher.zip" runtype="rtr"
 
 Title="Stardew_Valley ." Desc="An open-ended country-life RPG!  You must have a copy of the compatibility version of Stardew Valley copied to the ports/stardewvalley/gamedata folder." porter="Johnny on Flame" locat="StardewValley.zip" mono="y"
 
