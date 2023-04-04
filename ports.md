@@ -246,7 +246,7 @@ Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge
 
 Title="Timespinner ." Desc="Travel back in time to change fate itself, in this beautifully crafted story-driven adventure, inspired by classic 90s action-platformers.  You must have a copy of Timespinner for Linux copied to the ports/timespinner/gamedata folder." porter="Johnny on Flame" locat="Timespinner.zip" mono="y"
 
-Title="Tiny_Crate ." Desc="Tiny Crate is a cute little precision platformer with puzzle elements! Lift and toss crates to traverse over spike pits and reach higher ground! Push yourself and make tight jumps! You got this!." porter="Cebion" locat="tiny-crate.zip" 
+Title="Tiny_Crate ." Desc="Tiny Crate is a cute little precision platformer with puzzle elements! Lift and toss crates to traverse over spike pits and reach higher ground! Push yourself and make tight jumps! You got this!." porter="Cebion" locat="tiny-crate.zip" runtype="rtr"
 
 Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 1 files to the ports/tombraider1 folder." porter="Jetup" locat="Tomb%20Raider%201.zip"
 
