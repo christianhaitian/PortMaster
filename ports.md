@@ -40,6 +40,9 @@ Title="Blood ." Desc="Blood port based on EDuke32.  You'll need to add your own 
 
 Title="Blues_Brothers ." Desc="A rewrite of the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Amiga or Dos files to the ports/bluesbrothers/gamedata folder." porter="Jetup" locat="Blues%20Brothers.zip" runtype="rtr"
 
+Title="Blues_Brothers:_Jukebox_Adventure ." Desc="A rewrite of the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/bbda/gamedata folder." porter="Jetup" locat="BBJA.zip" runtype="rtr"
+
+
 Title_F="Bugdom ." Desc="This is Pangea Software's Bugdom updated to run on modern operating systems. Use the touchscreen to navigate the UI." porter="brooksytech" locat="Bugdom.zip" runtype="rtr"
 
 Title="Cannonball ." Desc="This is the libretro port of the OutRun game engine recreation written by Chris White in 2014.  Add the OutRun Revision B ROMs into /ports/cannonball/gamedata folder. " porter="Christian_Haitian" locat="Cannonball.zip"
@@ -63,6 +66,8 @@ Title="Der_Clou! ." Desc="A burglary simulation game originally created by neo S
 Title="DevilutionX ." Desc="DevilutionX is a source port of Diablo from https://github.com/diasurgical/devilutionX.  Includes the Diablo shareware version.  You can add your own full version DIABDAT.MPQ file to the ports/devilution folder.  To run the Diablo: Hellfire expansion you will need to also copy hellfire.mpq, hfmonk.mpq, hfmusic.mpq, hfvoice.mpq" porter="Christian_Haitian" locat="Devilutionx.zip" runtype="rtr"
 
 Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery surfaces." porter="Christian_Haitian" locat="Dinothawr.zip" runtype="rtr"
+
+Title="Diver_Down ." Desc="Diver Down is a stealth-platformer. Avoid the lights on 20 different stages using your mysterious Diver Down ability, that allows you to dive onto solids! ." porter="Cebion" locat="diverdown.zip" runtype="rtr"
 
 Title_P="Doom_3 ." Desc="Doom 3 is a 2004 survival horror first-person shooter video game developed by id Software and published by Activision. You need to add your own full game pak files to the ports/doom3/base folder." porter="brooksytech" locat="doom3.zip"
 
@@ -146,13 +151,13 @@ Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.
 
 Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrabbit games by Alister Thomson.  Includes the Jazz Jackrabiit shareware files.  You can add your own full game Dos files to the ports/openjazz/gamedata folder." porter="Jetup" locat="OpenJazz.zip" runtype="rtr"
 
-Title="OpenOMF ." Desc="An Open Source remake of "One Must Fall 2097" by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr"
+Title="OpenOMF ." Desc="An Open Source remake of 'One Must Fall 2097' by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr"
 
 Title="OpenTTD ." Desc="An open source simulation game based upon Transport Tycoon Deluxe." porter="Cebion" locat="Openttd.zip" runtype="rtr"
 
 Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyrian.  OpenTyrian 2.1 files are already included as they were made freeware sometime ago." porter="Christian_Haitian" locat="OpenTyrian.zip" runtype="rtr"
 
-Title="OpenRCD2 ." Desc="OpenRCT2 is Open source re-implementation of RollerCoaster Tycoon 2. Add your Roller Coaster Tycoon 2 game files to the ports/openrct2/RCT2 directory, and optionally add your Roller Coaster Tycoon 1 files to ports/openrct2/RCT1" porter="Kloptops" locat="OpenRCT2.zip"
+Title="OpenRCT2 ." Desc="OpenRCT2 is Open source re-implementation of RollerCoaster Tycoon 2. Add your Roller Coaster Tycoon 2 game files to the ports/openrct2/RCT2 directory, and optionally add your Roller Coaster Tycoon 1 files to ports/openrct2/RCT1" porter="Kloptops" locat="OpenRCT2.zip"
 
 Title="OpenXcom_Extended ." Desc="OXCE is an open source engine for running XCOM:Ufo Defense and Terror From the Deep.  You will need to provide your own UFO Defense/TFTD game files.  Read the README-port.txt file for details." porter="nl255" locat="Openxcom.zip"
 
@@ -224,6 +229,8 @@ Title="Space_Cadet_Pinball ." Desc="A reversed engineered version Space Cadet Pi
 
 Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's game Spelunky Classic. Based on the source code published in Humble Weekly Bundle: Play and Create with GameMaker (not original 1.1 release)." porter="Christian_Haitian" locat="Spelunky.zip" runtype="rtr"
 
+Title="Starcatcher ." Desc="Starcatcher is a platformer inspired by Kirby, Metroid, Gravitron Experiment. Your goal: Collect stars in outer space." porter="Cebion" locat="starcatcher.zip" runtype="rtr"
+
 Title="Stardew_Valley ." Desc="An open-ended country-life RPG!  You must have a copy of the compatibility version of Stardew Valley copied to the ports/stardewvalley/gamedata folder." porter="Johnny on Flame" locat="StardewValley.zip" mono="y"
 
 Title_P="Steel_Assault ." Desc="Punch, whip, and zipline your way through a post-apocalyptic America in this 16-bit retro-style action platformer!  You must have a copy of Steel Assault for Linux copied to the ports/steelassault/gamedata folder." porter="Johnny on Flame" locat="SteelAssault.zip" mono="y"
@@ -232,7 +239,7 @@ Title="Super_Mario_War ." Desc="Super Mario War is a fan-made multiplayer Super 
 
 Title_P="Star_Wars_Jedi_Knight_-_Jedi_Academy ." Desc="An open source port of Jedi Academy using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediAcademy/base folder." porter="brooksytech" locat="JediAcademy.zip"
 
-Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of Jedi Outcast using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediOutcast/base folder." porter="brooksytech" locat="JediOutcast.zip""
+Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of Jedi Outcast using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediOutcast/base folder." porter="brooksytech" locat="JediOutcast.zip"
 
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
 
@@ -241,6 +248,8 @@ Title="Tamatool ." Desc="Tamatool is a Tamagotchi P1 emulator. Tamatool requires
 Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge.  To play the original Chip's Challenge levels, copy your "chips.dat" into 'ports/tileworld/data' and make sure it's lowercase.  The almost complete SDL2 conversion used: github.com/rangeli/tileworld" porter="Slayer366" locat="TileWorld.zip" runtype="rtr"
 
 Title="Timespinner ." Desc="Travel back in time to change fate itself, in this beautifully crafted story-driven adventure, inspired by classic 90s action-platformers.  You must have a copy of Timespinner for Linux copied to the ports/timespinner/gamedata folder." porter="Johnny on Flame" locat="Timespinner.zip" mono="y"
+
+Title="Tiny_Crate ." Desc="Tiny Crate is a cute little precision platformer with puzzle elements! Lift and toss crates to traverse over spike pits and reach higher ground! Push yourself and make tight jumps! You got this!." porter="Cebion" locat="tiny-crate.zip" runtype="rtr"
 
 Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 1 files to the ports/tombraider1 folder." porter="Jetup" locat="Tomb%20Raider%201.zip"
 
@@ -253,6 +262,8 @@ Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangam
 Title="VanillaRA ." Desc="Vanilla Conquer is a fully portable version Command and Conquer Red Alert. The game comes with the demo files, read the README for detailed information on installing the full game." porter="kloptops and Snoopy" locat="VanillaRA.zip" runtype="rtr"
 
 Title="VanillaTD ." Desc="Vanilla Conquer is a fully portable version Command and Conquer Tiberium Dawn. The game comes with the demo files, read the README for detailed information on installing the full game." porter="kloptops and Snoopy" locat="VanillaTD.zip" runtype="rtr"
+
+Title="VCMI ." Desc="VCMI is a fully portable version of Heroes of Might and Magic III. Copy the GoG installer files to ports/vcmi and it will install the game files as required, see the README for more information." porter="kloptops" locat="VCMI.zip"
 
 Title="VVVVVV ." Desc="VVVVVV is a 2010 puzzle-platform game created by Terry Cavanagh.  The free Make and Play Edition data.zip file is already included.  You can also add your own purchased copy of the data.zip from your VVVVVV into the ports/VVVVVV folder if you prefer that version instead." porter="Christian_Haitian" locat="VVVVVV.zip" runtype="rtr"
 
