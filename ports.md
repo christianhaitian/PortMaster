@@ -40,6 +40,9 @@ Title="Blood ." Desc="Blood port based on EDuke32.  You'll need to add your own 
 
 Title="Blues_Brothers ." Desc="A rewrite of the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Amiga or Dos files to the ports/bluesbrothers/gamedata folder." porter="Jetup" locat="Blues%20Brothers.zip" runtype="rtr"
 
+Title="Blues_Brothers:_Jukebox_Adventure ." Desc="A rewrite of the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/bbda/gamedata folder." porter="Jetup" locat="BBJA.zip" runtype="rtr"
+
+
 Title_F="Bugdom ." Desc="This is Pangea Software's Bugdom updated to run on modern operating systems. Use the touchscreen to navigate the UI." porter="brooksytech" locat="Bugdom.zip" runtype="rtr"
 
 Title="Cannonball ." Desc="This is the libretro port of the OutRun game engine recreation written by Chris White in 2014.  Add the OutRun Revision B ROMs into /ports/cannonball/gamedata folder. " porter="Christian_Haitian" locat="Cannonball.zip"
@@ -148,13 +151,13 @@ Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.
 
 Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrabbit games by Alister Thomson.  Includes the Jazz Jackrabiit shareware files.  You can add your own full game Dos files to the ports/openjazz/gamedata folder." porter="Jetup" locat="OpenJazz.zip" runtype="rtr"
 
-Title="OpenOMF ." Desc="An Open Source remake of "One Must Fall 2097" by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr"
+Title="OpenOMF ." Desc="An Open Source remake of 'One Must Fall 2097' by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr"
 
 Title="OpenTTD ." Desc="An open source simulation game based upon Transport Tycoon Deluxe." porter="Cebion" locat="Openttd.zip" runtype="rtr"
 
 Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyrian.  OpenTyrian 2.1 files are already included as they were made freeware sometime ago." porter="Christian_Haitian" locat="OpenTyrian.zip" runtype="rtr"
 
-Title="OpenRCD2 ." Desc="OpenRCT2 is Open source re-implementation of RollerCoaster Tycoon 2. Add your Roller Coaster Tycoon 2 game files to the ports/openrct2/RCT2 directory, and optionally add your Roller Coaster Tycoon 1 files to ports/openrct2/RCT1" porter="Kloptops" locat="OpenRCT2.zip"
+Title="OpenRCT2 ." Desc="OpenRCT2 is Open source re-implementation of RollerCoaster Tycoon 2. Add your Roller Coaster Tycoon 2 game files to the ports/openrct2/RCT2 directory, and optionally add your Roller Coaster Tycoon 1 files to ports/openrct2/RCT1" porter="Kloptops" locat="OpenRCT2.zip"
 
 Title="OpenXcom_Extended ." Desc="OXCE is an open source engine for running XCOM:Ufo Defense and Terror From the Deep.  You will need to provide your own UFO Defense/TFTD game files.  Read the README-port.txt file for details." porter="nl255" locat="Openxcom.zip"
 
@@ -236,7 +239,7 @@ Title="Super_Mario_War ." Desc="Super Mario War is a fan-made multiplayer Super 
 
 Title_P="Star_Wars_Jedi_Knight_-_Jedi_Academy ." Desc="An open source port of Jedi Academy using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediAcademy/base folder." porter="brooksytech" locat="JediAcademy.zip"
 
-Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of Jedi Outcast using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediOutcast/base folder." porter="brooksytech" locat="JediOutcast.zip""
+Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of Jedi Outcast using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediOutcast/base folder." porter="brooksytech" locat="JediOutcast.zip"
 
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr"
 
