@@ -149,6 +149,8 @@ Title="OpenBlok ." Desc="A customizable, cross platform, open-source falling blo
 
 Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.  Just download and play." porter="Cebion" locat="Openclaw.zip" runtype="rtr"
 
+Title="OpenFodder ." Desc="Open Fodder is an open source version of the Cannon Fodder engine. It comes with demo files, you can add the full version files by reading the included README.md" porter="Kloptops" locat="OpenFodder.zip" runtype="rtr"
+
 Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrabbit games by Alister Thomson.  Includes the Jazz Jackrabiit shareware files.  You can add your own full game Dos files to the ports/openjazz/gamedata folder." porter="Jetup" locat="OpenJazz.zip" runtype="rtr"
 
 Title="OpenOMF ." Desc="An Open Source remake of 'One Must Fall 2097' by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr"
