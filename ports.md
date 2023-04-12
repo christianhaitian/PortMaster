@@ -57,6 +57,8 @@ Title="Commander_Genius ." Desc="Commander Genius is an open-source clone of Com
 
 Title="CorsixTH ." Desc="An opensource clone of Theme Hospital.  Load your Theme Hospital files into the ports/corsixth/HOSP folder.  As an example, the demo files of Theme Hospital is already included." porter="Jetup and Romadu" locat="CorsixTH.zip" runtype="rtr"
 
+Title="Cosmo-Engine ." Desc="A new game engine to play the MS-DOS game Cosmo's Cosmic Adventure on modern systems. Episode 1 is included and you can add Episode 2 and 3 gamefiles to the data folder" runtype="rtr"
+
 Title_F="Cro-Mag_Rally ." Desc="This is a port of Pangea Software’s racing game Cro-Mag Rally. Take control of the caveman Brog as you race through the  Stone, Bronze, and Iron Ages in primitive vehicles." porter="brooksytech" locat="cromagrally.zip" runtype="rtr"
 
 Title="Dave_Gnukem ." Desc="Dave Gnukem is a cross-platform 2D scrolling platform shooter inspired by Duke Nukem 1." porter="Bamboozler" locat="Davegnukem.zip" runtype="rtr"
