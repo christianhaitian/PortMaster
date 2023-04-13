@@ -157,8 +157,6 @@ Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrab
 
 Title="OpenOMF ." Desc="An Open Source remake of 'One Must Fall 2097' by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr"
 
-Title="OpenTTD ." Desc="An open source simulation game based upon Transport Tycoon Deluxe." porter="Cebion" locat="Openttd.zip" runtype="rtr"
-
 Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyrian.  OpenTyrian 2.1 files are already included as they were made freeware sometime ago." porter="Christian_Haitian" locat="OpenTyrian.zip" runtype="rtr"
 
 Title="OpenRCT2 ." Desc="OpenRCT2 is Open source re-implementation of RollerCoaster Tycoon 2. Add your Roller Coaster Tycoon 2 game files to the ports/openrct2/RCT2 directory, and optionally add your Roller Coaster Tycoon 1 files to ports/openrct2/RCT1" porter="Kloptops" locat="OpenRCT2.zip"
