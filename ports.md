@@ -211,6 +211,8 @@ Title="Shipwreck ." Desc="Shipwreck is a top down adventure game in which you mu
 
 Title="Shovel_Knight_Treasure_Trove ." Desc="Shovel Knight Treasure Trove loader.  You must have a copy of Shovel Knight Treasure Trove for Linux copied to the ports/shovelknight/gamedata folder.  For more info on the setup needs, see https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information" porter="Johnny on Flame" locat="Shovel%20Knight.zip"
 
+Title="Simple_Sokoban ." Desc="Simple Sokoban is a simple Sokoban game that supports animated movements,unlimited level solutions, unlimited undos and more. It does not have any sound" porter="Bamboozler" locat="SimpleSokoban.zip" runtype="rtr"
+
 Title="SDLPoP ." Desc="An open-source port of Prince of Persia, based on the disassembly of the DOS version, extended with new features by NagyD" porter="Christian_Haitian" locat="SDLPoP.zip" runtype="rtr"
 
 Title="SkiJump3 ." Desc="Ski Jump International v3" porter="Cebion" locat="skijump3.zip" runtype="rtr"
