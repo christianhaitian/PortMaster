@@ -149,6 +149,8 @@ Title="NAM ." Desc="NAM using the rednukem build open source port by Alexey Khok
 
 Title_F="Nanosaur ." Desc="This is Pangea Software’s Nanosaur, which casts a cybernetic dinosaur from the future who’s sent back in time 20 minutes before a giant asteroid hits the Earth." porter="brooksytech" locat="nanosaur.zip" runtype="rtr"
 
+Title="Neverball ." Desc="Tilt the floor to roll a ball through an obstacle course within the given time. If the ball falls or time expires, a ball is lost. Includes Neverputt." porter="Bamboozler" locat="Neverball.zip" runtype="rtr"
+
 Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play." porter="Jetup" locat="nKaruga.zip" runtype="rtr"
 
 Title="OpenBlok ." Desc="A customizable, cross platform, open-source falling block game, packed with a bunch of features." porter="Bamboozler" locat="Openblok.zip" runtype="rtr"
