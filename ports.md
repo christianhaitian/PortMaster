@@ -14,7 +14,7 @@ Title="Aleph-One_Marathon_Infinity ." Desc="An open source version of Bungie's M
 
 Title="Alien_vs_Predator ." Desc="The three most ferocious species in the universe in a bloodthirsty battle for the ultimate prize: survival. Take your pick: be a Colonial Marine, a Predator or an Alien. Fight through suspense-filled environments: from starships and space stations to colonial bases and eerie planetscapes. One wrong move turns you from hunter to prey.  You will need the original files of the PC release copied to the ports/avp folder." porter="Cebion" locat="avp.zip" genres="fps,action"
 
-Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip" genres="action,adventure,platformer
+Title="AM2R ." Desc="Another Metroid 2 Remake.  An action-adventure game developed by Argentinian programmer Milton Guasti (also known as DoctorM64).  You'll need to provide your own am2r android apk into the ports/am2r/gamedata folder.  Make sure it is named am2r.apk.  The name is case sensitive." porter="Johnny on Flame" locat="AM2R.zip" genres="action,adventure,platformer"
 
 Title="Anarch ." Desc="Anarch is extremely small, completely public domain, no-dependency, no-file, portable suckless anarcho-pacifist from-scratch 90s-style Doom clone that runs everywhere, made for the benefit of all living beings" porter="Bamboozler" locat="Anarch.zip" runtype="rtr" genres="fps,action"
 
@@ -63,13 +63,13 @@ Title="Cosmo-Engine ." Desc="A new game engine to play the MS-DOS game Cosmo's C
 
 Title_F="Cro-Mag_Rally ." Desc="This is a port of Pangea Software’s racing game Cro-Mag Rally. Take control of the caveman Brog as you race through the  Stone, Bronze, and Iron Ages in primitive vehicles." porter="brooksytech" locat="cromagrally.zip" runtype="rtr" genres="racing"
 
-Title="Dave_Gnukem ." Desc="Dave Gnukem is a cross-platform 2D scrolling platform shooter inspired by Duke Nukem 1." porter="Bamboozler" locat="Davegnukem.zip" runtype="rtr" genres="fps,action"
+Title="Dave_Gnukem ." Desc="Dave Gnukem is a cross-platform 2D scrolling platform shooter inspired by Duke Nukem 1." porter="Bamboozler" locat="Davegnukem.zip" runtype="rtr" genres="action,platformer"
 
 Title="Der_Clou! ." Desc="A burglary simulation game originally created by neo Software Produktions GmbH.  Der Clou!'s files are already included and ready to go." porter="Cebion" locat="derclou.zip" runtype="rtr" genres="simulation,strategy"
 
 Title="DevilutionX ." Desc="DevilutionX is a source port of Diablo from https://github.com/diasurgical/devilutionX.  Includes the Diablo shareware version.  You can add your own full version DIABDAT.MPQ file to the ports/devilution folder.  To run the Diablo: Hellfire expansion you will need to also copy hellfire.mpq, hfmonk.mpq, hfmusic.mpq, hfvoice.mpq" porter="Christian_Haitian" locat="Devilutionx.zip" runtype="rtr" genres="action,rpg"
 
-Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery surfaces." porter="Christian_Haitian" locat="Dinothawr.zip" runtype="rtr" genes="puzzle"
+Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery surfaces." porter="Christian_Haitian" locat="Dinothawr.zip" runtype="rtr" genres="puzzle"
 
 Title="Diver_Down ." Desc="Diver Down is a stealth-platformer. Avoid the lights on 20 different stages using your mysterious Diver Down ability, that allows you to dive onto solids! ." porter="Cebion" locat="diverdown.zip" runtype="rtr" genres="platformer"
 
@@ -79,7 +79,7 @@ Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source
 
 Title="DungeonRush ." Desc="A opensource game inspired by Snake, written in pure C with SDL" porter="Bamboozler" locat="DungeonRush.zip" runtype="rtr" genres="rpg"
 
-Title="Enigma ." Desc="Enigma is a puzzle game inspired by Oxyd on the Atari ST and Rock'n'Roll on the Amiga" porter="Bamboozler" locat="Enigma.zip" runtype="rtr" genes="puzzle"
+Title="Enigma ." Desc="Enigma is a puzzle game inspired by Oxyd on the Atari ST and Rock'n'Roll on the Amiga" porter="Bamboozler" locat="Enigma.zip" runtype="rtr" genres="puzzle"
 
 Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip" genres="fps,action"
 
@@ -149,7 +149,7 @@ Title="NAM ." Desc="NAM using the rednukem build open source port by Alexey Khok
 
 Title_F="Nanosaur ." Desc="This is Pangea Software’s Nanosaur, which casts a cybernetic dinosaur from the future who’s sent back in time 20 minutes before a giant asteroid hits the Earth." porter="brooksytech" locat="nanosaur.zip" runtype="rtr" genres="fps"
 
-Title="Neverball ." Desc="Tilt the floor to roll a ball through an obstacle course within the given time. If the ball falls or time expires, a ball is lost. Includes Neverputt." porter="Bamboozler" locat="Neverball.zip" runtype="rtr"
+Title="Neverball ." Desc="Tilt the floor to roll a ball through an obstacle course within the given time. If the ball falls or time expires, a ball is lost. Includes Neverputt." porter="Bamboozler" locat="Neverball.zip" runtype="rtr" genres="platformer,puzzle"
 
 Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play." porter="Jetup" locat="nKaruga.zip" runtype="rtr" genres="fps"
 
