@@ -153,6 +153,8 @@ Title="Neverball ." Desc="Tilt the floor to roll a ball through an obstacle cour
 
 Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play." porter="Jetup" locat="nKaruga.zip" runtype="rtr" genres="fps"
 
+Title="Nonny ." Desc="A simple nonogram game that lets you play and create nonogram puzzles." porter="Bamboozler" locat="Nonny.zip" runtype="rtr" genres="puzzle"
+
 Title="OpenBlok ." Desc="A customizable, cross platform, open-source falling block game, packed with a bunch of features." porter="Bamboozler" locat="Openblok.zip" runtype="rtr" genres="puzzle"
 
 Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.  Just download and play." porter="Cebion" locat="Openclaw.zip" runtype="rtr" genres="platformer"
