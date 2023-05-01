@@ -79,6 +79,8 @@ Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source
 
 Title="DungeonRush ." Desc="A opensource game inspired by Snake, written in pure C with SDL" porter="Bamboozler" locat="DungeonRush.zip" runtype="rtr" genres="rpg"
 
+Title="Eity ." Desc="Eity is a free rhythm game with cool music in a similar vain to DDR. " porter="Cebion" locat="eity.zip" runtype="rtr" genres="rhytm"
+
 Title="Enigma ." Desc="Enigma is a puzzle game inspired by Oxyd on the Atari ST and Rock'n'Roll on the Amiga" porter="Bamboozler" locat="Enigma.zip" runtype="rtr" genres="puzzle"
 
 Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip" genres="fps,action"
