@@ -277,9 +277,9 @@ Title="Ultimate_Tapan_Kaikki ." Desc="A simple top-down shooter.  Just download 
 
 Title="Undertale ." Desc="Undertale loader.  You must have a copy of Undertale Linux version assets copied to the ports/undertale/assets folder.  For more info on the setup needs, see https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information" porter="krishenriksen (kreal)" locat="Undertale.zip" genres="rpg"
 
-Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install." porter="romadu" locat="UQM.zip" runtype="rtr" genres="strategy"
-
 Title="Upo ." Desc="Upo is a procedurally generated music game. Your goal is to avoid collision with flying objects in rhytm to the music." porter="Cebion" locat="upo.zip" runtype="rtr" genres="rhytm"
+
+Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install." porter="romadu" locat="UQM.zip" runtype="rtr" genres="strategy"
 
 Title="VanillaRA ." Desc="Vanilla Conquer is a fully portable version Command and Conquer Red Alert. The game comes with the demo files, read the README for detailed information on installing the full game." porter="kloptops and Snoopy" locat="VanillaRA.zip" runtype="rtr" genres="strategy"
 
