@@ -182,7 +182,7 @@ UpdateCheck() {
 		   local x360="Yes"
 		  fi
 		  unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
-		  if [ "${OS_NAME}" != "JELOS" ] || [ "${OS_NAME}" != "UnofficialOS" ]; then
+		  if [ "${OS_NAME}" != "JELOS" ] && [ "${OS_NAME}" != "UnofficialOS" ]; then
 		    mv -f $toolsfolderloc/PortMaster/PortMaster.sh $toolsfolderloc/.
 		    if [ -f "$toolsfolderloc/PortMaster/tasksetter.sh" ]; then
 		      rm -f "$toolsfolderloc/PortMaster/tasksetter.sh"
