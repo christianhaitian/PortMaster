@@ -297,3 +297,5 @@ Title="Wordle_SDL ." Desc="Wordle SDL is a port of a simple clone of Wordle made
 Title="World_War_II_GI ." Desc="World War 2 GI using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version WW2GI.GRP and WW2DI.RTS and .CON files and optionally CD audio tracks as OGG file in the format trackXX.ogg (where XX is the track number) to the ports/rednukem-WWII/gamedata folder." porter="romadu" locat="World%20War%20II%20GI.zip" genres="fps"
 
 Title="Worship_Vector ." Desc="Worship Vector is a Tower Defense type game. The game is based upon a unique map, which extends automatically.  Just download and play." porter="Cebion" locat="worship_vector.zip" runtype="rtr" genres="puzzle"
+
+Title="ZGloom ." Desc="ZGloom is a re-implementation of Amiga FPS Gloom, including support for Gloom 3, Gloom Deluxe and Zombie Massacre." porter="Bamboozler" locat="ZGloom.zip" runtype="rtr" genres="fps"
