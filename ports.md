@@ -52,6 +52,8 @@ Title="Cave_Story_lr ." Desc="Cave Story using the Libretro Retroarch Nxengine c
 
 Title="Cave_Story_(Evo) ." Desc="Cave Story using the Nxengine-evo engine from https://github.com/nxengine/nxengine-evo" porter="Christian_Haitian" locat="Cave%20Story-evo.zip" runtype="rtr" genres="action,adventure,platformer"
 
+Title="Celeste_Classic ." Desc="Celeste Classic is a C source port of the original celeste (Celeste classic)." porter="Bamboozler" locat="cceleste.zip" runtype="rtr" genres="platformer,puzzle"
+
 Title="C-Dogs ." Desc="C-Dogs is a classic overhead run-and-gun game" porter="Christian_Haitian" locat="C-Dogs.zip" runtype="rtr" genres="action,shooter"
 
 Title="Commander_Genius ." Desc="Commander Genius is an open-source clone of Commander Keen (1-6, Dreams) which allows you to play these episodes and some of the mods made for them.  Developed by Gerstrong.  Includes the shareware version of Commander Keen 1.  You can add load your own keen folders into the ports/cgenius/games folder" porter="Christian_Haitian" locat="Commander%20Genius.zip" runtype="rtr" genres="action,platformer"
