@@ -166,6 +166,8 @@ Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.
 
 Title="OpenFodder ." Desc="Open Fodder is an open source version of the Cannon Fodder engine. It comes with demo files, you can add the full version files by reading the included README.md" porter="Kloptops" locat="OpenFodder.zip" runtype="rtr" genres="strategy"
 
+Title="Open_Great_Giana_Sisters ." Desc="A Free Software/Open Source implementation/remake of The Great Giana Sisters." porter="Bamboozler" locat="OpenGGS.zip" runtype="rtr" genres="platformer"
+
 Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrabbit games by Alister Thomson.  Includes the Jazz Jackrabiit shareware files.  You can add your own full game Dos files to the ports/openjazz/gamedata folder." porter="Jetup" locat="OpenJazz.zip" runtype="rtr" genres="platformer"
 
 Title="OpenOMF ." Desc="An Open Source remake of 'One Must Fall 2097' by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr" genres="action"
