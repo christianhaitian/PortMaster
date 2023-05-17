@@ -262,6 +262,8 @@ Title_P="Star_Wars_Jedi_Knight_-_Jedi_Academy ." Desc="An open source port of Je
 
 Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of Jedi Outcast using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediOutcast/base folder." porter="brooksytech" locat="JediOutcast.zip" genres="fps"
 
+Title="LBreakoutHD ." Desc="LBreakoutHD is a scaleable 16:9 remake of LBreakout2. You try to clear levels full of different types of bricks and extras by using your paddle to aim balls at the bricks." porter="Bamboozler" locat="LBreakoutHD.zip" runtype="rtr" genres="other"
+
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr" genres="platformer"
 
 Title="Tamatool ." Desc="Tamatool is a Tamagotchi P1 emulator. Tamatool requires a compatible Tamagotchi P1 ROM called rom.bin in its folder" porter="Bamboozler" locat="Tamatool.zip" genres="simulation"
