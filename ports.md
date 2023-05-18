@@ -136,6 +136,8 @@ Title="iiChantra ." Desc="iiChantra is a cross-platform 2D-Action, «retro» in 
 
 Title="Invaders ." Desc="A memory accurate reimplementation of Space Invaders by loadzero.  You'll need to provide your own invaders.e, invaders.f, invaders.g, and invaders.h files from a MAME_078 romset into the invaders/inv1 folder." porter="romadu" locat="Invaders.zip" genres="action"
 
+Title="LBreakoutHD ." Desc="LBreakoutHD is a scaleable 16:9 remake of LBreakout2. You try to clear levels full of different types of bricks and extras by using your paddle to aim balls at the bricks." porter="Bamboozler" locat="LBreakoutHD.zip" runtype="rtr" genres="other"
+
 Title="Maldita_Castilla ." Desc="An arcade action video game developed by Locomalito and released in December 2012.  The gameplay is inspired by the games Shinobi and Ghost and Goblins." porter="krishenriksen (kreal)" locat="Maldita%20Castilla.zip" runtype="rtr" genres="action,adventure"
 
 Title="Meritous ." Desc="Action-adventure dungeon crawl game.  Meritous files are already included and ready to go." porter="Cebion" locat="Meritous.zip" runtype="rtr" genres="action,adventure"
@@ -261,8 +263,6 @@ Title="Super_Mario_War ." Desc="Super Mario War is a fan-made multiplayer Super 
 Title_P="Star_Wars_Jedi_Knight_-_Jedi_Academy ." Desc="An open source port of Jedi Academy using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediAcademy/base folder." porter="brooksytech" locat="JediAcademy.zip" genres="fps"
 
 Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of Jedi Outcast using OpenJK by the JACoders team. Originally developed by Raven Software. You need to add your own full game pak files to the ports/JediOutcast/base folder." porter="brooksytech" locat="JediOutcast.zip" genres="fps"
-
-Title="LBreakoutHD ." Desc="LBreakoutHD is a scaleable 16:9 remake of LBreakout2. You try to clear levels full of different types of bricks and extras by using your paddle to aim balls at the bricks." porter="Bamboozler" locat="LBreakoutHD.zip" runtype="rtr" genres="other"
 
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr" genres="platformer"
 
