@@ -88,6 +88,8 @@ Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  Y
 
 Title="Exult ." Desc="A port of Ultima 7.  You'll need A copy of the black gate and/or serpent isle added to ports/exult/data/blackgate and/or ports/exult/data/serpentisle." porter="nl255" locat="Exult.zip" genres="rpg"
 
+Title="F1_Race ." Desc="A port of the F1 Race game from MTK OS to SDL2 and Web using Emscripten." porter="Bamboozler" locat="F1Race.zip" runtype="rtr" genres="arcade,racing"
+
 Title="F2bgl ." Desc=" A reimplementation of the Fade to Black game.  You will need the original files of the PC release or PC demo copied to the ports/f2bgl folder." porter="Romadu" locat="fade_to_black.zip" genres="action,adventure"
 
 Title="Falling_Time ." Desc="Arcade game inspired by Fall Down.  Falling Time files are already included and ready to go." porter="Cebion" locat="falling_time.zip" runtype="rtr" genres="arcade"
