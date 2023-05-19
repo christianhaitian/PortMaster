@@ -136,6 +136,8 @@ Title="iiChantra ." Desc="iiChantra is a cross-platform 2D-Action, «retro» in 
 
 Title="Invaders ." Desc="A memory accurate reimplementation of Space Invaders by loadzero.  You'll need to provide your own invaders.e, invaders.f, invaders.g, and invaders.h files from a MAME_078 romset into the invaders/inv1 folder." porter="romadu" locat="Invaders.zip" genres="action"
 
+Title="Laser_Kombat ." Desc="Laser Kombat is a classic puzzle game, now available for modern systems. Destroy all the tanks to beat the level. Stay out of line of sight, though, or you will get shot. Shoot your lasers at mirrors, blow up bomb or push your enemies into water with movable blocks to win" porter="Bamboozler" locat="Laserkombat.zip" runtype="rtr" genres="puzzle"
+
 Title="LBreakoutHD ." Desc="LBreakoutHD is a scaleable 16:9 remake of LBreakout2. You try to clear levels full of different types of bricks and extras by using your paddle to aim balls at the bricks." porter="Bamboozler" locat="LBreakoutHD.zip" runtype="rtr" genres="other"
 
 Title="Maldita_Castilla ." Desc="An arcade action video game developed by Locomalito and released in December 2012.  The gameplay is inspired by the games Shinobi and Ghost and Goblins." porter="krishenriksen (kreal)" locat="Maldita%20Castilla.zip" runtype="rtr" genres="action,adventure"
