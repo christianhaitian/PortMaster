@@ -182,6 +182,8 @@ Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyr
 
 Title="OpenRCT2 ." Desc="OpenRCT2 is Open source re-implementation of RollerCoaster Tycoon 2. Add your Roller Coaster Tycoon 2 game files to the ports/openrct2/RCT2 directory, and optionally add your Roller Coaster Tycoon 1 files to ports/openrct2/RCT1" porter="Kloptops" locat="OpenRCT2.zip" genres="simulation"
 
+Title="OpenSupaplex ." Desc="OpenSupaplex is a 1:1 reimplementation of the original game in C and SDL." porter="Bamboozler" locat="OpenSupaplex.zip" runtype="rtr" genres="action,puzzle"
+
 Title="OpenXcom_Extended ." Desc="OXCE is an open source engine for running XCOM:Ufo Defense and Terror From the Deep.  You will need to provide your own UFO Defense/TFTD game files.  Read the README-port.txt file for details." porter="nl255" locat="Openxcom.zip" genres="strategy"
 
 Title_F="Otto_Matic ." Desc="This is Pangea Software’s Otto Matic. Take control of the robot Otto Matic and save earth from aliens from Planet X" porter="brooksytech" locat="ottomatic.zip" runtype="rtr" genres="action,adventure"
