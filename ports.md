@@ -166,6 +166,8 @@ Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play."
 
 Title="Nonny ." Desc="A simple nonogram game that lets you play and create nonogram puzzles." porter="Bamboozler" locat="Nonny.zip" runtype="rtr" genres="puzzle"
 
+Title="NPuzzle ." Desc="NPuzzle is a 15 puzzle style sliding game where you have to rearrange the tiles in order. Includes 6 background images" porter="Bamboozler" locat="NPuzzle.zip" runtype="rtr" genres="puzzle"
+
 Title="OpenBlok ." Desc="A customizable, cross platform, open-source falling block game, packed with a bunch of features." porter="Bamboozler" locat="Openblok.zip" runtype="rtr" genres="puzzle"
 
 Title="OpenClaw ." Desc="A Reimplementation of the 1997 Captain Claw platformer.  Just download and play." porter="Cebion" locat="Openclaw.zip" runtype="rtr" genres="platformer"
