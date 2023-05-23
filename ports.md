@@ -166,6 +166,8 @@ Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play."
 
 Title="Nonny ." Desc="A simple nonogram game that lets you play and create nonogram puzzles." porter="Bamboozler" locat="Nonny.zip" runtype="rtr" genres="puzzle"
 
+Title="Nova_Pinball ." Desc="A pinball game created with the Love game framework.\n\nYour mission: Make the star go nova. There are in-game hints that point out the next target to achieve your goal." porter="Cebion" locat="nova_pinball.zip" runtype="rtr" genres="arcade"
+
 Title="NPuzzle ." Desc="NPuzzle is a 15 puzzle style sliding game where you have to rearrange the tiles in order. Includes 6 background images" porter="Bamboozler" locat="NPuzzle.zip" runtype="rtr" genres="puzzle"
 
 Title="OpenBlok ." Desc="A customizable, cross platform, open-source falling block game, packed with a bunch of features." porter="Bamboozler" locat="Openblok.zip" runtype="rtr" genres="puzzle"
