@@ -216,6 +216,8 @@ Title="Redneck_Rampage_2 ." Desc="Redneck Rampage 2 using the rednukem build ope
 
 Title="Reminiscence ." Desc="A reimplementation of the Flashback game using the reminiscence engine by Alex Chermenin.  You will need the original files of the PC version copied to ports/reminiscence/gamedata folder." porter="jetup and romadu" locat="Reminiscence.zip" genres="action,adventure"
 
+Title="Retro_time ." Desc="RetroTime is a game containing 8 retro based games playable in 3 game modes being Retro Carousel, Time Attack and Lives mode." porter="Bamboozler" locat="RetroTime.zip" genres="arcade"
+
 Title="Return_to_Castle_Wolfenstein ." Desc="Return to Castle Wolfenstein using the iortcw project.  With porting work done by JohnnyonFlame.  Packaged by Romadu. You'll need to add your own pak0.pk3, sp_pak1.pk3, sp_pak2.pk3, and sp_pak3.pk3 to the ports/iortcw/main folder." porter="JohnnyonFlame" locat="iortcw.zip" genres="fps"
 
 Title="Rick_Dangerous ." Desc="An open source implementation of the legendary game "Rick Dangerous" using the xrick libretro retroarch core.  All necessary files are already included." porter="Christian_Haitian" locat="Rick%20Dangerous.zip" runtype="rtr" genres="action,adventure"
