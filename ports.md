@@ -246,6 +246,8 @@ Title="Simple_Sokoban ." Desc="Simple Sokoban is a simple Sokoban game that supp
 
 Title="SDLPoP ." Desc="An open-source port of Prince of Persia, based on the disassembly of the DOS version, extended with new features by NagyD" porter="Christian_Haitian" locat="SDLPoP.zip" runtype="rtr" genres="platformer"
 
+Title="SDLSopwith ." Desc="SDL Sopwith is a port of the game Sopwith, which was originally by BMB CompuScience Canada." porter="Bamboozler" locat="SDLSopwith.zip" runtype="rtr" genres="arcade"
+
 Title="SkiJump3 ." Desc="Ski Jump International v3" porter="Cebion" locat="skijump3.zip" runtype="rtr" genres="sports"
 
 Title="Sonic_1 ." Desc="Sonic the Hedgehog 1 decompilation by Rubberduckycooly.  Just add your own android Data.rsdk file to the ports/sonic1 folder.  See the wiki for more info on this" porter="Christian_Haitian" locat="Sonic%201.zip" genres="platformer"
