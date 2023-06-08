@@ -282,6 +282,8 @@ Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of
 
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr" genres="platformer"
 
+Title="SuperTuxKart ." Desc="SuperTuxKart is a 3D open-source arcade racer with a variety characters, tracks, and modes to play. This port uses the low quality mobile assets. See the readme file for instructions on adding the full quality assets.  !!!Warning!!! This is a 123MB package and will take a while to download and install." porter="Bamboozler" locat="SuperTuxKart.zip" runtype="rtr" genres="racing"
+
 Title="Tamatool ." Desc="Tamatool is a Tamagotchi P1 emulator. Tamatool requires a compatible Tamagotchi P1 ROM called rom.bin in its folder" porter="Bamboozler" locat="Tamatool.zip" genres="simulation"
 
 Title="Thermomorph ." Desc="An Alien-inspired survive-the-night horror game, created in Love2D." porter="Cebion" locat="thermomorph.zip" runtype="rtr" genres="simulation,other"
