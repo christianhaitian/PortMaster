@@ -200,6 +200,8 @@ Title="Owlboy ." Desc="A story-driven platform adventure game, where you can fly
 
 Title="Pekka_Kana_2 ." Desc="Pekka Kana 2 (Pekka the Rooster 2) is a jump 'n run game made in the spirit of old classic platformers such as Super Mario, Sonic the Hedgehog, Jazz Jackrabbit, Super Frog and so on. Pekka Kana 2 files are already included and ready to go." porter="Cebion" locat="pekka-kana-2.zip" runtype="rtr" genres="platformer"
 
+Title="Pigeon_Ascent ." Desc="*Optimized for 4:3 640x480 and 5:3 1920x1152*. Take care of your own pigeon as they fight increasingly stronger foes, and then face the legendary Pigeon God at the end... can you keep death far from your bird? Pigeon Ascent files are already included and ready to go." porter="Tekkenfede" locat="pigeon.zip" runtype="rtr" genres="strategy"
+
 Title="Powder ." Desc="A roguelike is a dungeon crawler where no two games are the same. The maps are different, the items are different, there are no guaranteed win paths.  Powder files are already included and ready to go." porter="Cebion" locat="powder.zip" runtype="rtr" genres="rpg"
 
 Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip" runtype="rtr" genres="platformer"
