@@ -202,6 +202,8 @@ Title="Pekka_Kana_2 ." Desc="Pekka Kana 2 (Pekka the Rooster 2) is a jump 'n run
 
 Title="Pigeon_Ascent ." Desc="*Optimized for 4:3 640x480 and 5:3 1920x1152*. Take care of your own pigeon as they fight increasingly stronger foes, and then face the legendary Pigeon God at the end... can you keep death far from your bird? Pigeon Ascent files are already included and ready to go." porter="Tekkenfede" locat="pigeon.zip" runtype="rtr" genres="strategy"
 
+Title="Planet Waves." Desc="*Works in 640x480. Optimized for 4:3 or higher aspect ratio. Could scale weirdly on gameboy like aspect ratio. *. An arcade tower defense about protecting a small planet made for the gotm.io jam #3 by Escada Games. Planet Waves files are already included and ready to go." porter="Tekkenfede" locat="planetWaves.zip" runtype="rtr" genres="strategy"
+
 Title="Powder ." Desc="A roguelike is a dungeon crawler where no two games are the same. The maps are different, the items are different, there are no guaranteed win paths.  Powder files are already included and ready to go." porter="Cebion" locat="powder.zip" runtype="rtr" genres="rpg"
 
 Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip" runtype="rtr" genres="platformer"
