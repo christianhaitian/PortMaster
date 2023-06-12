@@ -326,6 +326,8 @@ Title="World_War_II_GI ." Desc="World War 2 GI using the rednukem build open sou
 
 Title="Worship_Vector ." Desc="Worship Vector is a Tower Defense type game. The game is based upon a unique map, which extends automatically.  Just download and play." porter="Cebion" locat="worship_vector.zip" runtype="rtr" genres="puzzle"
 
+Title="xkcd Hoverboard ." Desc="Native port of xkcd 1608 Hoverboard game." porter="Bamboozler" locat="Hoverboard.zip" runtype="rtr" genres="platformer"
+
 Title="ZGloom ." Desc="ZGloom is a re-implementation of Amiga FPS Gloom, including support for Gloom 3, Gloom Deluxe and Zombie Massacre." porter="Bamboozler" locat="ZGloom.zip" runtype="rtr" genres="fps"
 
 Title="Znax ." Desc="Znax is a remake of a game by Nick Kouvaris. It is a sort of puzzle / arcade game where you as the player need to select 4 blocks of the same color and form rectangles as big as you can." porter="Bamboozler" locat="Znax.zip" runtype="rtr" genres="puzzle"
