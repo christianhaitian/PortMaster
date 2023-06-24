@@ -74,6 +74,8 @@ Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery s
 
 Title="Diver_Down ." Desc="Diver Down is a stealth-platformer. Avoid the lights on 20 different stages using your mysterious Diver Down ability, that allows you to dive onto solids! ." porter="Cebion" locat="diverdown.zip" runtype="rtr" genres="platformer"
 
+Title="Dome_Romantik ." Desc="*Optimized for 4:3 (with touch support) and 16:9(or similar ex. rg552). Could scale weirdly on gameboy like aspect ratio.* Dig your way through to the core of the planet. Mine minerals, bring them back to your dome and install upgrades just in time to defend from hostile lifeforms. Dome Romantik files are already included and ready to go. To Force a particular version rename the desired one in the installation folder as domeromantik-linux.zip(same with gptk file) and delete the others ones, then boot." porter="Tekkenfede" locat="DomeRomantik.zip" runtype="rtr" genres="strategy,action"
+
 Title_P="Doom_3 ." Desc="Doom 3 is a 2004 survival horror first-person shooter video game developed by id Software and published by Activision. You need to add your own full game pak files to the ports/doom3/base folder." porter="brooksytech" locat="doom3.zip" genres="fps,action"
 
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip" genres="fps,action"
