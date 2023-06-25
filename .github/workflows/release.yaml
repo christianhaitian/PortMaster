@@ -61,6 +61,10 @@ jobs:
         id: portmaster-zip
         run: |
           zip -9 -r ./PortMaster.zip PortMaster/
+      - name: Create images zip from images Folder
+        id: images-zip
+        run: |
+          zip -9 -r ./images.zip images/
       - name: Create md5 hashes
         id: md5
         run: |
