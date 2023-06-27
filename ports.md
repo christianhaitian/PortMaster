@@ -68,7 +68,7 @@ Title="Dave_Gnukem ." Desc="Dave Gnukem is a cross-platform 2D scrolling platfor
 
 Title="Der_Clou! ." Desc="A burglary simulation game originally created by neo Software Produktions GmbH.  Der Clou!'s files are already included and ready to go." porter="Cebion" locat="derclou.zip" runtype="rtr" genres="simulation,strategy"
 
-Title="DevilutionX ." Desc="DevilutionX is a source port of Diablo from https://github.com/diasurgical/devilutionX.  Includes the Diablo shareware version.  You can add your own full version DIABDAT.MPQ file to the ports/devilution folder.  To run the Diablo: Hellfire expansion you will need to also copy hellfire.mpq, hfmonk.mpq, hfmusic.mpq, hfvoice.mpq. See wiki if you experience issues with version upgrades or configuration chages." porter="Christian_Haitian" locat="Devilutionx.zip" runtype="rtr" genres="action,rpg"
+Title="DevilutionX ." Desc="DevilutionX is a source port of Diablo from https://github.com/diasurgical/devilutionX.  Includes the Diablo shareware version.  You can add your own full version DIABDAT.MPQ file to the ports/devilution folder.  To run the Diablo: Hellfire expansion you will need to also copy hellfire.mpq, hfmonk.mpq, hfmusic.mpq, hfvoice.mpq. See wiki if you experience issues with version upgrades or configuration changes." porter="Christian_Haitian" locat="Devilutionx.zip" runtype="rtr" genres="action,rpg"
 
 Title="Dinothawr ." Desc="Dinothawr is a block pushing puzzle game on slippery surfaces." porter="Christian_Haitian" locat="Dinothawr.zip" runtype="rtr" genres="puzzle"
 
