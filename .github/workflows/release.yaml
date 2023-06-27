@@ -64,7 +64,9 @@ jobs:
       - name: Create images zip from images Folder
         id: images-zip
         run: |
-          zip -9 -r ./images.zip images/
+          find images -iname '*.jpg' -exec touch -d '2021-01-01 00:00:00' {} \;
+          find images -iname '*.jpg' -exec chmod 644 {} \;
+          find images -iname '*.jpg' | sort | TZ=UTC zip -qX images.zip -@
       - name: Create md5 hashes
         id: md5
         run: |
