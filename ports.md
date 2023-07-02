@@ -218,7 +218,7 @@ Title="Quake_2 ." Desc="Quake 2 is the sequel to Quake 1, one of the first fully
 
 Title="Quake_3 ." Desc="Quake III Arena is a 1999 multiplayer-focused first-person shooter developed by id Software.  You need to add your own full game pak files and product key to the ports/quake3/baseq3 folder." porter="brooksytech" locat="Quake3.zip" genres="fps"
 
-Title="Raptor ." Desc="Reversed-engineered source port from Raptor Call Of The Shadows. Shareware files are included and game is ready to run. See readme for detailed instructions for full version game files and other configuration options. In the name and callsign section, make sure the crosshair is not on input fields, press start + down to enable text entry. Press start once done to complete entry." porter="brooksytech" locat="Raptor.zip" runtype="rtr" genres="arcade"
+Title="Raptor ." Desc="Reversed-engineered source port from Raptor Call Of The Shadows. Shareware files are included and game is ready to run. See readme for detailed instructions for full version game files and other configuration options. In the name and callsign section, make sure the crosshair is not on input fields, press start + down to enable text entry. Press start once done to complete entry." porter="Bamboozler" locat="Raptor.zip" runtype="rtr" genres="arcade"
 
 Title="RAWGL ." Desc="A re-implementation of the engine used in the game Another World aka Out of this World in the US.  Includes the Out of this World demo files.  You can add your own full game files to the ports/rawgl/gamedata/ folder.  See https://github.com/cyxx/rawgl#supported-versions for more supported files info." porter="Jetup" locat="RAWGL.zip" runtype="rtr" genres="action,adventure"
 
