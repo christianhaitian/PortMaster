@@ -192,6 +192,8 @@ Title="OpenRCT2 ." Desc="OpenRCT2 is Open source re-implementation of RollerCoas
 
 Title="OpenSupaplex ." Desc="OpenSupaplex is a 1:1 reimplementation of the original game in C and SDL." porter="Bamboozler" locat="OpenSupaplex.zip" runtype="rtr" genres="action,puzzle"
 
+Title="OpenSyobon ." Desc="An SDL-based cross-platform port of Syobon Action" porter="Bamboozler" locat="OpenSyobon.zip" runtype="rtr" genres="platformer"
+
 Title="OpenXcom_Extended ." Desc="OXCE is an open source engine for running XCOM:Ufo Defense and Terror From the Deep.  You will need to provide your own UFO Defense/TFTD game files.  Read the README-port.txt file for details." porter="nl255" locat="Openxcom.zip" genres="strategy"
 
 Title_F="Otto_Matic ." Desc="This is Pangea Software’s Otto Matic. Take control of the robot Otto Matic and save earth from aliens from Planet X" porter="brooksytech" locat="ottomatic.zip" runtype="rtr" genres="action,adventure"
