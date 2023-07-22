@@ -1,0 +1,626 @@
+#!/usr/bin/env python3
+
+import hashlib
+import os
+import shutil
+import sys
+import textwrap
+import zipfile
+
+from pathlib import Path
+
+################################################################################
+## This speeds up harbourmaster from 4-5 seconds to 1-2 seconds.
+##
+## Insert our extra modules.
+PYLIB_ZIP     = Path(__file__).parent / 'pylibs.zip'
+PYLIB_ZIP_MD5 = Path(__file__).parent / 'pylibs.zip.md5'
+PYLIB_PATH    = Path(__file__).parent / 'pylibs'
+
+if (Path(__file__).parent / 'exlibs').is_dir():
+    EXLIB_PATH = Path(__file__).parent / 'exlibs'
+    sys.path.insert(0, str(EXLIB_PATH))
+    sys.path.insert(0, str(PYLIB_PATH))
+
+else:
+    if PYLIB_ZIP.is_file():
+        if PYLIB_PATH.is_dir():
+            shutil.rmtree(PYLIB_PATH)
+
+        PYLIB_PATH.mkdir(0o755)
+        with zipfile.ZipFile(PYLIB_ZIP, 'r') as zf:
+            zf.extractall(PYLIB_PATH)
+
+        md5_check = hashlib.md5()
+        with PYLIB_ZIP.open('rb') as fh:
+            while True:
+                data = fh.read(1024 * 1024)
+                if len(data) == 0:
+                    break
+
+                md5_check.update(data)
+
+        with PYLIB_ZIP_MD5.open('wt') as fh:
+            fh.write(md5_check.hexdigest())
+
+        del md5_check
+
+        PYLIB_ZIP.unlink()
+
+    sys.path.insert(0, str(PYLIB_PATH))
+
+################################################################################
+## Now load the stuff we include
+import utility
+import harbourmaster
+import requests
+
+from utility import cprint, do_cprint_output
+from loguru import logger
+
+from harbourmaster import (
+    HarbourMaster,
+    make_temp_directory,
+    add_list_unique,
+    )
+
+
+LOG_FILE = harbourmaster.HM_TOOLS_DIR / "PortMaster" / "harbourmaster.txt"
+if LOG_FILE.parent.is_dir():
+    LOG_FILE_HANDLE = logger.add(LOG_FILE, level="DEBUG", backtrace=True, diagnose=True)
+
+
+################################################################################
+## Self updater url
+HM_UPDATE_URLS = {
+    "harbourmaster": "https://github.com/kloptops/harbourmaster/raw/main/harbourmaster.md5",
+    "pylibs.zip": "https://github.com/kloptops/harbourmaster/raw/main/pylibs.zip.md5",
+    }
+
+
+def self_upgrade():
+    """
+    Self-upgrading code.
+    """
+    if harbourmaster.HM_TESTING:
+        cprint("<error>Unable to update in test environment.</error>")
+        return 255
+
+    self_path = Path(__file__).parent
+
+    if not self_path.is_absolute():
+        self_path = self_path.absolute()
+
+    results = []
+
+    cprint("<b>Performing Self Upgrade.</b>")
+    for file_name, file_url_md5 in HM_UPDATE_URLS.items():
+        if not file_url_md5.endswith('.md5'):
+            logger.error("Self Upgrade: Something is funky, quitting.")
+            return 255
+
+        file_md5_result = harbourmaster.fetch_text(file_url_md5)
+        if file_md5_result is None:
+            logger.error(f"Self Upgrade: File download failed. [{file_url_md5}]")
+            return 255
+
+        file_md5_result = file_md5_result.strip()
+
+        if file_name == 'pylibs.zip':
+            if (self_path / (file_name + '.md5')).is_file():
+                if (self_path / (file_name + '.md5')).read_text().strip() == file_md5_result:
+                    cprint(f"- skipping <b>{file_name!r}</b>, already up to date. [<b>{file_md5_result}</b>]")
+                    continue
+
+        elif (self_path / file_name).is_file():
+            md5 = hashlib.md5()
+            with open(self_path / file_name, 'rb') as fh:
+                md5.update(fh.read())
+
+            if md5.hexdigest() == file_md5_result:
+                cprint(f"- skipping <b>{file_name!r}</b>, already up to date. [<b>{file_md5_result}</b>]")
+                continue
+
+        file_url = file_url_md5.rsplit('.', 1)[0]
+
+        file_data = harbourmaster.fetch_data(file_url)
+        if file_data is None:
+            logger.error(f"Self Upgrade: File download failed. [{file_url}]")
+            return 255
+
+        md5 = hashlib.md5()
+        md5.update(file_data)
+        file_md5_check = md5.hexdigest()
+
+        if file_md5_check != file_md5_result:
+            logger.error(f"Self Upgrade: MD5 sum doesn't match. [{file_md5_check} vs {file_md5_result}]")
+            return 255
+
+        results.append((file_name, file_data))
+
+    if len(results) == 0:
+        cprint("<b>Skipping, harbourmaster is already up to date.</b>")
+
+    else:
+        cprint("<b,g,>Succesfully fetched files, updating.</b,g,>")
+        for file_name, file_data in results:
+            cprint(f"- updating <b>{file_name!r}</b>")
+            with open(self_path / file_name, 'wb') as fh:
+                fh.write(file_data)
+            cprint("  done.")
+
+        cprint("<b>All Done!</b>")
+
+    return 0
+
+
+"""
+HM_NEED_UPDATE = False
+
+def first_run():
+    r = requests.get("https://github.com/kloptops/harbourmaster/raw/main/sources/defaults.json")
+    if r.status_code != 200:
+        logger.error(f"Unable to fetch sources list. [{r.status_code}]")
+        exit(255)
+
+    sources = r.json()
+    for source, data in sources.items():
+
+
+if not (harbourmaster.HM_TOOLS_DIR / "PortMaster" / "config").is_dir():
+    first_run()
+"""
+
+################################################################################
+## Commands
+
+
+def do_auto_update(hm, argv):
+    """
+    Force auto update available ports.
+    """
+    for source in hm.sources:
+        hm.sources[source].auto_update()
+
+    return 0
+
+
+def do_update(hm, argv):
+    """
+    Update available ports, checks for new releases.
+    """
+    if len(argv) == 0:
+        argv = ('all', )
+
+    if argv[0].lower() == 'all':
+        cprint('<b>Updating all port sources:</b>')
+        for source in hm.sources:
+            hm.sources[source].update()
+    else:
+        for arg in argv:
+            if arg not in hm.sources:
+                cprint(f'<warn>Unknown source {arg}</warn>')
+                continue
+
+            cprint(f'<b>Updating {arg}:<b/>')
+            hm.sources[arg].update()
+
+    return 0
+
+
+def do_list(hm, argv):
+    """
+    List available ports
+
+    {command} list [filters]
+    """
+    ports = hm.list_ports(argv)
+    available_filters = set()
+
+    cprint("Available ports:")
+    for port in sorted(ports.keys(), key=lambda port: ports[port]['attr']['title'].casefold()):
+        port_info = ports[port]
+        cprint(f"- <b>{port}<b>: <b,g,>{port_info['attr']['title']}</b,g,>")
+        cprint("")
+        cprint('\n'.join(textwrap.wrap(port_info['attr']['desc'], width=70, initial_indent='    ', subsequent_indent='    ')))
+        cprint("")
+        cprint("")
+
+        available_filters.update(hm.port_info_attrs(ports[port]))
+
+    available_filters -= set(argv)
+
+    cprint(f'<r>Filters</r>: <m>{", ".join(sorted(available_filters))}</m>')
+
+    return 0
+
+
+def do_ports(hm, argv):
+    """
+    List installed ports
+
+    {command} ports [filters]
+    """
+    if len(hm.installed_ports) > 0:
+        cprint("<b,g,>Installed Ports:</b,g,>")
+        for port in hm.installed_ports:
+            cprint(f"- <b>{port}</b>")
+
+        cprint()
+
+    if len(hm.unknown_ports) > 0:
+        cprint("<warn>Unknown Ports:</warn>")
+        for file_name in hm.unknown_ports:
+            cprint(f"- <b>{file_name}</b>")
+
+        cprint()
+
+    if len(hm.broken_ports) > 0:
+        cprint("<error>Broken Ports:</error>")
+        for port in hm.broken_ports:
+            cprint(f"- <b>{port}</b>")
+
+        cprint()
+
+    if sum((len(hm.installed_ports), len(hm.unknown_ports), len(hm.broken_ports))) == 0:
+        cprint("No ports found.")
+
+        cprint()
+
+    return 0
+
+
+def do_portsmd(hm, argv):
+    """
+    List available ports in a format portmaster can use.
+
+    {command} portsmd
+    """
+    if len(argv) > 0:
+        results = []
+        for arg in argv:
+            if arg == '':
+                continue
+
+            if ',' in arg:
+                results.extend([
+                    x
+                    for x in arg.split(',')
+                    if x != ''])
+            else:
+                results.append(arg)
+
+        argv = results
+
+    ports = hm.list_ports(argv)
+    available_filters = set()
+
+    cprint()
+    for port in sorted(ports.keys(), key=lambda port: ports[port]['attr']['title'].casefold()):
+        cprint(hm.portmd(ports[port]))
+        cprint()
+        available_filters.update(hm.port_info_attrs(ports[port]))
+
+    available_filters -= set(argv)
+
+    # Always remove these filters
+    available_filters -= {'installed', 'broken'}
+
+    cprint(f'<r>Filters</r>="<m>{",".join(sorted(available_filters))}</m>"')
+
+    return 0
+
+
+def do_uninstall(hm, argv):
+    """
+    Uninstall a port
+
+    {command} uninstall Half-Life.zip             # Uninstall half-life.zip
+    """
+    if len(argv) == 0:
+        cprint("Missing arguments.")
+        return do_help(hm, ['uninstall'])
+
+    for arg in argv:
+        result = hm.uninstall_port(arg)
+        if result != 0:
+            return result
+
+    return 0
+
+
+def do_install(hm, argv):
+    """
+    Install a port
+
+    {command} install Half-Life.zip               # Install from highest priority repo
+    {command} install */Half-Life.zip             # Same as above.
+    {command} install pm/Half-Life.zip            # Install specifically from Portmaster repo
+    {command} install klops/Half-Life.zip         # Install specifically from Kloptops repo
+    {command} install https://example.com/example_port.zip # Download a port from a url
+    {command} install ./Half-Life.zip             # Install port from local file
+    """
+    if len(argv) == 0:
+        cprint("Missing arguments.")
+        return do_help(hm, ['install'])
+
+    for arg in argv:
+        result = hm.install_port(arg)
+        if result != 0:
+            return result
+
+    return 0
+
+
+def do_upgrade(hm, argv):
+    """
+    Upgrade a port
+
+    {command} upgrade Half-Life.zip               # Update from highest priority repo
+    {command} upgrade */Half-Life.zip             # Same as above.
+    {command} upgrade pm/Half-Life.zip            # Update specifically from portmaster repo
+    """
+
+    if len(argv) == 0:
+        cprint("Missing arguments.")
+        return do_help(hm, ['upgrade'])
+
+    if len(argv) == 1 and argv[0] == 'harbourmaster':
+        ## SPECIAL CASE!
+
+        return self_upgrade()
+
+    logger.error("Error: Not yet implemented.")
+    return 255
+
+
+def do_runtime_list(hm, argv):
+    """
+    List available runtimes
+
+    {command} runtime_list
+    """
+    runtimes = []
+
+    for source_prefix, source in hm.sources.items():
+        for runtime in source.utils:
+            add_list_unique(runtimes, runtime)
+
+    runtimes.sort()
+
+    cprint("<b>Available Runtimes:</b>")
+    for runtime in runtimes:
+        installed = ""
+        if (hm.libs_dir / runtime).is_file():
+            installed = " <b,g,>(installed)</b,g,>"
+
+        cprint(f"- {runtime}{installed}")
+
+    return 0
+
+
+def do_runtime_check(hm, argv):
+    """
+    Check if a runtime is installed, if not install it.
+
+    {command} runtime_check "mono-6.12.0.122-aarch64.squashfs"
+    """
+
+    if len(argv) == 0:
+        cprint("Missing arguments.")
+        return do_help(hm, ['runtime_check'])
+
+    return hm.check_runtime(argv[0])
+
+
+def do_reload(hm, argv):
+    """
+    Reloads ports list
+
+    {command} reload
+    """
+    hm.load_ports()
+
+    return 0
+
+
+def do_fifo_control(hm, argv):
+    """
+    {command} --quiet --no-check fifo_control /dev/shm/portmaster/hm_input /dev/shm/portmaster/hm_done > /dev/null &
+
+    echo "portsmd:/dev/shm/portmaster/ports.md:" | sudo tee /dev/shm/portmaster/hm_input > /dev/null
+
+    """
+    if len(argv) < 2:
+        return 0
+
+    logger.info("-- Beginning Fifo Control --")
+
+    fifo_file = Path(argv[0])
+    done_file = Path(argv[1])
+
+    if fifo_file.exists():
+        fifo_file.unlink()
+
+    if done_file.exists():
+        done_file.unlink()
+
+    try:
+        os.mkfifo(fifo_file, mode=0o777)
+
+        with open(argv[0], 'r') as pipe:
+            while True:
+                args = pipe.readline().strip()
+                if not args:
+                    continue
+
+                args = args.split(':')
+
+                if args[0] == 'exit':
+                    return 0
+
+                if len(args) < 2:
+                    continue
+
+                logger.info(f"fifo: {args}")
+                if args[1] == "":
+                    fifo_commands[args[0].casefold()](hm, args[2:])
+                else:
+                    with open(args[1], 'w') as fh:
+                        do_cprint_output(fh)
+                        fifo_commands[args[0].casefold()](hm, args[2:])
+                        do_cprint_output(None)
+
+                done_file.touch(mode=0o755, exist_ok=True)
+
+    finally:
+        if fifo_file.exists():
+            fifo_file.unlink()
+
+        logger.info("-- Endo Fifo Control --")
+
+
+def do_help(hm, argv):
+    """
+    Shows general help or help for a particular command.
+
+    {command} help
+    {command} help list
+    """
+    command = sys.argv[0]
+    if '/' in command:
+        command = command.rsplit('/', 1)[1]
+
+    if len(argv) > 0:
+        if argv[0].lower() not in all_commands:
+            cprint(f"Error: unknown help command <b>{argv[0]}</b>")
+            do_help(hm, [])
+            return 255
+
+        cprint(textwrap.dedent(all_commands[argv[0].lower()].__doc__.format(command=command)).strip())
+        return 0
+
+    cprint(f"{command} <d>[flags]</d> <b><update></b> <d>[source or all]</d> ")
+    cprint(f"{command} <d>[flags]</d> <b><install/upgrade></b> <d>[source/]</d><port_name>.zip ")
+    cprint(f"{command} <d>[flags]</d> <uninstall> <port_name> ")
+    cprint(f"{command} <d>[flags]</d> <b><list/portsmd></b> <d>[source or all]</d> <d>[... filters]</d>")
+    cprint(f"{command} <d>[flags]</d> <b><ports></b>")
+    cprint(f"{command} <d>[flags]</d> <b><runtime_check></b> <runtime>")
+    cprint(f"{command} <d>[flags]</d> <b><runtime_list></b>")
+    cprint(f"{command} <d>[flags]</d> <b><help></b> <command>")
+    cprint()
+    cprint("Flags:")
+    cprint("  --quiet        - less text")
+    cprint("  --debug        - more text")
+    cprint("  --no-check     - dont check for ports updates unless you run <b>update</b>")
+    cprint("  --force-colour - force colour output")
+    cprint("  --no-colour    - force no colour output")
+    cprint("  --no-log       - do not log to harbourmaster.txt")
+    cprint()
+    cprint("All available commands: <b>" + ('</b>, <b>'.join(all_commands.keys())) + "</b>")
+    cprint()
+
+    return 0
+
+
+fifo_commands = {
+    'portsmd': do_portsmd,
+    'reload': do_reload,
+    'update': do_update,
+    'auto_update': do_auto_update,
+    }
+
+all_commands = {
+    'update': do_update,
+    'auto_update': do_auto_update,
+    'portsmd': do_portsmd,
+    'ports': do_ports,
+    'list': do_list,
+    'install': do_install,
+    'uninstall': do_uninstall,
+    'upgrade': do_upgrade,
+    'runtime_list': do_runtime_list,
+    'runtime_check': do_runtime_check,
+    'help': do_help,
+    }
+
+
+@logger.catch
+def main(argv):
+    global LOG_FILE_HANDLE
+
+    with make_temp_directory() as temp_dir:
+        argv = argv[:]
+
+        config = {
+            'quiet': False,
+            'no-check': False,
+            'debug': False,
+            'no-colour': False,
+            'force-colour': False,
+            'no-log': False,
+            'help': False,
+            }
+
+        i = 1
+        while i < len(argv):
+            if argv[i] == '--':
+                del argv[i]
+                break
+
+            if argv[i].startswith('--'):
+                if argv[i][2:] in config:
+                    config[argv[i][2:]] = True
+                else:
+                    if not config['quiet']:
+                        logger.error(f"unknown argument {argv}")
+
+                del argv[i]
+                continue
+
+            i += 1
+
+        if config['quiet']:
+            logger.remove(0)  # For the default handler, it's actually '0'.
+            logger.add(sys.stderr, level="ERROR")
+        elif config['debug']:
+            logger.remove(0)  # For the default handler, it's actually '0'.
+            logger.add(sys.stderr, level="DEBUG")
+
+        if config['no-log']:
+            logger.remove(LOG_FILE_HANDLE)
+            LOG_FILE_HANDLE = None
+
+        if config['no-colour']:
+            utility.do_color(False)
+        elif config['force-colour']:
+            utility.do_color(True)
+
+        hm = HarbourMaster(config, temp_dir=temp_dir)
+
+        if config['help']:
+            all_commands['help'](hm, argv[1:])
+            return 1
+
+        if len(argv) == 1:
+            all_commands['help'](hm, [])
+            return 1
+
+        if argv[1].casefold() == 'nothing':
+            ## This is used to lazily update sources.
+            return 0
+
+        if argv[1].casefold() == 'fifo_control':
+            do_fifo_control(hm, argv[2:])
+            return 0
+
+        if argv[1].casefold() not in all_commands:
+            cprint(f'Command <b>{argv[1]}</b> not found.')
+            all_commands['help'](hm, [])
+            return 2
+
+        return all_commands[argv[1].casefold()](hm, argv[2:])
+
+
+if __name__ == '__main__':
+    exit(main(sys.argv))

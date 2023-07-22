@@ -18,7 +18,7 @@ export DIALOGRC=/
 app_colorscheme="Default"
 mono_version="mono-6.12.0.122-aarch64.squashfs"
 
-sudo echo "Testing for sudo..."
+sudo echo "Testing for sudo..." > /dev/null
 if [ $? != 0 ]; then
   ESUDO=""
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/storage/roms/ports/PortMaster/libs"
@@ -40,7 +40,7 @@ else
   if [[ $isitarkos == *"ArkOS"* ]]; then
     if [[ ! -z $( timedatectl | grep inactive ) ]]; then
       $ESUDO timedatectl set-ntp 1
-	fi
+  fi
   fi
 fi
 
@@ -48,12 +48,18 @@ if [ -f "/etc/os-release" ]; then
   source /etc/os-release
 fi
 
-$ESUDO chmod 666 /dev/tty0
+if [[ "${UI_SERVICE}" =~ weston.service ]]; then
+  CUR_TTY="/dev/tty"
+else
+  CUR_TTY="/dev/tty0"
+fi
+
+$ESUDO chmod 666 $CUR_TTY
 export TERM=linux
 export XDG_RUNTIME_DIR=/run/user/$UID/
-printf "\033c" > /dev/tty0
+printf "\033c" > $CUR_TTY
 # hide cursor
-printf "\e[?25h" > /dev/tty0
+printf "\e[?25h" > $CUR_TTY
 dialog --clear
 
 hotkey="Select"
@@ -72,9 +78,9 @@ if [[ -e "/dev/input/by-path/platform-ff300000.usb-usb-0:1.2:1.0-event-joystick"
 elif [[ -e "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick" ]]; then
   if [[ ! -z $(cat /etc/emulationstation/es_input.cfg | $GREP "190000004b4800000010000001010000") ]]; then
     param_device="oga"
-	hotkey="Minus"
+  hotkey="Minus"
   else
-	param_device="rk2020"
+  param_device="rk2020"
   fi
 elif [[ -e "/dev/input/by-path/platform-odroidgo3-joypad-event-joystick" ]]; then
   param_device="ogs"
@@ -134,7 +140,15 @@ isitext=$(df -PTh $toolsfolderloc | awk '{print $2}' | grep ext)
 
 cd $toolsfolderloc/PortMaster
 
-$ESUDO $toolsfolderloc/PortMaster/oga_controls PortMaster.sh $param_device > /dev/null 2>&1 &
+$ESUDO chmod -R +x .
+
+if [ "${OS_NAME}" == "JELOS" ]; then
+  $ESUDO $toolsfolderloc/PortMaster/gptokeyb PortMaster.sh -c "$toolsfolderloc/PortMaster/oga_controls_settings.txt" > /dev/null 2>&1 &
+  CONTROLS="gptokeyb"
+else
+  $ESUDO $toolsfolderloc/PortMaster/oga_controls PortMaster.sh $param_device > /dev/null 2>&1 &
+  CONTROLS="oga_controls"
+fi
 
 curversion="$(curl file://$toolsfolderloc/PortMaster/version)"
 
@@ -142,8 +156,9 @@ GW=`ip route | awk '/default/ { print $3 }'`
 if [ -z "$GW" ]; then
   dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
   --msgbox "\n\nYour network connection doesn't seem to be working. \
-  \nDid you make sure to configure your wifi connection?" $height $width 2>&1 > /dev/tty0
-  $ESUDO kill -9 $(pidof oga_controls)
+  \nDid you make sure to configure your wifi connection?" $height $width 2>&1 > ${CUR_TTY}
+
+  $ESUDO kill -9 $(pidof "$CONTROLS")
   if [ ! -z "$ESUDO" ]; then
     $ESUDO systemctl restart oga_events &
   fi
@@ -153,7 +168,7 @@ fi
 website="https://github.com/PortsMaster/PortMaster-Releases/releases/latest/download/"
 isgithubrelease="true" #Github releases convert space " " ("%20") to "."
 
-ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | $GREP -Po '"country":.*?[^\\]"')
+# ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | $GREP -Po '"country":.*?[^\\]"')
 
 #if [[ "$ISITCHINA" == "\"country\":\"China\"" ]]; then
 #  website="http://139.196.213.206/arkos/ports/"
@@ -170,53 +185,182 @@ UpdateCheck() {
 
   if [[ "$gitversion" != "$curversion" ]]; then
     
-	dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
---yesno "\nThere's an update for PortMaster ($gitversion).  Would you like to download it now?" $height $width 2>&1 > /dev/tty0
+  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
+--yesno "\nThere's an update for PortMaster ($gitversion).  Would you like to download it now?" $height $width 2>&1 > ${CUR_TTY}
 
     case $? in
-	   0) 
-		$WGET -t 3 -T 60 -q --show-progress "${website}PortMaster.zip" -O /dev/shm/portmaster/PortMaster.zip 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog \
-			  --progressbox "Downloading and installing PortMaster update..." $height $width > /dev/tty0
-		if [ ${PIPESTATUS[0]} -eq 0 ]; then
-		  if [[ ! -z $(cat $toolsfolderloc/PortMaster/gamecontrollerdb.txt | $GREP 'Xbox 360 Layout') ]]; then
-		   local x360="Yes"
-		  fi
-		  unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
-		  if [ "${OS_NAME}" != "JELOS" ] && [ "${OS_NAME}" != "UnofficialOS" ]; then
-		    mv -f $toolsfolderloc/PortMaster/PortMaster.sh $toolsfolderloc/.
-		    if [ -f "$toolsfolderloc/PortMaster/tasksetter.sh" ]; then
-		      rm -f "$toolsfolderloc/PortMaster/tasksetter.sh"
-		    fi
-		  fi
-		  if [[ "${x360}" == "Yes" ]]; then
-			 cp -f $toolsfolderloc/PortMaster/.Backup/donottouch_x.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-		  fi
-		  if [ ! -z $isitext ]; then
-			$ESUDO chmod -R 777 $toolsfolderloc/PortMaster
-			$ESUDO chmod 777 $toolsfolderloc/PortMaster.sh
-		  fi
-		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > /dev/tty0
-		  $ESUDO kill -9 $(pidof oga_controls)
-		  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
-		  if [ ! -z "$ESUDO" ]; then
-		    $ESUDO systemctl restart oga_events &
-		  fi
-		  exit 0
-		else
-		  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster failed to update." $height $width 2>&1 > /dev/tty0
-		  $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
-		fi
+     0) 
+    $WGET -t 3 -T 60 -q --show-progress "${website}PortMaster.zip" -O /dev/shm/portmaster/PortMaster.zip 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog \
+        --progressbox "Downloading and installing PortMaster update..." $height $width > ${CUR_TTY}
+    if [ ${PIPESTATUS[0]} -eq 0 ]; then
+      if [[ ! -z $(cat $toolsfolderloc/PortMaster/gamecontrollerdb.txt | $GREP 'Xbox 360 Layout') ]]; then
+       local x360="Yes"
+      fi
+      unzip -X -o /dev/shm/portmaster/PortMaster.zip -d $toolsfolderloc/
+      if [ "${OS_NAME}" != "JELOS" ] && [ "${OS_NAME}" != "UnofficialOS" ]; then
+        mv -f $toolsfolderloc/PortMaster/PortMaster.sh $toolsfolderloc/.
+        if [ -f "$toolsfolderloc/PortMaster/tasksetter.sh" ]; then
+          rm -f "$toolsfolderloc/PortMaster/tasksetter.sh"
+        fi
+      fi
+      if [[ "${x360}" == "Yes" ]]; then
+       cp -f $toolsfolderloc/PortMaster/.Backup/donottouch_x.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+      fi
+      if [ ! -z $isitext ]; then
+      $ESUDO chmod -R 777 $toolsfolderloc/PortMaster
+      $ESUDO chmod 777 $toolsfolderloc/PortMaster.sh
+      fi
+      dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > ${CUR_TTY}
+      $ESUDO kill -9 $(pidof "$CONTROLS")
+      $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
+      if [ ! -z "$ESUDO" ]; then
+        $ESUDO systemctl restart oga_events &
+      fi
+      exit 0
+    else
+      dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster failed to update." $height $width 2>&1 > ${CUR_TTY}
+      $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip
+    fi
         ;;
     esac
   fi
 }
 
-$WGET -t 3 -T 60 --no-check-certificate "$website"ports.md -O /dev/shm/portmaster/ports.md
+UpdateCheck
+
+# HarbourMaster pipe commands
+HM_PIPE="/dev/shm/portmaster/hm_input"
+HM_DONE="/dev/shm/portmaster/hm_done"
+
+HarbourCommand() {
+  # Send a command to harbourmaster
+  local command="$1"
+  local wait=0
+
+  if [ ! -e "$HM_PIPE" ]; then
+    $ESUDO $toolsfolderloc/PortMaster/harbourmaster --quiet --no-check --no-colour fifo_control "$HM_PIPE" "$HM_DONE" &
+
+    while true; do
+      if [ -e "$HM_PIPE" ]; then
+        break
+      fi
+
+      if [ $wait -gt 15 ]; then
+        break
+      fi
+
+      wait=$(expr $wait + 1)
+      sleep 1
+    done
+  fi
+
+  if [ -e "$HM_PIPE" ]; then
+    if [ -f "$HM_DONE" ]; then
+      rm -f "$HM_DONE" > /dev/null
+    fi
+
+    echo "$1" | $ESUDO tee $HM_PIPE > /dev/null
+
+    wait=0
+    # We wait for a maximum of 15 seconds to say it is done.
+    while true; do
+      if [ -f "$HM_DONE" ]; then
+        break
+      fi
+
+      if [ "$wait" -gt 15 ]; then
+        break
+      fi
+
+      wait=$(expr $wait + 1)
+      sleep 1
+    done
+  fi
+}
+
+FilterKey() {
+  echo "$1" | sha1sum | cut -b -12
+}
+
+HarbourQuit() {
+  if [ -e "$HM_PIPE" ]; then
+    echo "exit" | $ESUDO tee $HM_PIPE > /dev/null
+    rm -f /dev/shm/portmaster/*.md > /dev/null
+    rm -f $HM_PIPE > /dev/null
+    rm -f $HM_DONE > /dev/null
+  fi
+}
+
+HarbourUpdate() {
+  printf "\033c" > ${CUR_TTY}
+
+  HarbourCommand "update:${CUR_TTY}"
+
+  echo "Reloading Portmaster Info." > ${CUR_TTY}
+
+  rm -f /dev/shm/portmaster/*.md
+
+  PortsMD "" > /dev/null
+  PortsMD "rtr" > /dev/null
+  PortsMD "installed" > /dev/null
+}
+
+HarbourUpgrade() {
+  printf "\033c" > ${CUR_TTY}
+
+  HarbourQuit
+
+  $ESUDO $toolsfolderloc/PortMaster/harbourmaster --quiet upgrade harbourmaster > ${CUR_TTY}
+
+  echo "Restarting HarbourMaster." > ${CUR_TTY}
+
+  PortsMD "" > /dev/null
+  PortsMD "rtr" > /dev/null
+  PortsMD "installed" > /dev/null
+}
+
+HarbourReload() {
+  printf "\033c" > ${CUR_TTY}
+
+  echo "Reloading PortMaster Info." > ${CUR_TTY}
+
+  HarbourCommand "reload:${CUR_TTY}"
+
+  rm -f /dev/shm/portmaster/*.md
+
+  PortsMD "" > /dev/null
+  PortsMD "rtr" > /dev/null
+  PortsMD "installed" > /dev/null
+}
+
+PortsMD() {
+  local filters="$1"
+  local portsmd="/dev/shm/portmaster/ports.$(FilterKey "$filters").md"
+
+  if [ ! -f "$portsmd" ]; then
+    HarbourCommand "portsmd:$portsmd:$filters"
+  fi
+
+  echo "$portsmd"
+}
+
+printf "\033c" > ${CUR_TTY}
+
+echo "Starting PortMaster." > ${CUR_TTY}
+
+# Check for an update lazily.
+HarbourCommand "auto_update:${CUR_TTY}"
+
+## Cache these.
+PortsMD "" > /dev/null
+PortsMD "rtr" > /dev/null
+PortsMD "installed" > /dev/null
 
 PortInfoInstall() {
 
-local setwebsiteback="N"
-local unzipstatus
+  local setwebsiteback="N"
+  local installstatus
+  local portsmd=$(PortsMD "")
 
   if [ ! -z "$(cat /etc/fstab | $GREP "roms2" | tr -d '\0')" ]; then
     whichsd="roms2"
@@ -226,10 +370,11 @@ local unzipstatus
     whichsd="roms"
   fi
   
-  msgtxt=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=Desc=").*?(?=")')
-  installloc=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
-  porter=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=porter=").*?(?=")')
-  needmono=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=mono=").*?(?=")')
+  msgtxt=$(cat "$portsmd" | $GREP "$1" | $GREP -oP '(?<=Desc=").*?(?=")')
+  installloc=$(cat "$portsmd" | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
+  porter=$(cat "$portsmd" | $GREP "$1" | $GREP -oP '(?<=porter=").*?(?=")')
+  needmono=$(cat "$portsmd" | $GREP "$1" | $GREP -oP '(?<=mono=").*?(?=")')
+
   if [[ -f "$toolsfolderloc/PortMaster/libs/$mono_version" ]]; then
     ismonothere="y"
   else
@@ -248,79 +393,89 @@ local unzipstatus
   if [[ "${needmono,,}" == "y" ]] && [[ "$ismonothere" == "n" ]]; then
     dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
     --yesno "\n$msgtxt \n\nPorted By: $porter\n\nThis port also requires the download and install 
-	of the mono library which is over 200MBs in size.  This download may take a while.
-	\n\nWould you like to continue to install this port?" $height $width 2>&1 > /dev/tty0
+  of the mono library which is over 200MBs in size.  This download may take a while.
+  \n\nWould you like to continue to install this port?" $height $width 2>&1 > ${CUR_TTY}
   else
     dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
-    --yesno "\n$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?" $height $width 2>&1 > /dev/tty0
+    --yesno "\n$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?" $height $width 2>&1 > ${CUR_TTY}
   fi
-  
+
   case $? in
      0)
-	    if [ ${needmono,,} == "y" ] && [ $ismonothere == "n" ]; then
-	      $WGET -t 3 -T 60 -q --show-progress "$website$mono_version" -O \
-	      $toolsfolderloc/PortMaster/libs/$mono_version 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog --progressbox \
-		  "Downloading ${mono_version} package..." $height $width > /dev/tty0
-        fi
-        if [ ${needmono,,} == "y" ] && [ $ismonothere == "n" ] && [ $? -ne 0 ]; then
-          dialog --clear --backtitle "PortMaster v$curversion" --title "$mono_version" --clear --msgbox "\n\n$mono_version did NOT download. \
-          \n\nIt did not download correctly.  Please verify that you have at least 500MBs of space left in your roms parition
-          and your internet connection is stable and try again." $height $width 2>&1 > /dev/tty0
-          $ESUDO rm -f $toolsfolderloc/PortMaster/libs/$mono_version
-        else
-	      $WGET -t 3 -T 60 -q --show-progress "$website$installloc" -O \
-	      /dev/shm/portmaster/$installloc 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog --progressbox \
-	      "Downloading ${1} package..." $height $width > /dev/tty0
-	      unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > /dev/tty0
-	      unzipstatus=$?
-		  if [ $unzipstatus -eq 0 ] || [ $unzipstatus -eq 1 ]; then
-		    if [ ! -z $isitext ]; then
-		      $ESUDO chmod -R 777 /$whichsd/ports
-		    fi
-		    if [[ -e "/storage/.config/.OS_ARCH" ]] || [ "${OS_NAME}" == "JELOS" ] || [ "${OS_NAME}" == "UnofficialOS" ]; then
-		      cd /$whichsd/ports/
-		      for s in *.sh
-			  do
-			    if [[ -z $(cat "$s" | $GREP "ESUDO") ]] || [[ -z $(cat "$s" | $GREP "controlfolder") ]]; then
-			      sed -i 's/sudo //g' /storage/roms/ports/"$s"
-			    fi
-			  done
-		    fi
-		    cd $toolsfolderloc
-		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
-		    \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > /dev/tty0
-		  elif [ $unzipstatus -eq 2 ] || [ $unzipstatus -eq 3 ] || [ $unzipstatus -eq 9 ] || [ $unzipstatus -eq 51 ]; then
-		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
-		    \n\nIt did not download correctly.  Please check your internet connection and try again." $height $width 2>&1 > /dev/tty0
-		  elif [ $unzipstatus -eq 50 ]; then
-		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
-		    \n\nYour roms partition seems to be full." $height $width 2>&1 > /dev/tty0
-		  else
-		    dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install. \
-		    \n\nUnzip error code:$unzipstatus " $height $width 2>&1 > /dev/tty0
-		  fi
+      printf "\033c" > ${CUR_TTY}
 
-	      $ESUDO rm -f /dev/shm/portmaster/$installloc
+      echo "Downloading $1." > ${CUR_TTY}
+
+      $ESUDO $toolsfolderloc/PortMaster/harbourmaster --quiet --no-check install "$installloc" > ${CUR_TTY}
+      installstatus=$?
+      if [ $installstatus -eq 0 ]; then
+        if [ ! -z $isitext ]; then
+          $ESUDO chmod -R 777 /$whichsd/ports
         fi
-	    ;;
-	 *) 
-	    ;;
+        dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 installed successfully. \
+        \n\nMake sure to restart EmulationStation in order to see it in the ports menu." $height $width 2>&1 > ${CUR_TTY}
+
+        HarbourReload
+      else
+        dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT install." \
+        $height $width 2>&1 > ${CUR_TTY}
+      fi
+      ;;
+   *) 
+      ;;
+  esac
+}
+
+PortUninstall() {
+
+  local portsmd=$(PortsMD "")
+  
+  installloc=$(cat "$portsmd" | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
+
+  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
+  --yesno "\n\n****WARNING****\n\nWould you like to uninstall $1?\n\n****WARNING****" $height $width 2>&1 > ${CUR_TTY}
+
+  case $? in
+     0)
+      printf "\033c" > ${CUR_TTY}
+
+      echo "Uninstalling $1." > ${CUR_TTY}
+
+      $ESUDO $toolsfolderloc/PortMaster/harbourmaster --quiet --no-check uninstall "$installloc" > ${CUR_TTY}
+      installstatus=$?
+      if [ $installstatus -eq 0 ]; then
+        if [ ! -z $isitext ]; then
+          $ESUDO chmod -R 777 /$whichsd/ports
+        fi
+        dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 uninstalled successfully. \
+        \n\nMake sure to restart EmulationStation in order to remove it from the ports menu." $height $width 2>&1 > ${CUR_TTY}
+
+        HarbourReload
+      else
+        dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\n$1 did NOT uninstall." \
+        $height $width 2>&1 > ${CUR_TTY}
+      fi
+      ;;
+   *) 
+      ;;
   esac
 }
 
 userExit() {
-  rm -f /dev/shm/portmaster/ports.md
-  $ESUDO kill -9 $(pidof oga_controls)
+  HarbourQuit
+
+  $ESUDO kill -9 $(pidof "$CONTROLS")
   if [ ! -z "$ESUDO" ]; then
     $ESUDO systemctl restart oga_events &
   fi
   dialog --clear
-  printf "\033c" > /dev/tty0
+  printf "\033c" > ${CUR_TTY}
   exit 0
 }
+
 SetColorScheme() {
   if [ "$app_colorscheme" == "Default" ]; then
-	export DIALOGRC=$toolsfolderloc/PortMaster/colorscheme/$app_colorscheme.dialogrc
+  export DIALOGRC=$toolsfolderloc/PortMaster/colorscheme/$app_colorscheme.dialogrc
     if [[ -e "$toolsfolderloc/PortMaster/PortMaster.sh" ]]; then
       sed -i "/export DIALOGRC\=\//c\export DIALOGRC\=\/" $toolsfolderloc/PortMaster/PortMaster.sh
     fi
@@ -351,11 +506,11 @@ ColorSchemeMenu() {
   dialog_config=("${dialog_config[@]%.*}") #Get filename without extension
   cmd=(dialog \
     --clear \
-	--backtitle "PortMaster v$curversion" \
-	--title " [ Color Scheme Selection ] " \
-	--no-collapse \
-	--cancel-label "Back" \
-	--menu "Select the PortMaster UI color scheme :" $height $width "15")
+    --backtitle "PortMaster v$curversion" \
+    --title " [ Color Scheme Selection ] " \
+    --no-collapse \
+    --cancel-label "Back" \
+    --menu "Select the PortMaster UI color scheme :" $height $width "15")
 
   options+=(Default ".")
 
@@ -367,7 +522,7 @@ ColorSchemeMenu() {
     fi
   done
 
-  choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty0)
+  choice=$("${cmd[@]}" "${options[@]}" 2>&1 >${CUR_TTY})
   retval=$?
 
   case $retval in
@@ -376,7 +531,7 @@ ColorSchemeMenu() {
       app_colorscheme=$choice
       SetColorScheme
     fi
-	ColorSchemeMenu
+  ColorSchemeMenu
     ;;
   1)
     Settings
@@ -394,116 +549,222 @@ Settings() {
     local curctrlcfg="Switch to Default Control Layout"
   fi
   
-  local settingsoptions=( 1 "Restore Backup gamecontrollerdb.txt" 2 "$curctrlcfg" 3 "UI Color Scheme" 4 "Go Back" )
+  local settingsoptions=( 1 "Restore Backup gamecontrollerdb.txt" 2 "$curctrlcfg" 3 "UI Color Scheme" 4 "Update Ports List" 5 "Upgrade HarbourMaster" 6 "Go Back" )
 
   while true; do
     settingsselection=(dialog \
-   	--backtitle "PortMaster v$curversion" \
-   	--title "[ Settings Menu ]" \
-   	--no-collapse \
-   	--clear \
-	--cancel-label "$hotkey + Start to Exit" \
+    --backtitle "PortMaster v$curversion" \
+    --title "[ Settings Menu ]" \
+    --no-collapse \
+    --clear \
+    --cancel-label "$hotkey + Start to Exit" \
     --menu "What do you want to do?" $height $width 15)
-	
-	settingschoices=$("${settingsselection[@]}" "${settingsoptions[@]}" 2>&1 > /dev/tty0) || TopLevel
+  
+  settingschoices=$("${settingsselection[@]}" "${settingsoptions[@]}" 2>&1 > ${CUR_TTY}) || TopLevel
 
     for choice in $settingschoices; do
       case $choice in
         1) cp -f $toolsfolderloc/PortMaster/.Backup/donottouch.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-		   if [ $? == 0 ]; then
-		     dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nThe default gamecontrollerdb.txt has been successfully restored." $height $width 2>&1 > /dev/tty0
-		   else
-		     dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nThe default gamecontrollerdb.txt has failed to be restored.  Is the backup portmaster subfolder or it's contents missing?" $height $width 2>&1 > /dev/tty0
-		   fi
-		   Settings
+       if [ $? == 0 ]; then
+         dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nThe default gamecontrollerdb.txt has been successfully restored." $height $width 2>&1 > ${CUR_TTY}
+       else
+         dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nThe default gamecontrollerdb.txt has failed to be restored.  Is the backup portmaster subfolder or it's contents missing?" $height $width 2>&1 > ${CUR_TTY}
+       fi
+       Settings
         ;;
-		2) if [[ $curctrlcfg == "Switch to Xbox 360 Control Layout" ]]; then
-			 cp -f $toolsfolderloc/PortMaster/.Backup/donottouch_x.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-		   else
-			 cp -f $toolsfolderloc/PortMaster/.Backup/donottouch.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-		   fi
-		   Settings
-		;;
-		3) ColorSchemeMenu
-		;;
-		4) TopLevel
-		;;
+    2) if [[ $curctrlcfg == "Switch to Xbox 360 Control Layout" ]]; then
+       cp -f $toolsfolderloc/PortMaster/.Backup/donottouch_x.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+       else
+       cp -f $toolsfolderloc/PortMaster/.Backup/donottouch.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
+       fi
+       Settings
+    ;;
+    3) ColorSchemeMenu
+    ;;
+    4) HarbourUpdate
+    ;;
+    5) HarbourUpgrade
+    ;;
+    6) TopLevel
+    ;;
       esac
     done
   done
 }
 
-MainMenu() {
-  local options=(
-   $(cat /dev/shm/portmaster/ports.md | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl")
-  )
+PortsMenu() {
+  local filters="$1"
+  local original_filters="$filters"
+  local portsmd=""
 
   while true; do
+    portsmd=$(PortsMD "$filters")
+
+    local options=(
+     $(cat "$portsmd" | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl")
+    )
+
+    local filters_available=$(cat "$portsmd" | $GREP -oP "(?<=Filters=\").*?(?=\")")
+
+    if [[ "$filters_available" == "" ]]; then
+      filter_option=()
+    else
+      filter_option=("Filter Games" ".")
+    fi
+
+    if [[ "$original_filters" == "rtr" ]]; then
+      menu_title="Main Menu for Ready to Run ports"
+    else
+      menu_title="Main Menu of all ports"
+    fi
+
+    if [[ "$filters" != "$original_filters" ]]; then
+      menu_title="$menu_title\nFiltered by: ${filters}"
+    fi
+
+    if [[ "$filters" != "$original_filters" ]]; then
+      options+=("Clear Filters" ".")
+    fi
+
     selection=(dialog \
-   	--backtitle "PortMaster v$curversion" \
-   	--title "[ Main Menu of all ports]" \
-   	--no-collapse \
-   	--clear \
-	--cancel-label "$hotkey + Start to Exit" \
-    --menu "Available ports for install" $height $width 15)
+      --backtitle "PortMaster v$curversion" \
+      --title "[ Main Menu of all ports]" \
+      --no-collapse \
+      --clear \
+      --cancel-label "$hotkey + Start to Exit" \
+      --menu "$menu_title" $height $width 15)
 
-    choices=$("${selection[@]}" "${options[@]}" 2>&1 > /dev/tty0) || TopLevel
+    choice=$("${selection[@]}" "${filter_option[@]}" "${options[@]}" 2>&1 > ${CUR_TTY}) || TopLevel
 
-    for choice in $choices; do
-      case $choice in
-        *) PortInfoInstall $choice ;;
-      esac
-    done
+    case $choice in
+      "Filter Games")
+        filters=$(FiltersMenu "$filters")
+        ;;
+      "Clear Filters")
+        filters="$original_filters"
+        ;;
+      *)
+        PortInfoInstall "$choice"
+        ;;
+    esac
   done
 }
 
-MainMenuRTR() {
-  local options=(
-   $(cat /dev/shm/portmaster/ports.md | $GREP 'runtype="rtr"' | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl")
-  )
+UninstallMenu() {
+  local portsmd=""
 
   while true; do
+    portsmd=$(PortsMD "installed")
+
+    local options=(
+      $(cat "$portsmd" | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl")
+    )
+
+    echo "(?<=Title=\").*?(?=\")|$power|$opengl" "${options[@]}" > output.txt
+    menu_title="Ports Installed"
+
     selection=(dialog \
-   	--backtitle "PortMaster v$curversion" \
-   	--title "[ Main Menu for Ready to Run ports ]" \
-   	--no-collapse \
-   	--clear \
-	--cancel-label "$hotkey + Start to Exit" \
-    --menu "Available Ready to Run ports for install" $height $width 15)
+      --backtitle "PortMaster v$curversion" \
+      --title "[ Main Menu of Installed Ports ]" \
+      --no-collapse \
+      --clear \
+      --cancel-label "$hotkey + Start to Exit" \
+      --menu "$menu_title" $height $width 15)
 
-    choices=$("${selection[@]}" "${options[@]}" 2>&1 > /dev/tty0) || TopLevel
+    choice=$("${selection[@]}" "${options[@]}" 2>&1 > ${CUR_TTY}) || TopLevel
 
-    for choice in $choices; do
-      case $choice in
-        *) PortInfoInstall $choice ;;
-      esac
-    done
+    case $choice in
+      *)
+        PortUninstall "$choice"
+        ;;
+    esac
   done
+}
+
+FiltersMenu() {
+  # Get the list of options as a comma-separated value
+  local filters="$1"
+  local wait=0
+  local portsmd=$(PortsMD "$filters")
+
+  local filters_available=$(cat "$portsmd" | $GREP -oP "(?<=Filters=\").*?(?=\")")
+
+  if [[ "$filters_available" == "" ]]; then
+    echo "$filters"
+    return 0
+  fi
+
+  # Set the IFS variable to comma
+  IFS=','
+
+  # Read the options into an array
+  read -ra filters_array <<< "$filters_available"
+
+  local options=()
+
+  # Loop through the array and add each option as a pair
+  for filter_value in "${filters_array[@]}"; do
+    options+=("${filter_value}" ".")
+  done
+
+  selection=(dialog \
+      --backtitle "PortMaster v$curversion" \
+      --title "[ Select Filter ]" \
+      --no-collapse \
+      --clear \
+      --cancel-label "$hotkey + Start to Exit" \
+      --menu "Available Filters" $height $width 15)
+
+  # Display the menu using the dialog command
+  choice=$("${selection[@]}" "${options[@]}" 2>&1 > ${CUR_TTY})
+
+  # Check if the user pressed the cancel button or closed the dialog window
+  if [[ $? -ne 0 ]]; then
+    echo "$filters"
+    return 0
+  fi
+
+  if [[ $filters == "" ]]; then
+    echo "$choice"
+  else
+    echo "$filters,$choice"
+  fi
+
+  return 0
 }
 
 TopLevel() {
-  local topoptions=( 1 "All Available Ports" 2 "Ready to Run Ports" 3 "Settings" )
+  local topoptions=( 1 "All Available Ports" 2 "Ready to Run Ports" 3 "Uninstall Ports" 4 "Settings" )
 
   while true; do
     topselection=(dialog \
-   	--backtitle "PortMaster v$curversion" \
-   	--title "[ Top Level Menu ]" \
-   	--no-collapse \
-   	--clear \
-	--cancel-label "$hotkey + Start to Exit" \
+    --backtitle "PortMaster v$curversion" \
+    --title "[ Top Level Menu ]" \
+    --no-collapse \
+    --clear \
+    --cancel-label "$hotkey + Start to Exit" \
     --menu "Please make your selection" $height $width 15)
-	
-	topchoices=$("${topselection[@]}" "${topoptions[@]}" 2>&1 > /dev/tty0) || userExit
+  
+  topchoices=$("${topselection[@]}" "${topoptions[@]}" 2>&1 > ${CUR_TTY}) || userExit
 
     for choice in $topchoices; do
       case $choice in
-        1) MainMenu ;;
-		2) MainMenuRTR ;;
-		3) Settings ;;
+        1) PortsMenu "" ;;
+        2) PortsMenu "rtr" ;;
+        3) UninstallMenu ;;
+        4) Settings ;;
       esac
     done
   done
 }
 
-UpdateCheck
-TopLevel
+## DISABLE for now.
+# UpdateCheck
+
+if [ -e $HM_PIPE ]; then
+  TopLevel
+else
+  echo "Unable to initialise HarbourMaster." > ${CUR_TTY}
+  sleep 5
+  userExit
+fi
