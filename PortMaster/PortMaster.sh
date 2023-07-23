@@ -143,7 +143,12 @@ cd $toolsfolderloc/PortMaster
 $ESUDO chmod -R +x .
 
 if [ "${OS_NAME}" == "JELOS" ]; then
-  $ESUDO $toolsfolderloc/PortMaster/gptokeyb PortMaster.sh -c "$toolsfolderloc/PortMaster/oga_controls_settings.txt" > /dev/null 2>&1 &
+  # Copy over the JELOS control.txt
+  if [ -f /storage/.config/PortMaster/control.txt ]; then
+    cp -f /storage/.config/PortMaster/control.txt $toolsfolderloc/PortMaster/control.txt
+  fi
+
+  $toolsfolderloc/PortMaster/gptokeyb PortMaster.sh -c "$toolsfolderloc/PortMaster/oga_controls_settings.txt" > /dev/null 2>&1 &
   CONTROLS="gptokeyb"
 else
   $ESUDO $toolsfolderloc/PortMaster/oga_controls PortMaster.sh $param_device > /dev/null 2>&1 &
@@ -203,13 +208,21 @@ UpdateCheck() {
           rm -f "$toolsfolderloc/PortMaster/tasksetter.sh"
         fi
       fi
+
+      if [ "${OS_NAME}" == "JELOS" ] && [ -f /storage/.config/PortMaster/control.txt ]; then
+        # Copy over the JELOS control.txt
+        cp /storage/.config/PortMaster/control.txt $toolsfolderloc/PortMaster/control.txt
+      fi
+
       if [[ "${x360}" == "Yes" ]]; then
        cp -f $toolsfolderloc/PortMaster/.Backup/donottouch_x.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
       fi
+
       if [ ! -z $isitext ]; then
-      $ESUDO chmod -R 777 $toolsfolderloc/PortMaster
-      $ESUDO chmod 777 $toolsfolderloc/PortMaster.sh
+        $ESUDO chmod -R 777 $toolsfolderloc/PortMaster
+        $ESUDO chmod 777 $toolsfolderloc/PortMaster.sh
       fi
+
       dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear --msgbox "\n\nPortMaster updated successfully." $height $width 2>&1 > ${CUR_TTY}
       $ESUDO kill -9 $(pidof "$CONTROLS")
       $ESUDO rm -f /dev/shm/portmaster/PortMaster.zip

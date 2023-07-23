@@ -311,6 +311,37 @@ def do_portsmd(hm, argv):
     return 0
 
 
+def do_portsjson(hm, argv):
+    """
+    List available ports in the new ports.json format.
+
+    {command} ports.json [filename]
+    """
+    import json
+
+    ports = hm.list_ports([])
+
+    for port_name, port_info in ports.items():
+        images = hm.port_images(port_name)
+        if images is not None:
+            images = {
+                key: value.name
+                for key, value in images.items()}
+
+        port_info['attr']['images'] = images
+        del port_info['status']
+        del port_info['files']
+
+    if len(argv) > 0:
+        with open(argv[0], 'w') as fh:
+            json.dump(ports, fh, indent=4)
+
+    else:
+        print(json.dumps(ports, indent=4))
+
+    return 0
+
+
 def do_uninstall(hm, argv):
     """
     Uninstall a port
@@ -504,6 +535,7 @@ def do_help(hm, argv):
     cprint(f"{command} <d>[flags]</d> <b><install/upgrade></b> <d>[source/]</d><port_name>.zip ")
     cprint(f"{command} <d>[flags]</d> <uninstall> <port_name> ")
     cprint(f"{command} <d>[flags]</d> <b><list/portsmd></b> <d>[source or all]</d> <d>[... filters]</d>")
+    cprint(f"{command} <d>[flags]</d> <b><ports.json></b> <d>[file name]</d>")
     cprint(f"{command} <d>[flags]</d> <b><ports></b>")
     cprint(f"{command} <d>[flags]</d> <b><runtime_check></b> <runtime>")
     cprint(f"{command} <d>[flags]</d> <b><runtime_list></b>")
@@ -535,6 +567,7 @@ all_commands = {
     'auto_update': do_auto_update,
     'portsmd': do_portsmd,
     'ports': do_ports,
+    'ports.json': do_portsjson,
     'list': do_list,
     'install': do_install,
     'uninstall': do_uninstall,
