@@ -118,6 +118,8 @@ Title="GemRB ." Desc="GemRB (Game Engine Made with preRendered Background) is a 
 
 Title="Gigalomania ." Desc="Gigalomania is an open source 2D Real Time Strategy god game.  Gigalomania files are already included and ready to go." porter="Cebion" locat="gigalomania.zip" runtype="rtr" genres="strategy"
 
+Title="Gmu_Music_Player ." Desc="Gmu is an open source music player for portable gaming consoles and handhelds.  Add your music to the 'ports/gmu-music-player/music' folder for easy access or wherever else you wish as you can browse all storage for files." porter="Slayer366" locat="Gmu%20Music%20Player.zip" genres="music"
+
 Title="Half-Life ." Desc="Half-Life is Valve's debut title which blends blends action and adventure with award-winning technology to create a frighteningly realistic world where players must think to survive. You need to have your own copy of the game. You need to copy the steam valve directory from your steam installation into ports/Half-Life/valve directory. You can also run Half-Life Blue Shift/Opposing Forces by copying the contents of the bshift/gearbox steam files into their respective ports/Half-Life/ directory." porter="kloptops" locat="Half-Life.zip" genres="fps,action"
 
 Title="Hawkthorne ." Desc="This 2d platformer is based on Community's Digital Estate Planning episode." porter="Cebion" locat="hawkthorne.zip" runtype="rtr" genres="platformer,rpg"
