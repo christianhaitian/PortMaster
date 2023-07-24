@@ -158,8 +158,74 @@ fi
 curversion="$(curl file://$toolsfolderloc/PortMaster/version)"
 
 GW=`ip route | awk '/default/ { print $3 }'`
+## Autoinstallation Code
+# This will automatically install zips found within the PortMaster/autoinstall directory using harbourmaster
+AUTOINSTALL=$(find "${toolsfolderloc}/PortMaster/autoinstall" -type f \( -name "*.zip" -o -name "*.squashfs" \))
+if [ -n "$AUTOINSTALL" ]; then
+  if ls "${toolsfolderloc}/PortMaster/autoinstall"/*.squashfs 1>/dev/null 2>&1; then
+    if ! ls "${toolsfolderloc}/PortMaster/autoinstall"/*.zip 1>/dev/null 2>&1; then
+      $ESUDO mv -f "${toolsfolderloc}/PortMaster/autoinstall"/*.squashfs "${toolsfolderloc}/PortMaster/libs"
+
+      if [ -z "$GW" ]; then
+        dialog --clear --backtitle "PortMaster v$curversion" --clear \
+        --msgbox "\nCopied runtimes from the autoinstall directory.\n\nSince you have no internet connection, \
+this autoinstallation is now complete." $height $width 2>&1 > ${CUR_TTY}
+
+        $ESUDO kill -9 $(pidof "$CONTROLS")
+        if [ ! -z "$ESUDO" ]; then
+          $ESUDO systemctl restart oga_events &
+        fi
+        exit 0
+      else
+        dialog --clear --backtitle "PortMaster v$curversion" --clear \
+        --yesno "\nSuccessfully installed runtimes from the autoinstall directory." $height $width 2>&1 > ${CUR_TTY}
+      fi
+    fi
+  fi
+
+  dialog --clear --backtitle "PortMaster v$curversion" --clear \
+  --yesno "\nThere are some ports available for autoinstallation, would you like to proceed?" $height $width 2>&1 > ${CUR_TTY}
+
+  case $? in
+    0) 
+    if ls "${toolsfolderloc}/PortMaster/autoinstall"/*.squashfs 1>/dev/null 2>&1; then
+      $ESUDO mv -f "${toolsfolderloc}/PortMaster/autoinstall"/*.squashfs "${toolsfolderloc}/PortMaster/libs"
+    fi
+
+    $ESUDO $toolsfolderloc/PortMaster/harbourmaster --debug --offline install "${toolsfolderloc}/PortMaster/autoinstall"/*.zip > ${CUR_TTY}
+    if [ $? -eq 0 ]; then
+      rm -f "${toolsfolderloc}/PortMaster/autoinstall"/*.zip
+
+    else
+      dialog --clear --backtitle "PortMaster v$curversion" --clear \
+      --msgbox "\n\nInstallation failed. Check ports/PortMaster/harbourmaster.txt for details.\n\nQuitting." $height $width 2>&1 > ${CUR_TTY}
+
+      $ESUDO kill -9 $(pidof "$CONTROLS")
+      if [ ! -z "$ESUDO" ]; then
+        $ESUDO systemctl restart oga_events &
+      fi
+      exit 0
+    fi
+
+    if [ -z "$GW" ]; then
+      dialog --clear --backtitle "PortMaster v$curversion" --clear \
+      --msgbox "\n\nSince you have no internet connection, this autoinstallation is now complete." $height $width 2>&1 > ${CUR_TTY}
+
+      $ESUDO kill -9 $(pidof "$CONTROLS")
+      if [ ! -z "$ESUDO" ]; then
+        $ESUDO systemctl restart oga_events &
+      fi
+      exit 0
+    else
+      dialog --clear --backtitle "PortMaster v$curversion" --clear \
+      --msgbox "\n\nSuccessfully installed ports." $height $width 2>&1 > ${CUR_TTY}
+    fi
+    ;;
+  esac
+fi
+
 if [ -z "$GW" ]; then
-  dialog --clear --backtitle "PortMaster v$curversion" --title "$1" --clear \
+  dialog --clear --backtitle "PortMaster v$curversion" --clear \
   --msgbox "\n\nYour network connection doesn't seem to be working. \
   \nDid you make sure to configure your wifi connection?" $height $width 2>&1 > ${CUR_TTY}
 
