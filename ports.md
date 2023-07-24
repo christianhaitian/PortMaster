@@ -186,6 +186,8 @@ Title="Open_Great_Giana_Sisters ." Desc="A Free Software/Open Source implementat
 
 Title="OpenJazz ." Desc="A free, open-source version of the classic Jazz Jackrabbit games by Alister Thomson.  Includes the Jazz Jackrabiit shareware files.  You can add your own full game Dos files to the ports/openjazz/gamedata folder." porter="Jetup" locat="OpenJazz.zip" runtype="rtr" genres="platformer"
 
+Title="OpenMRac ." Desc="OpenMRac is a split-screen racing game. It is a tweaked source release of MultiRacer." porter="Cebion" locat="openmrac.zip" runtype="rtr" genres="racing"
+
 Title="OpenOMF ." Desc="An Open Source remake of 'One Must Fall 2097' by Diversions Entertainment." porter="Cebion" locat="Openomf.zip" runtype="rtr" genres="action"
 
 Title="OpenTyrian ." Desc="OpenTyrian is an open-source port of the DOS game Tyrian.  OpenTyrian 2.1 files are already included as they were made freeware sometime ago." porter="Christian_Haitian" locat="OpenTyrian.zip" runtype="rtr" genres="fps"
