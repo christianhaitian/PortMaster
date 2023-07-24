@@ -545,6 +545,7 @@ def do_help(hm, argv):
     cprint("  --quiet        - less text")
     cprint("  --debug        - more text")
     cprint("  --no-check     - dont check for ports updates unless you run <b>update</b>")
+    cprint("  --offline      - don't make any internet connections, assumes --no-check.")
     cprint("  --force-colour - force colour output")
     cprint("  --no-colour    - force no colour output")
     cprint("  --no-log       - do not log to harbourmaster.txt")
@@ -588,6 +589,7 @@ def main(argv):
         config = {
             'quiet': False,
             'no-check': False,
+            'offline': False,
             'debug': False,
             'no-colour': False,
             'force-colour': False,
@@ -612,6 +614,9 @@ def main(argv):
                 continue
 
             i += 1
+
+        if config['offline']:
+            config['no-check'] = True
 
         if config['quiet']:
             logger.remove(0)  # For the default handler, it's actually '0'.
