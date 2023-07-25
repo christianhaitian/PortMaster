@@ -2,6 +2,7 @@
 
 import hashlib
 import os
+import re
 import shutil
 import sys
 import textwrap
@@ -328,7 +329,12 @@ def do_portsjson(hm, argv):
                 key: value.name
                 for key, value in images.items()}
 
-        port_info['attr']['images'] = images
+        port_info['attr']['image'] = images
+        port_info['download_url'] = hm.port_download_url(port_name)
+        if "PortMaster-Releases" in port_info['download_url']:
+            port_info['download_url'] = re.sub(r"download/\d+-\d+-\d+_\d+/", "latest/download/", port_info['download_url'])
+        port_info['download_size'] = hm.port_download_size(port_name, check_runtime=False)
+
         del port_info['status']
         del port_info['files']
 
