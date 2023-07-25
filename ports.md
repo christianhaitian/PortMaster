@@ -252,6 +252,8 @@ Title="Rlvm ." Desc="Rlvm is a Free Software reimplementation of the Key RealLiv
 
 Title="Rocks_N_Diamonds ." Desc="A Boulderdash type game by Holger Schemel with many unique features, such as the ability to play remade levels from Boulderdash, Emerald Mine and Supaplex and many more levels." porter="Christian_Haitian" locat="rocksndiamonds.zip" runtype="rtr" genres="puzzle"
 
+Title="ROTA ." Desc="In ROTA gravity bends beneath your feet! Move blocks and twist gravity to solve puzzles. Collect all 50 gems and explore 8 vibrant worlds" porter="Cebion" locat="rota.zip" runtype="rtr" genres="platformer"
+
 Title="RVGL ." Desc="An open source port of Re-Volt by the RV Team.  Necessary files will be downloaded and installed upon initial launch while connected to the internet." porter="romadu" locat="RVGL.zip" genres="racing"
 
 Title="Shadow_Warrior ." Desc="Shadow Warrior open source port by Jonathan Fowler.  You'll need to add your own full version SW.GRP and SW.RTS Shadow Warrior files to the ports/shadow-warrior folder." porter="Romadu" locat="Shadow%20Warrior.zip" genres="fps"
