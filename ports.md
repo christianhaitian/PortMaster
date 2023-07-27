@@ -58,6 +58,8 @@ Title="Celeste_Classic ." Desc="Celeste Classic is a C source port of the origin
 
 Title="C-Dogs ." Desc="C-Dogs is a classic overhead run-and-gun game" porter="Christian_Haitian" locat="C-Dogs.zip" runtype="rtr" genres="action,shooter"
 
+Title="Cliff_Hanger ." Desc="Traverse the different levels of this huge cave, in less than 12 seconds, or else, you die! Make sure to collect all of those shiny diamond thingies, they surely are important for you, I assure you!" porter="Cebion" locat="cliff_hanger.zip" runtype="rtr" genres="platformer"
+
 Title="Commander_Genius ." Desc="Commander Genius is an open-source clone of Commander Keen (1-6, Dreams) which allows you to play these episodes and some of the mods made for them.  Developed by Gerstrong.  Includes the shareware version of Commander Keen 1.  You can add load your own keen folders into the ports/cgenius/games folder" porter="Christian_Haitian" locat="Commander%20Genius.zip" runtype="rtr" genres="action,platformer"
 
 Title="CorsixTH ." Desc="An opensource clone of Theme Hospital.  Load your Theme Hospital files into the ports/corsixth/HOSP folder.  As an example, the demo files of Theme Hospital is already included." porter="Jetup and Romadu" locat="CorsixTH.zip" runtype="rtr" genres="simulation,strategy"
@@ -67,6 +69,10 @@ Title="Cosmo-Engine ." Desc="A new game engine to play the MS-DOS game Cosmo's C
 Title_F="Cro-Mag_Rally ." Desc="This is a port of Pangea Software’s racing game Cro-Mag Rally. Take control of the caveman Brog as you race through the  Stone, Bronze, and Iron Ages in primitive vehicles." porter="brooksytech" locat="cromagrally.zip" runtype="rtr" genres="racing"
 
 Title="Dave_Gnukem ." Desc="Dave Gnukem is a cross-platform 2D scrolling platform shooter inspired by Duke Nukem 1." porter="Bamboozler" locat="Davegnukem.zip" runtype="rtr" genres="action,platformer"
+
+Title="Deep_Sleep ." Desc="Use your Dream Pillow to traverse through 15 different and challenging levels! Good luck!." porter="Cebion" locat="deep_sleep.zip" runtype="rtr" genres="platformer"
+
+Title="Defshot ." Desc="A 2D shooter made for the KoriJam." porter="Cebion" locat="defshot.zip" genres="action,platformer"
 
 Title="Der_Clou! ." Desc="A burglary simulation game originally created by neo Software Produktions GmbH.  Der Clou!'s files are already included and ready to go." porter="Cebion" locat="derclou.zip" runtype="rtr" genres="simulation,strategy"
 
