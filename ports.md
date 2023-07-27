@@ -102,6 +102,8 @@ Title="Fallout_1 ." Desc="Fallout is a post nuclear RPG.  You need to copy critt
 
 Title="Fallout_2 ." Desc="Fallout 2 is a post nuclear RPG.  You need to copy critter.dat, master.dat, patch000.dat and data from the original game to ports/fallout2 folder." porter="Orson" locat="Fallout2.zip" genres="rpg,strategy"
 
+Title="Farmner ." Desc="*single stick command included in the directory, rename and boot* Your daughter has gone missing. You have followed footsteps next to a path to what seems to be an abandoned farmland. There are torches still glowing hot, where is everyone? Find your daughter, quickly!. The game files are already included and ready to go." porter="Tekkenfede" locat="Farmner.zip" genres="action,adventure"
+
 Title="Flare_Engine ." Desc="Flare is an open source, 2D action RPG. Its game play can be likened to the games in the Diablo series.  The game files are already included and ready to go." porter="Cebion" locat="flare.zip" runtype="rtr" genres="action,rpg"
 
 Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Might and Magic 2 game engine by Ihar Hubchyk.  Just add the data and maps folders from your full version GOG HOMM2 to the ports/fheroes2 folder or just launch Fheroes2 to download the demo files." porter="romadu" locat="Fheroes2.zip" genres="strategy,rpg"
