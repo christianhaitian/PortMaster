@@ -112,6 +112,8 @@ Title="Farmner ." Desc="*single stick command included in the directory, rename 
 
 Title="Final_Quest ." Desc="Embark on an exciting journey in Final Quest: A Godot Research, a unique blend of a captivating 2D platform game and an in-depth research guide for the Godot game engine." porter="Cebion" locat="final_quest.zip" runtype="rtr" genres="platformer"
 
+Title="Fire_and_Fondness_2 ." Desc="A puzzle game about rescuing your loved one from hazardous situations! Also, a send-up of daytime television." porter="Cebion" locat="fire_and_fondness2.zip" runtype="rtr" genres="puzzle"
+
 Title="Flare_Engine ." Desc="Flare is an open source, 2D action RPG. Its game play can be likened to the games in the Diablo series.  The game files are already included and ready to go." porter="Cebion" locat="flare.zip" runtype="rtr" genres="action,rpg"
 
 Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Might and Magic 2 game engine by Ihar Hubchyk.  Just add the data and maps folders from your full version GOG HOMM2 to the ports/fheroes2 folder or just launch Fheroes2 to download the demo files." porter="romadu" locat="Fheroes2.zip" genres="strategy,rpg"
@@ -147,6 +149,8 @@ Title="Hocoslamfy ." Desc="You are a small bee and you must fly to avoid the bam
 Title="Hurrican ." Desc="Turrican port by Thrimbor.  Just add the data and lang folders from here to the ports/hurrican folder or just launch Hurrican from the ports menu in Emulationstation and it will download the files and install them automatically." porter="romadu" locat="Hurrican.zip" genres="platformer"
 
 Title="Hydra_Castle_Labyrinth ." Desc="Hydra Castle Labyrinth is a platform game with some old school action. It's also reminiscent of games of the 16 bit era." porter="Christian_Haitian" locat="Hydra%20Castle%20Labyrinth.zip" runtype="rtr" genres="platformer"
+
+Title="Hyperfight ." Desc="HYPERFIGHT is a fighting game where every hit is lethal, and every win counts." porter="Cebion" locat="hyperfight.zip" runtype="rtr" genres="action"
 
 Title="Iconoclasts ." Desc="A platformer that offers fun and wacky gameplay.  Recommended only for 640x480 devices or better.  You must have a copy of Iconoclasts for Linux copied to the ports/iconoclasts/gamedata folder.  Be sure the folder contains subfolders named 32, 64 and data." porter="Johnny on Flame" locat="Iconoclasts.zip" genres="action,adventure"
 
