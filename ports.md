@@ -22,7 +22,7 @@ Title="Augustus ." Desc="A reimplemntation of the Caeser 3 engine.  You will nee
 
 Title="Axiom_Verge ." Desc="A port of Axiom Verge, an awesome metroidvania 2D platformer. You will need to add your own files to the ports/axiom-verge/gamedata folder. YOU HAVE TO USE THE DRM FREE EPIC GAMES VERSION. Also make sure you have the mono-6.12.0.122-aarch64.squashfs file in your Portmaster/libs folder. All intructions are in the ports/axiom-verge/gamedata folder" porter="Johnny on Flame, Overflask, and Nuxx" locat="Axiom%20Verge.zip" mono="y" genres="action,adventure,platformer"
 
-Title="Beat2x ." Desc="A DDR-style rythm game where the goal is to time the button presses to line up with the music beat." porter="Bamboozler" locat="Beat2x.zip" genres="rythm"
+Title="Beat2x ." Desc="A DDR-style rythm game where the goal is to time the button presses to line up with the music beat." porter="Bamboozler" locat="Beat2x.zip" runtype="rtr" genres="rythm"
 
 Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip" genres="action"
 
@@ -108,9 +108,9 @@ Title="Fallout_1 ." Desc="Fallout is a post nuclear RPG.  You need to copy critt
 
 Title="Fallout_2 ." Desc="Fallout 2 is a post nuclear RPG.  You need to copy critter.dat, master.dat, patch000.dat and data from the original game to ports/fallout2 folder." porter="Orson" locat="Fallout2.zip" genres="rpg,strategy"
 
-Title="Farmner ." Desc="*single stick command included in the directory, rename and boot* Your daughter has gone missing. You have followed footsteps next to a path to what seems to be an abandoned farmland. There are torches still glowing hot, where is everyone? Find your daughter, quickly!. The game files are already included and ready to go." porter="Tekkenfede" locat="Farmner.zip" genres="action,adventure"
+Title="Farmner ." Desc="*single stick command included in the directory, rename and boot* Your daughter has gone missing. You have followed footsteps next to a path to what seems to be an abandoned farmland. There are torches still glowing hot, where is everyone? Find your daughter, quickly!. The game files are already included and ready to go." porter="Tekkenfede" locat="Farmner.zip" runtype="rtr" genres="action,adventure"
 
-Title="Final_Quest ." Desc="Embark on an exciting journey in Final Quest: A Godot Research, a unique blend of a captivating 2D platform game and an in-depth research guide for the Godot game engine." porter="Cebion" locat="final_quest.zip" genres="platformer"
+Title="Final_Quest ." Desc="Embark on an exciting journey in Final Quest: A Godot Research, a unique blend of a captivating 2D platform game and an in-depth research guide for the Godot game engine." porter="Cebion" locat="final_quest.zip" runtype="rtr" genres="platformer"
 
 Title="Flare_Engine ." Desc="Flare is an open source, 2D action RPG. Its game play can be likened to the games in the Diablo series.  The game files are already included and ready to go." porter="Cebion" locat="flare.zip" runtype="rtr" genres="action,rpg"
 
