@@ -22,7 +22,7 @@ Title="Augustus ." Desc="A reimplemntation of the Caeser 3 engine.  You will nee
 
 Title="Axiom_Verge ." Desc="A port of Axiom Verge, an awesome metroidvania 2D platformer. You will need to add your own files to the ports/axiom-verge/gamedata folder. YOU HAVE TO USE THE DRM FREE EPIC GAMES VERSION. Also make sure you have the mono-6.12.0.122-aarch64.squashfs file in your Portmaster/libs folder. All intructions are in the ports/axiom-verge/gamedata folder" porter="Johnny on Flame, Overflask, and Nuxx" locat="Axiom%20Verge.zip" mono="y" genres="action,adventure,platformer"
 
-Title="Beat2x ." Desc="A DDR-style rythm game where the goal is to time the button presses to line up with the music beat." porter="Bamboozler" locat="Beat2x.zip" genres="rythm"
+Title="Beat2x ." Desc="A DDR-style rythm game where the goal is to time the button presses to line up with the music beat." porter="Bamboozler" locat="Beat2x.zip" runtype="rtr" genres="rythm"
 
 Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip" genres="action"
 
@@ -108,9 +108,11 @@ Title="Fallout_1 ." Desc="Fallout is a post nuclear RPG.  You need to copy critt
 
 Title="Fallout_2 ." Desc="Fallout 2 is a post nuclear RPG.  You need to copy critter.dat, master.dat, patch000.dat and data from the original game to ports/fallout2 folder." porter="Orson" locat="Fallout2.zip" genres="rpg,strategy"
 
-Title="Farmner ." Desc="*single stick command included in the directory, rename and boot* Your daughter has gone missing. You have followed footsteps next to a path to what seems to be an abandoned farmland. There are torches still glowing hot, where is everyone? Find your daughter, quickly!. The game files are already included and ready to go." porter="Tekkenfede" locat="Farmner.zip" genres="action,adventure"
+Title="Farmner ." Desc="*single stick command included in the directory, rename and boot* Your daughter has gone missing. You have followed footsteps next to a path to what seems to be an abandoned farmland. There are torches still glowing hot, where is everyone? Find your daughter, quickly!. The game files are already included and ready to go." porter="Tekkenfede" locat="Farmner.zip" runtype="rtr" genres="action,adventure"
 
-Title="Final_Quest ." Desc="Embark on an exciting journey in Final Quest: A Godot Research, a unique blend of a captivating 2D platform game and an in-depth research guide for the Godot game engine." porter="Cebion" locat="final_quest.zip" genres="platformer"
+Title="Final_Quest ." Desc="Embark on an exciting journey in Final Quest: A Godot Research, a unique blend of a captivating 2D platform game and an in-depth research guide for the Godot game engine." porter="Cebion" locat="final_quest.zip" runtype="rtr" genres="platformer"
+
+Title="Fire_and_Fondness_2 ." Desc="A puzzle game about rescuing your loved one from hazardous situations! Also, a send-up of daytime television." porter="Cebion" locat="fire_and_fondness2.zip" runtype="rtr" genres="puzzle"
 
 Title="Flare_Engine ." Desc="Flare is an open source, 2D action RPG. Its game play can be likened to the games in the Diablo series.  The game files are already included and ready to go." porter="Cebion" locat="flare.zip" runtype="rtr" genres="action,rpg"
 
@@ -147,6 +149,8 @@ Title="Hocoslamfy ." Desc="You are a small bee and you must fly to avoid the bam
 Title="Hurrican ." Desc="Turrican port by Thrimbor.  Just add the data and lang folders from here to the ports/hurrican folder or just launch Hurrican from the ports menu in Emulationstation and it will download the files and install them automatically." porter="romadu" locat="Hurrican.zip" genres="platformer"
 
 Title="Hydra_Castle_Labyrinth ." Desc="Hydra Castle Labyrinth is a platform game with some old school action. It's also reminiscent of games of the 16 bit era." porter="Christian_Haitian" locat="Hydra%20Castle%20Labyrinth.zip" runtype="rtr" genres="platformer"
+
+Title="Hyperfight ." Desc="HYPERFIGHT is a fighting game where every hit is lethal, and every win counts." porter="Cebion" locat="hyperfight.zip" runtype="rtr" genres="action"
 
 Title="Iconoclasts ." Desc="A platformer that offers fun and wacky gameplay.  Recommended only for 640x480 devices or better.  You must have a copy of Iconoclasts for Linux copied to the ports/iconoclasts/gamedata folder.  Be sure the folder contains subfolders named 32, 64 and data." porter="Johnny on Flame" locat="Iconoclasts.zip" genres="action,adventure"
 
