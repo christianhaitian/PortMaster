@@ -166,7 +166,9 @@ Title="LBreakoutHD ." Desc="LBreakoutHD is a scaleable 16:9 remake of LBreakout2
 
 Title="Maldita_Castilla ." Desc="An arcade action video game developed by Locomalito and released in December 2012.  The gameplay is inspired by the games Shinobi and Ghost and Goblins." porter="krishenriksen (kreal)" locat="Maldita%20Castilla.zip" runtype="rtr" genres="action,adventure"
 
-Title="Margot-Beatrice Adventure ." Desc="he courageous princess Margot-Béatrice try to re-take the forest gem but she encounter a terrible (in every way) sorcerer that emprison her in a cristal prison. She now forced to call her animal friends to free her and save the forest." porter="Cebion" locat="margot_beatrice_adventure.zip" runtype="rtr" genres="platfomer,adventure"
+Title="Margot-Beatrice Adventure ." Desc="The courageous princess Margot-Béatrice try to re-take the forest gem but she encounter a terrible (in every way) sorcerer that emprison her in a cristal prison. She now forced to call her animal friends to free her and save the forest." porter="Cebion" locat="margot_beatrice_adventure.zip" runtype="rtr" genres="platfomer,adventure"
+
+Title="Maximilien Adventure ." Desc="Maximilien, a young adventure, survive a terrible plane crash. With the help of some locals, he will needs to get through the jungle and find his brother and sister." porter="Cebion" locat="maximilien_adventure.zip" runtype="rtr" genres="platfomer,adventure"
 
 Title="Me_and_My_Shadow ." Desc="A puzzle/platform game in which you try to reach the exit by solving puzzles. Spikes, moving blocks, fragile blocks and much more stand between you and the exit. Record your moves and let your shadow mimic them to reach blocks you couldn't reach alone." porter="Bamboozler" locat="meandmyshadow.zip" runtype="rtr" genres="platformer,puzzle"
 
