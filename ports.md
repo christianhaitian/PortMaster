@@ -66,6 +66,8 @@ Title="CorsixTH ." Desc="An opensource clone of Theme Hospital.  Load your Theme
 
 Title="Cosmo-Engine ." Desc="A new game engine to play the MS-DOS game Cosmo's Cosmic Adventure on modern systems. Episode 1 is included and you can add Episode 2 and 3 gamefiles to the data folder" porter="Bamboozler" locat="Cosmo-Engine.zip" runtype="rtr" genres="action,platformer"
 
+Title="Daikatana ." Desc="Travel through time to fight a corrupted dictatorship and right the wrongs inflicted on the world. You must add the retail data files from the 'data/' folder to the port's 'daikatana/gamedata/' folder." porter="Johnny on Flame" locat="Daikatana.zip" genres="fps,action"
+
 Title_F="Cro-Mag_Rally ." Desc="This is a port of Pangea Software’s racing game Cro-Mag Rally. Take control of the caveman Brog as you race through the  Stone, Bronze, and Iron Ages in primitive vehicles." porter="brooksytech" locat="cromagrally.zip" runtype="rtr" genres="racing"
 
 Title="Dave_Gnukem ." Desc="Dave Gnukem is a cross-platform 2D scrolling platform shooter inspired by Duke Nukem 1." porter="Bamboozler" locat="Davegnukem.zip" runtype="rtr" genres="action,platformer"
