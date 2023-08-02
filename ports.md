@@ -56,6 +56,8 @@ Title="Cave_Story_(Evo) ." Desc="Cave Story using the Nxengine-evo engine from h
 
 Title="Celeste_Classic ." Desc="Celeste Classic is a C source port of the original celeste (Celeste classic)." porter="Bamboozler" locat="cceleste.zip" runtype="rtr" genres="platformer,puzzle"
 
+Title="Chasm ." Desc="Explore the depths below a remote mountain town in this procedurally-generated Adventure Platformer. Taking inspiration from hack 'n slash dungeon crawlers and Metroidvania-style platformers, Chasm will immerse you in a fantasy world full of exciting treasure, deadly enemies, and abundant secrets. You must copy a valid Linux build of the game to the 'chasm/gamedata' folder." porter="Johnny on Flame" locat="Chasm.zip" mono="y" genres="action,adventure,platformer"
+
 Title="C-Dogs ." Desc="C-Dogs is a classic overhead run-and-gun game" porter="Christian_Haitian" locat="C-Dogs.zip" runtype="rtr" genres="action,shooter"
 
 Title="Cliff_Hanger ." Desc="Traverse the different levels of this huge cave, in less than 12 seconds, or else, you die! Make sure to collect all of those shiny diamond thingies, they surely are important for you, I assure you!" porter="Cebion" locat="cliff_hanger.zip" runtype="rtr" genres="platformer"
