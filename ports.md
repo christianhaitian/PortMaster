@@ -236,6 +236,8 @@ Title="Planet_Waves ." Desc="*Works in 640x480. Optimized for 4:3 or higher aspe
 
 Title="Plaque_Attack_Remake ." Desc="*Optimized for 4:3 and 16:9(or similar ex. rg552). Could scale weirdly on gameboy like aspect ratio.* Atari 2600's Plaque Attack game remake made for Highjam #1 by Escada Games. Plaque attack Remake files are already included and ready to go. To Force a particular version rename the desired one in the installation folder as PlaqueAttackRemake.zip and delete the other one, then boot." porter="Tekkenfede" locat="PlaqueAttackRemake.zip" runtype="rtr" genres="action,other"
 
+Title="Pocket_Tactics ." Desc="After the collapse of human civilization, rogue warriors fight for scraps on the surface, fighting for what few remnants they can find from the old world, and sheltering in caves from the chemically modified rain that pours like thick soup onto the landscape below." porter="Cebion" locat="pockettactics.zip" runtype="rtr" genres="strategy"
+
 Title="Powder ." Desc="A roguelike is a dungeon crawler where no two games are the same. The maps are different, the items are different, there are no guaranteed win paths.  Powder files are already included and ready to go." porter="Cebion" locat="powder.zip" runtype="rtr" genres="rpg"
 
 Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip" runtype="rtr" genres="platformer"
