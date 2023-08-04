@@ -94,6 +94,8 @@ Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source
 
 Title="DungeonRush ." Desc="A opensource game inspired by Snake, written in pure C with SDL" porter="Bamboozler" locat="DungeonRush.zip" runtype="rtr" genres="rpg"
 
+Title="Echo_Chamber ." Desc="Wizard roguelike, Traverse a dungeon and add a new spell each time you clear a floor." porter="Cebion" locat="echo_chamber.zip" runtype="rtr" genres="rpg"
+
 Title="Eity ." Desc="Eity is a free rhythm game with cool music in a similar vain to DDR. " porter="Cebion" locat="eity.zip" runtype="rtr" genres="rhytm"
 
 Title="Enigma ." Desc="Enigma is a puzzle game inspired by Oxyd on the Atari ST and Rock'n'Roll on the Amiga" porter="Bamboozler" locat="Enigma.zip" runtype="rtr" genres="puzzle"
@@ -359,6 +361,8 @@ Title="VCMI ." Desc="VCMI is a fully portable version of Heroes of Might and Mag
 Title="VVVVVV ." Desc="VVVVVV is a 2010 puzzle-platform game created by Terry Cavanagh.  The free Make and Play Edition data.zip file is already included.  You can also add your own purchased copy of the data.zip from your VVVVVV into the ports/VVVVVV folder if you prefer that version instead." porter="Christian_Haitian" locat="VVVVVV.zip" runtype="rtr" genres="platformer"
 
 Title="Wetspot_2 ." Desc="A port of QuickBasic 4.5 game Wetspot 2 by Angelo Mottola.  Just download and play." porter="Cebion" locat="wetspot2.zip" runtype="rtr" genres="action"
+
+Title="Wizardchase ." Desc="2D retro pacman like arcade game Collect all the treasure in the dungeon! Can you make it to the second level? Good luck!" porter="Cebion" locat="wizardchase.zip" runtype="rtr" genres="arcade"
 
 Title="Wizznic! ." Desc="Wizznic! is an open-source, freeware remake of Puzznic, recreating the original arcade levels, the NES ones and including fan-made puzzle packs with new custom levels." porter="Bamboozler" locat="Wizznic.zip" runtype="rtr" genres="puzzle"
 
