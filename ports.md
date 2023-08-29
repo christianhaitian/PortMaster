@@ -194,6 +194,8 @@ Title="NAM ." Desc="NAM using the rednukem build open source port by Alexey Khok
 
 Title_F="Nanosaur ." Desc="This is Pangea Software’s Nanosaur, which casts a cybernetic dinosaur from the future who’s sent back in time 20 minutes before a giant asteroid hits the Earth." porter="brooksytech" locat="nanosaur.zip" runtype="rtr" genres="fps"
 
+Title_F="Nanosaur 2 ." Desc="This is Pangea Software’s Nanosaur II: Hatchling, a continuation of the original Nanosaur storyline, only this time you get to fly a pterodactyl." porter="brooksytech" locat="nanosaur2.zip" runtype="rtr" genres="fps"
+
 Title="Neverball ." Desc="Tilt the floor to roll a ball through an obstacle course within the given time. If the ball falls or time expires, a ball is lost. Includes Neverputt." porter="Bamboozler" locat="Neverball.zip" runtype="rtr" genres="platformer,puzzle"
 
 Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play." porter="Jetup" locat="nKaruga.zip" runtype="rtr" genres="fps"
