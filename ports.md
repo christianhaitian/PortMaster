@@ -64,6 +64,8 @@ Title="C-Dogs ." Desc="C-Dogs is a classic overhead run-and-gun game" porter="Ch
 
 Title="Cliff_Hanger ." Desc="Traverse the different levels of this huge cave, in less than 12 seconds, or else, you die! Make sure to collect all of those shiny diamond thingies, they surely are important for you, I assure you!" porter="Cebion" locat="cliff_hanger.zip" runtype="rtr" genres="platformer"
 
+Title="Clockwind ." Desc="The mechanic of this game is time travel. Make your way through 4 levels utilizing the passage of time in different ways. This may involve making trees grow or turning a car in to a flying car." porter="Cebion" locat="clockwind.zip" runtype="rtr" genres="platformer"
+
 Title="Commander_Genius ." Desc="Commander Genius is an open-source clone of Commander Keen (1-6, Dreams) which allows you to play these episodes and some of the mods made for them.  Developed by Gerstrong.  Includes the shareware version of Commander Keen 1.  You can add load your own keen folders into the ports/cgenius/games folder" porter="Christian_Haitian" locat="Commander%20Genius.zip" runtype="rtr" genres="action,platformer"
 
 Title="CorsixTH ." Desc="An opensource clone of Theme Hospital.  Load your Theme Hospital files into the ports/corsixth/HOSP folder.  As an example, the demo files of Theme Hospital is already included." porter="Jetup and Romadu" locat="CorsixTH.zip" runtype="rtr" genres="simulation,strategy"
