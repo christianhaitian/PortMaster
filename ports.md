@@ -196,6 +196,8 @@ Title="Mr_Boom ." Desc="A Bomberman clone." porter="Christian_Haitian" locat="Mr
 
 Title="Multris ." Desc="A version of Tetris with randomly generated polyominoes of varying sizes." porter="Bamboozler" locat="Multris.zip" runtype="rtr" genres="puzzle"
 
+Title="Murtop ." Desc="Fast-paced arcade game packed with action, as if it was taken out directly from the 80's, where Dig Dug meets Bomberman. You can purchase Murtop at: https://hiulit.itch.io/murtop. Download and extract it, and place the Murtop.pck file in the gamedata directory. This has been tested with Murtop ARM 64, version 1.2.0" porter="tabreturn" locat="Murtop.zip" genres="platformer"
+
 Title="NAM ." Desc="NAM using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version NAM.GRP and NAM.RTS and .CON files and optionally CD audio tracks as OGG file in the format trackXX.ogg (where XX is the track number) to the ports/rednukem-NAM/gamedata folder." porter="romadu" locat="NAM.zip" genres="fps"
 
 Title_F="Nanosaur ." Desc="This is Pangea Software’s Nanosaur, which casts a cybernetic dinosaur from the future who’s sent back in time 20 minutes before a giant asteroid hits the Earth." porter="brooksytech" locat="nanosaur.zip" runtype="rtr" genres="fps"
