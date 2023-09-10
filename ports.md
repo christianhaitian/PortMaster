@@ -324,6 +324,8 @@ Title="Space_Cadet_Pinball ." Desc="A reversed engineered version Space Cadet Pi
 
 Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's game Spelunky Classic. Based on the source code published in Humble Weekly Bundle: Play and Create with GameMaker (not original 1.1 release)." porter="Christian_Haitian" locat="Spelunky.zip" runtype="rtr" genres="platformer"
 
+Title="Starboy ." Desc="During its journey StarBoy crashed and got lost in an unknown planet, help him return back to its spaceship! You can purchase StarBoy at: https://mrkdji.itch.io/starboy. Download and extract it, and place the starboy_linux.pck file in the gamedata directory. This has been tested with starboy_linux.zip, version 1.0.3" porter="tabreturn" locat="StarBoy.zip" genres="platformer"
+
 Title="Starcatcher ." Desc="Starcatcher is a platformer inspired by Kirby, Metroid, Gravitron Experiment. Your goal: Collect stars in outer space." porter="Cebion" locat="starcatcher.zip" runtype="rtr" genres="platformer"
 
 Title="Stardew_Valley ." Desc="An open-ended country-life RPG!  You must have a copy of the compatibility version of Stardew Valley copied to the ports/stardewvalley/gamedata folder." porter="Johnny on Flame" locat="StardewValley.zip" mono="y" genres="simulation,rpg"
