@@ -244,6 +244,8 @@ Title="Oddworld:_Abes_Oddysee_Exoddus ." Desc="It is a platformer with puzzle-so
 
 Title="Owlboy ." Desc="A story-driven platform adventure game, where you can fly and explore a brand new world in the clouds.  Text is not readable on devices with screens less than 5 inches.  You must have a copy of Owlboy for Linux copied to the ports/owlboy/gamedata folder." porter="Johnny on Flame" locat="Owlboy.zip" mono="y" genres="action,adventure"
 
+Title="Paused ." Desc="What do ducks have to do with rabbits? Exactly, adventure and physics stuff are what you are looking for. Game files are already included and ready to go." porter="tabreturn" locat="PAUSED.zip" genres="puzzle"
+
 Title="Pekka_Kana_2 ." Desc="Pekka Kana 2 (Pekka the Rooster 2) is a jump 'n run game made in the spirit of old classic platformers such as Super Mario, Sonic the Hedgehog, Jazz Jackrabbit, Super Frog and so on. Pekka Kana 2 files are already included and ready to go." porter="Cebion" locat="pekka-kana-2.zip" runtype="rtr" genres="platformer"
 
 Title="Pigeon_Ascent ." Desc="*Optimized for 4:3 640x480 and 5:3 1920x1152*. Take care of your own pigeon as they fight increasingly stronger foes, and then face the legendary Pigeon God at the end... can you keep death far from your bird? Pigeon Ascent files are already included and ready to go." porter="Tekkenfede" locat="pigeon.zip" runtype="rtr" genres="strategy"
