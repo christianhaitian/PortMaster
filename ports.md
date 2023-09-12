@@ -24,6 +24,8 @@ Title="Augustus ." Desc="A reimplemntation of the Caeser 3 engine.  You will nee
 
 Title="Axiom_Verge ." Desc="A port of Axiom Verge, an awesome metroidvania 2D platformer. You will need to add your own files to the ports/axiom-verge/gamedata folder. YOU HAVE TO USE THE DRM FREE EPIC GAMES VERSION. Also make sure you have the mono-6.12.0.122-aarch64.squashfs file in your Portmaster/libs folder. All intructions are in the ports/axiom-verge/gamedata folder" porter="Johnny on Flame, Overflask, and Nuxx" locat="Axiom%20Verge.zip" mono="y" genres="action,adventure,platformer"
 
+Title="Banana_Duck ." Desc="Experience the sweet taste of pursuing bananas and avoiding all the evil vegetables and saw blades that are there for absolutely no reason. Also, you're a duck that can't swim and dies when it touches the water. Game files are already included and ready to go." porter="tabreturn" locat="Banana%20Duck.zip" genres="platformer"
+
 Title="Beat2x ." Desc="A DDR-style rythm game where the goal is to time the button presses to line up with the music beat." porter="Bamboozler" locat="Beat2x.zip" runtype="rtr" genres="rythm"
 
 Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip" genres="action"
