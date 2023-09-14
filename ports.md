@@ -358,7 +358,7 @@ Title="The_Curse_Of_Issyos ." Desc="*Audio not works on lastest Jelos Releases* 
 
 Title="Thermomorph ." Desc="An Alien-inspired survive-the-night horror game, created in Love2D." porter="Cebion" locat="thermomorph.zip" runtype="rtr" genres="simulation,other"
 
-Title="Thwack ." Desc="Funky-legged tennis game. Thwack demo/jam files are already included and ready to go. The full game is available for purchase at https://jontopielski.itch.io/thwack. To run the full game, down ThwackLinux.zip, extract it, and copy the Thwack.pck file into the gamedata directory." porter="tabreturn" locat="StarBoy.zip" genres="platformer"
+Title="Thwack ." Desc="Funky-legged tennis game. Thwack demo/jam files are already included and ready to go. The full game is available for purchase at https://jontopielski.itch.io/thwack. To run the full game, down ThwackLinux.zip, extract it, and copy the Thwack.pck file into the gamedata directory." porter="tabreturn" locat="Thwack.zip" genres="platformer"
 
 Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge.  To play the original Chip's Challenge levels, copy 'chips.dat' into 'ports/tileworld/data' and make sure it's lowercase.  Handheld edition based on: https://github.com/senquack/tileworld-for-handhelds" porter="Slayer366" locat="TileWorld.zip" runtype="rtr" genres="puzzle"
 
