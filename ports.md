@@ -24,8 +24,6 @@ Title="Augustus ." Desc="A reimplemntation of the Caeser 3 engine.  You will nee
 
 Title="Axiom_Verge ." Desc="A port of Axiom Verge, an awesome metroidvania 2D platformer. You will need to add your own files to the ports/axiom-verge/gamedata folder. YOU HAVE TO USE THE DRM FREE EPIC GAMES VERSION. Also make sure you have the mono-6.12.0.122-aarch64.squashfs file in your Portmaster/libs folder. All intructions are in the ports/axiom-verge/gamedata folder" porter="Johnny on Flame, Overflask, and Nuxx" locat="Axiom%20Verge.zip" mono="y" genres="action,adventure,platformer"
 
-Title="Banana_Duck ." Desc="Experience the sweet taste of pursuing bananas and avoiding all the evil vegetables and saw blades that are there for absolutely no reason. Also, you're a duck that can't swim and dies when it touches the water. Game files are already included and ready to go." porter="tabreturn" locat="Banana%20Duck.zip" genres="platformer"
-
 Title="Beat2x ." Desc="A DDR-style rythm game where the goal is to time the button presses to line up with the music beat." porter="Bamboozler" locat="Beat2x.zip" runtype="rtr" genres="rythm"
 
 Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip" genres="action"
@@ -94,11 +92,9 @@ Title="Diver_Down ." Desc="Diver Down is a stealth-platformer. Avoid the lights 
 
 Title="Dome_Romantik ." Desc="*Optimized for 4:3 (with touch support) and 16:9(or similar ex. rg552). Could scale weirdly on gameboy like aspect ratio.* Dig your way through to the core of the planet. Mine minerals, bring them back to your dome and install upgrades just in time to defend from hostile lifeforms. Dome Romantik files are already included and ready to go. To Force a particular version rename the desired one in the installation folder as domeromantik-linux.zip(same with gptk file) and delete the others ones, then boot." porter="Tekkenfede" locat="DomeRomantik.zip" runtype="rtr" genres="strategy,action"
 
-Title="Donut_Dodo ." Desc="If a long lost arcade game from 1983 resurfaced today, it would be Donut Dodo -- a classic 2D platformer from the golden era, tough as nails and challenging for the whole family! You can purchase Donut Dodo at: https://zapposh.itch.io/donut-dodo-retropie-edition\n\nDownload and extract it, and place the DonutDodo.pck file in the gamedata directory. This has been tested with DonutDodo_1_39.zip" porter="tabreturn" locat="Donut%20Dodo.zip" genres="platformer"
+Title="Donut_Dodo ." Desc="If a long lost arcade game from 1983 resurfaced today, it would be Donut Dodo -- a classic 2D platformer from the golden era, tough as nails and challenging for the whole family! You can purchase Donut Dodo at: https://zapposh.itch.io/donut-dodo-retropie-edition\n\nDownload and extract it, and place the DonutDodo.pck file in the gamedata directory. This has been tested with DonutDodo_1_39.zip" porter="tabreturn" locat="Donut Dodo.zip" genres="platformer"
 
 Title_P="Doom_3 ." Desc="Doom 3 is a 2004 survival horror first-person shooter video game developed by id Software and published by Activision. You need to add your own full game pak files to the ports/doom3/base folder." porter="brooksytech" locat="doom3.zip" genres="fps,action"
-
-Title="DROID7 ." Desc="Jump your way up on a generated tower while a laser beam chases you from below. The higher you go, the faster it gets, and it isn't long before disappearing (and reappearing) platforms and spikes are introduced to make your life harder. You can purchase DROID7 at: https://juancolacelli.itch.io/droid7\n\nDownload the Windows version and extract it, and place the DROID7.pck file in the gamedata directory. This has been tested with Linux 64-bit, Dec 30 2022 release" porter="tabreturn" locat="DROID7.zip" genres="platformer"
 
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip" genres="fps,action"
 
