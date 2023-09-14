@@ -256,6 +256,8 @@ Title="Pekka_Kana_2 ." Desc="Pekka Kana 2 (Pekka the Rooster 2) is a jump 'n run
 
 Title="Pigeon_Ascent ." Desc="*Optimized for 4:3 640x480 and 5:3 1920x1152*. Take care of your own pigeon as they fight increasingly stronger foes, and then face the legendary Pigeon God at the end... can you keep death far from your bird? Pigeon Ascent files are already included and ready to go." porter="Tekkenfede" locat="pigeon.zip" runtype="rtr" genres="strategy"
 
+Title="Pinball_Disc_Room ." Desc="How did you end up in this pinball of death. The blades teleport in. Dodge the discs to survive." porter="Cebion" locat="pinball_disc_room.zip" runtype="rtr" genres="arcade"
+
 Title="Planet_Waves ." Desc="*Works in 640x480. Optimized for 4:3 or higher aspect ratio. Could scale weirdly on gameboy like aspect ratio.* An arcade tower defense about protecting a small planet made for the gotm.io jam #3 by Escada Games. Planet Waves files are already included and ready to go." porter="Tekkenfede" locat="planetWaves.zip" runtype="rtr" genres="strategy"
 
 Title="Plaque_Attack_Remake ." Desc="*Optimized for 4:3 and 16:9(or similar ex. rg552). Could scale weirdly on gameboy like aspect ratio.* Atari 2600's Plaque Attack game remake made for Highjam #1 by Escada Games. Plaque attack Remake files are already included and ready to go. To Force a particular version rename the desired one in the installation folder as PlaqueAttackRemake.zip and delete the other one, then boot." porter="Tekkenfede" locat="PlaqueAttackRemake.zip" runtype="rtr" genres="action,other"
