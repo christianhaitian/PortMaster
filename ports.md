@@ -162,7 +162,7 @@ Title="Heart_of_Darkness ." Desc="Heart of Darkness using the hode reimplementat
 
 Title="Heart_of_The_Alien_Redux ." Desc="Heart of The Alien Redux is a native port of Heart of The Alien. Place Heart Of The Alien (U).iso and Heart Of The Alien (U) xx.ogg or Heart Of The Alien (U) xx.mp3 02-42 in the data folder. The files must be named correctly" porter="Bamboozler" locat="HOTA.zip" genres="action,adventure,platformer"
 
-Title="HELP! NO BRAKE ." Desc="Hey umm, your car won't brake anymore. So better clear all the levels to get it fixed I guess. Game files are already included and ready to go." porter="tabreturn" locat="HELP! NO BRAKE.zip" runtype="rtr" genres="racing"
+Title="HELP!_NO_BRAKE ." Desc="Hey umm, your car won't brake anymore. So better clear all the levels to get it fixed I guess. Game files are already included and ready to go." porter="tabreturn" locat="HELP! NO BRAKE.zip" runtype="rtr" genres="racing"
 
 Title="Hex-A-Hop ." Desc="Hex-a-hop is a puzzle game in which a girl has to destroy green hexagons by stepping on them.  Hex-a-Hop files are already included and ready to go." porter="Cebion" locat="hex-a-hop.zip" runtype="rtr" genres="puzzle"
 
@@ -178,7 +178,7 @@ Title="Hydra_Castle_Labyrinth ." Desc="Hydra Castle Labyrinth is a platform game
 
 Title="Hyperfight ." Desc="HYPERFIGHT is a fighting game where every hit is lethal, and every win counts." porter="Cebion" locat="hyperfight.zip" runtype="rtr" genres="action"
 
-Title="hyper JUMP ." Desc="Pick up the yellow orbs, dodge everything else. Game files are already included and ready to go." porter="tabreturn" locat="hyper JUMP.zip" runtype="rtr" genres="action"
+Title="hyper_JUMP ." Desc="Pick up the yellow orbs, dodge everything else. Game files are already included and ready to go." porter="tabreturn" locat="hyper JUMP.zip" runtype="rtr" genres="action"
 
 Title="Iconoclasts ." Desc="A platformer that offers fun and wacky gameplay.  Recommended only for 640x480 devices or better.  You must have a copy of Iconoclasts for Linux copied to the ports/iconoclasts/gamedata folder.  Be sure the folder contains subfolders named 32, 64 and data." porter="Johnny on Flame" locat="Iconoclasts.zip" genres="action,adventure"
 
