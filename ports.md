@@ -70,6 +70,8 @@ Title="Cliff_Hanger ." Desc="Traverse the different levels of this huge cave, in
 
 Title="Clockwind ." Desc="The mechanic of this game is time travel. Make your way through 4 levels utilizing the passage of time in different ways. This may involve making trees grow or turning a car in to a flying car." porter="Cebion" locat="clockwind.zip" runtype="rtr" genres="platformer"
 
+Title="ClolorLines ." Desc="Forked and updated version of SDL re-implementation of classic Color Lines game, originally written by Nikita Zimin in 2010." porter="Bamboozler" locat="ColorLines.zip" runtype="rtr" genres="puzzle"
+
 Title="Commander_Genius ." Desc="Commander Genius is an open-source clone of Commander Keen (1-6, Dreams) which allows you to play these episodes and some of the mods made for them.  Developed by Gerstrong.  Includes the shareware version of Commander Keen 1.  You can add load your own keen folders into the ports/cgenius/games folder" porter="Christian_Haitian" locat="Commander%20Genius.zip" runtype="rtr" genres="action,platformer"
 
 Title="CorsixTH ." Desc="An opensource clone of Theme Hospital.  Load your Theme Hospital files into the ports/corsixth/HOSP folder.  As an example, the demo files of Theme Hospital is already included." porter="Jetup and Romadu" locat="CorsixTH.zip" runtype="rtr" genres="simulation,strategy"
@@ -261,6 +263,8 @@ Title="Paused ." Desc="What do ducks have to do with rabbits? Exactly, adventure
 Title="Pekka_Kana_2 ." Desc="Pekka Kana 2 (Pekka the Rooster 2) is a jump 'n run game made in the spirit of old classic platformers such as Super Mario, Sonic the Hedgehog, Jazz Jackrabbit, Super Frog and so on. Pekka Kana 2 files are already included and ready to go." porter="Cebion" locat="pekka-kana-2.zip" runtype="rtr" genres="platformer"
 
 Title="Pigeon_Ascent ." Desc="*Optimized for 4:3 640x480 and 5:3 1920x1152*. Take care of your own pigeon as they fight increasingly stronger foes, and then face the legendary Pigeon God at the end... can you keep death far from your bird? Pigeon Ascent files are already included and ready to go." porter="Tekkenfede" locat="pigeon.zip" runtype="rtr" genres="strategy"
+
+Title="Pinball_Disc_Room ." Desc="How did you end up in this pinball of death. The blades teleport in. Dodge the discs to survive." porter="Cebion" locat="pinball_disc_room.zip" runtype="rtr" genres="arcade"
 
 Title="Planet_Waves ." Desc="*Works in 640x480. Optimized for 4:3 or higher aspect ratio. Could scale weirdly on gameboy like aspect ratio.* An arcade tower defense about protecting a small planet made for the gotm.io jam #3 by Escada Games. Planet Waves files are already included and ready to go." porter="Tekkenfede" locat="planetWaves.zip" runtype="rtr" genres="strategy"
 
