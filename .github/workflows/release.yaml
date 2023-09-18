@@ -2,7 +2,12 @@ name: release
 
 on:
   push:
-    branches: [ main ]
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
+    branches:
+      - main
+
   workflow_dispatch:
 
 concurrency: 
@@ -22,25 +27,25 @@ jobs:
             if [[ -z "$LARGE_FILE_REPOSITORY" ]]; then
               LARGE_FILE_REPOSITORY="PortsMaster/PortMaster-Hosting"
             fi
-            echo "::set-output name=LARGE_FILE_REPOSITORY::$LARGE_FILE_REPOSITORY"
+            echo "LARGE_FILE_REPOSITORY=$LARGE_FILE_REPOSITORY" >> $GITHUB_OUTPUT
 
             LARGE_FILE_TAG="${{ secrets.LARGE_FILE_TAG }}"
             if [[ -z "$LARGE_FILE_TAG" ]]; then
               LARGE_FILE_TAG="large-files"
             fi
-            echo "::set-output name=LARGE_FILE_TAG::$LARGE_FILE_TAG"
+            echo "LARGE_FILE_TAG=$LARGE_FILE_TAG" >> $GITHUB_OUTPUT
 
             RELEASE_REPO="${{ secrets.RELEASE_REPO }}"
             if [[ -z "$RELEASE_REPO" ]]; then
               RELEASE_REPO="PortMaster-Releases"
             fi
-            echo "::set-output name=RELEASE_REPO::$RELEASE_REPO"
+            echo "RELEASE_REPO=$RELEASE_REPO" >> $GITHUB_OUTPUT
 
             RELEASE_ORG="${{ secrets.RELEASE_ORG }}"
             if [[ -z "$RELEASE_ORG" ]]; then
               RELEASE_ORG="PortsMaster"
             fi
-            echo "::set-output name=RELEASE_ORG::$RELEASE_ORG"
+            echo "RELEASE_ORG=$RELEASE_ORG" >> $GITHUB_OUTPUT
 
       - uses: hmarr/debug-action@v2
         name: "debug: ${{github.event_name}}"
@@ -56,7 +61,7 @@ jobs:
       - name: Get release name for artifacts
         id: date
         run: |
-            echo "::set-output name=date::$(date +'%Y-%m-%d_%H%M')"
+            echo "date=$(date +'%Y-%m-%d_%H%M')" >> $GITHUB_OUTPUT
       - name: Create PortMaster zip from PortMaster Folder
         id: portmaster-zip
         run: |
@@ -77,19 +82,31 @@ jobs:
               echo "file: $file"
               md5sum "$file" | cut -f1 -d' ' > "$file.md5"
             done
-      - name: "Publish release"
+      - name: "Prepare Release"
         uses: ncipollo/release-action@v1
         with:
           tag: "${{steps.date.outputs.date}}"
           allowUpdates: true
-          draft: false
+          draft: true
           prerelease: false
           replacesArtifacts: false
           omitNameDuringUpdate: true
           artifacts: "ports.md, *.zip, version, *.squashfs, *.md5"
           token: ${{ secrets.PORTMASTER_RELEASE_TOKEN }}
-          repo: ${{ steps.env.outputs.RELEASE_REPO}}
-          owner: ${{ steps.env.outputs.RELEASE_ORG}}
+          repo: ${{ steps.env.outputs.RELEASE_REPO }}
+          owner: ${{ steps.env.outputs.RELEASE_ORG }}
+      - name: "Publish Release"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{steps.date.outputs.date}}"
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          allowUpdates: true
+          draft: false
+          prerelease: false
+          token: ${{ secrets.PORTMASTER_RELEASE_TOKEN }}
+          repo: ${{ steps.env.outputs.RELEASE_REPO }}
+          owner: ${{ steps.env.outputs.RELEASE_ORG }}
       - name: Release Info
         id: info
         run: |
