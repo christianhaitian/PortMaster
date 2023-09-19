@@ -52,6 +52,8 @@ Title="Blues_Brothers:_Jukebox_Adventure ." Desc="A rewrite of the Blues Brother
 
 Title_F="Bugdom ." Desc="This is Pangea Software's Bugdom updated to run on modern operating systems. Use the touchscreen to navigate the UI." porter="brooksytech" locat="Bugdom.zip" runtype="rtr" genres="action,adventure"
 
+Title="Burst ." Desc="Your aura switches between red and blue every few seconds, hit balls the same color as your aura to gain points. The more balls there are on the screen, the more points you get. Game files are already included and ready to go." porter="tabreturn" locat="Burst.zip" runtype="rtr" genres="action"
+
 Title="Cannonball ." Desc="This is the libretro port of the OutRun game engine recreation written by Chris White in 2014.  Add the OutRun Revision B ROMs into /ports/cannonball/gamedata folder. " porter="Christian_Haitian" locat="Cannonball.zip" genres="racing"
 
 Title="Cave_Story_lr ." Desc="Cave Story using the Libretro Retroarch Nxengine core." porter="Christian_Haitian" locat="Cave%20Story.zip" runtype="rtr" genres="action,adventure,platformer"
@@ -67,6 +69,8 @@ Title="C-Dogs ." Desc="C-Dogs is a classic overhead run-and-gun game" porter="Ch
 Title="Cliff_Hanger ." Desc="Traverse the different levels of this huge cave, in less than 12 seconds, or else, you die! Make sure to collect all of those shiny diamond thingies, they surely are important for you, I assure you!" porter="Cebion" locat="cliff_hanger.zip" runtype="rtr" genres="platformer"
 
 Title="Clockwind ." Desc="The mechanic of this game is time travel. Make your way through 4 levels utilizing the passage of time in different ways. This may involve making trees grow or turning a car in to a flying car." porter="Cebion" locat="clockwind.zip" runtype="rtr" genres="platformer"
+
+Title="ClolorLines ." Desc="Forked and updated version of SDL re-implementation of classic Color Lines game, originally written by Nikita Zimin in 2010." porter="Bamboozler" locat="ColorLines.zip" runtype="rtr" genres="puzzle"
 
 Title="Commander_Genius ." Desc="Commander Genius is an open-source clone of Commander Keen (1-6, Dreams) which allows you to play these episodes and some of the mods made for them.  Developed by Gerstrong.  Includes the shareware version of Commander Keen 1.  You can add load your own keen folders into the ports/cgenius/games folder" porter="Christian_Haitian" locat="Commander%20Genius.zip" runtype="rtr" genres="action,platformer"
 
@@ -160,6 +164,8 @@ Title="Heart_of_Darkness ." Desc="Heart of Darkness using the hode reimplementat
 
 Title="Heart_of_The_Alien_Redux ." Desc="Heart of The Alien Redux is a native port of Heart of The Alien. Place Heart Of The Alien (U).iso and Heart Of The Alien (U) xx.ogg or Heart Of The Alien (U) xx.mp3 02-42 in the data folder. The files must be named correctly" porter="Bamboozler" locat="HOTA.zip" genres="action,adventure,platformer"
 
+Title="HELP!_NO_BRAKE ." Desc="Hey umm, your car won't brake anymore. So better clear all the levels to get it fixed I guess. Game files are already included and ready to go." porter="tabreturn" locat="HELP! NO BRAKE.zip" runtype="rtr" genres="racing"
+
 Title="Hex-A-Hop ." Desc="Hex-a-hop is a puzzle game in which a girl has to destroy green hexagons by stepping on them.  Hex-a-Hop files are already included and ready to go." porter="Cebion" locat="hex-a-hop.zip" runtype="rtr" genres="puzzle"
 
 Title="Hexen_2 ." Desc="Hexen II is a dark fantasy 1st-person shooter developed by Raven Software and published by id software.  Portal of Praevus features new levels, new enemies and a new playable character class, The Demoness.  You must copy your Hexen 2 pak0.pak and pak1.pak files into hexen2/data1 and your pak3.pak into hexen2/portals and make sure they're lowercase." porter="Slayer366" locat="Hexen2.zip" genres="fps,action"
@@ -173,6 +179,8 @@ Title="Hurrican ." Desc="Turrican port by Thrimbor.  Just add the data and lang 
 Title="Hydra_Castle_Labyrinth ." Desc="Hydra Castle Labyrinth is a platform game with some old school action. It's also reminiscent of games of the 16 bit era." porter="Christian_Haitian" locat="Hydra%20Castle%20Labyrinth.zip" runtype="rtr" genres="platformer"
 
 Title="Hyperfight ." Desc="HYPERFIGHT is a fighting game where every hit is lethal, and every win counts." porter="Cebion" locat="hyperfight.zip" runtype="rtr" genres="action"
+
+Title="hyper_JUMP ." Desc="Pick up the yellow orbs, dodge everything else. Game files are already included and ready to go." porter="tabreturn" locat="hyper JUMP.zip" runtype="rtr" genres="action"
 
 Title="Iconoclasts ." Desc="A platformer that offers fun and wacky gameplay.  Recommended only for 640x480 devices or better.  You must have a copy of Iconoclasts for Linux copied to the ports/iconoclasts/gamedata folder.  Be sure the folder contains subfolders named 32, 64 and data." porter="Johnny on Flame" locat="Iconoclasts.zip" genres="action,adventure"
 
@@ -218,6 +226,8 @@ Title="nKaruga ." Desc="A cool 2D bullet hell shooter.  Just download and play."
 
 Title="Nonny ." Desc="A simple nonogram game that lets you play and create nonogram puzzles." porter="Bamboozler" locat="Nonny.zip" runtype="rtr" genres="puzzle"
 
+Title="Nothing ." Desc="A simple platformer with a powerful editor. **Use keyboard and mouse for the editor**"." porter="Tekkenfede" locat="nothing.zip" genres="arcade,platformer"
+
 Title="Nova_Pinball ." Desc="A pinball game created with the Love game framework.\n\nYour mission: Make the star go nova. There are in-game hints that point out the next target to achieve your goal." porter="Cebion" locat="nova_pinball.zip" runtype="rtr" genres="arcade"
 
 Title="NPuzzle ." Desc="NPuzzle is a 15 puzzle style sliding game where you have to rearrange the tiles in order. Includes 6 background images" porter="Bamboozler" locat="NPuzzle.zip" runtype="rtr" genres="puzzle"
@@ -257,6 +267,8 @@ Title="Paused ." Desc="What do ducks have to do with rabbits? Exactly, adventure
 Title="Pekka_Kana_2 ." Desc="Pekka Kana 2 (Pekka the Rooster 2) is a jump 'n run game made in the spirit of old classic platformers such as Super Mario, Sonic the Hedgehog, Jazz Jackrabbit, Super Frog and so on. Pekka Kana 2 files are already included and ready to go." porter="Cebion" locat="pekka-kana-2.zip" runtype="rtr" genres="platformer"
 
 Title="Pigeon_Ascent ." Desc="*Optimized for 4:3 640x480 and 5:3 1920x1152*. Take care of your own pigeon as they fight increasingly stronger foes, and then face the legendary Pigeon God at the end... can you keep death far from your bird? Pigeon Ascent files are already included and ready to go." porter="Tekkenfede" locat="pigeon.zip" runtype="rtr" genres="strategy"
+
+Title="Pinball_Disc_Room ." Desc="How did you end up in this pinball of death. The blades teleport in. Dodge the discs to survive." porter="Cebion" locat="pinball_disc_room.zip" runtype="rtr" genres="arcade"
 
 Title="Planet_Waves ." Desc="*Works in 640x480. Optimized for 4:3 or higher aspect ratio. Could scale weirdly on gameboy like aspect ratio.* An arcade tower defense about protecting a small planet made for the gotm.io jam #3 by Escada Games. Planet Waves files are already included and ready to go." porter="Tekkenfede" locat="planetWaves.zip" runtype="rtr" genres="strategy"
 
@@ -360,7 +372,7 @@ Title="The_Curse_Of_Issyos ." Desc="*Audio not works on lastest Jelos Releases* 
 
 Title="Thermomorph ." Desc="An Alien-inspired survive-the-night horror game, created in Love2D." porter="Cebion" locat="thermomorph.zip" runtype="rtr" genres="simulation,other"
 
-Title="Thwack ." Desc="Funky-legged tennis game. Thwack demo/jam files are already included and ready to go. The full game is available for purchase at https://jontopielski.itch.io/thwack. To run the full game, down ThwackLinux.zip, extract it, and copy the Thwack.pck file into the gamedata directory." porter="tabreturn" locat="StarBoy.zip" genres="platformer"
+Title="Thwack ." Desc="Funky-legged tennis game. Thwack demo/jam files are already included and ready to go. The full game is available for purchase at https://jontopielski.itch.io/thwack. To run the full game, down ThwackLinux.zip, extract it, and copy the Thwack.pck file into the gamedata directory." porter="tabreturn" locat="Thwack.zip" genres="platformer"
 
 Title="Tile_World ." Desc="Tile World is a source port clone of Chip's Challenge.  To play the original Chip's Challenge levels, copy 'chips.dat' into 'ports/tileworld/data' and make sure it's lowercase.  Handheld edition based on: https://github.com/senquack/tileworld-for-handhelds" porter="Slayer366" locat="TileWorld.zip" runtype="rtr" genres="puzzle"
 
