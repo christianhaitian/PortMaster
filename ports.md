@@ -154,6 +154,8 @@ Title="Gmu_Music_Player ." Desc="Gmu is an open source music player for portable
 
 Title="GNU_Robbo ." Desc="GNU Robbo is a free open source reimplementation of game designed by Janusz Pelc and published by LK Avalon in 1989 for the Atari XL/XE computers." porter="Bamboozler" runtype="rtr" locat="GNURobbo.zip" genres="action,puzzle"
 
+Title="Gumgem ." Desc="Venture into a procedurally generated castle, different every time you play. The evil gummy bear has taken the prince prisoner, and you're our only hope! You can purchase Gumgem at: https://dazel.itch.io/gumgem. Download the GameShell version and extract it, and place the Gumgem.pck file in the gamedata directory. This has been tested with the Gumgem 2.2 - GameShell release" porter="tabreturn" locat="Gumgem.zip" genres="platformer"
+
 Title="Half-Life ." Desc="Half-Life is Valve's debut title which blends blends action and adventure with award-winning technology to create a frighteningly realistic world where players must think to survive. You need to have your own copy of the game. You need to copy the steam valve directory from your steam installation into ports/Half-Life/valve directory. You can also run Half-Life Blue Shift/Opposing Forces by copying the contents of the bshift/gearbox steam files into their respective ports/Half-Life/ directory." porter="kloptops" locat="Half-Life.zip" genres="fps,action"
 
 Title="Hawkthorne ." Desc="This 2d platformer is based on Community's Digital Estate Planning episode." porter="Cebion" locat="hawkthorne.zip" runtype="rtr" genres="platformer,rpg"
