@@ -368,7 +368,7 @@ Title="SuperTuxKart ." Desc="SuperTuxKart is a 3D open-source arcade racer with 
 
 Title="Tamatool ." Desc="Tamatool is a Tamagotchi P1 emulator. Tamatool requires a compatible Tamagotchi P1 ROM called rom.bin in its folder" porter="Bamboozler" locat="Tamatool.zip" genres="simulation"
 
-Title="The_Curse_Of_Issyos ." Desc="*Audio not works on lastest Jelos Releases* Defkalion was fishing on a quiet blue sea when he heard the voice of the Goddess Athena. Hurry up, she said, the isle of Issyos has been cursed by the Olympus. And so, fearing for his daughter Delia, his only family left, the fisherman sails back to his home, where the adventure is about to begin. To succesfully boot the game copy the data.win file into the gamedata folder, then boot the game from Coi.sh." porter="Tekkenfede and Johnny on Flame" locat="TheCurseOfIssyos.zip"  genres="action,other"
+Title="The_Curse_Of_Issyos ." Desc="Defkalion was fishing on a quiet blue sea when he heard the voice of the Goddess Athena. Hurry up, she said, the isle of Issyos has been cursed by the Olympus. And so, fearing for his daughter Delia, his only family left, the fisherman sails back to his home, where the adventure is about to begin. To succesfully boot the game copy the data.win file into the gamedata folder, then boot the game from Coi.sh." porter="Tekkenfede and Johnny on Flame" locat="TheCurseOfIssyos.zip"  genres="action,other"
 
 Title="Thermomorph ." Desc="An Alien-inspired survive-the-night horror game, created in Love2D." porter="Cebion" locat="thermomorph.zip" runtype="rtr" genres="simulation,other"
 
@@ -392,7 +392,7 @@ Title="Upo ." Desc="Upo is a procedurally generated music game. Your goal is to 
 
 Title="Ur-Quan_Masters ." Desc="The Ur-Quan Masters is a 2002 open source fangame modification, based on the action-adventure science fiction game Star Control II.  !!!Warning!!! This is a 369MB package and will take a while to download and install." porter="romadu" locat="UQM.zip" runtype="rtr" genres="strategy"
 
-Title="VA-11_Hall-A:Cyberpunk_Bartender_Action ." Desc="*Audio not works on lastest Jelos Releases* VA-11 HALL-A: Cyberpunk Bartender Action is a booze em' up about waifus, technology, and post-dystopia life. In this world, corporations reign supreme, all human life is infected with nanomachines designed to oppress them, and the terrifying White Knights ensure that everyone obeys the laws.. To boot copy the data.win/game.unx files and all the folder inside the gamedata folder and then boot the game from Valhalla.sh." porter="Tekkenfede" locat="Valhalla.zip" genres="visual novel"
+Title="VA-11_Hall-A:Cyberpunk_Bartender_Action ." Desc="VA-11 HALL-A: Cyberpunk Bartender Action is a booze em' up about waifus, technology, and post-dystopia life. In this world, corporations reign supreme, all human life is infected with nanomachines designed to oppress them, and the terrifying White Knights ensure that everyone obeys the laws.. To boot copy the data.win/game.unx files and all the folder inside the gamedata folder and then boot the game from Valhalla.sh." porter="Tekkenfede" locat="Valhalla.zip" genres="visual novel"
 
 Title="VanillaRA ." Desc="Vanilla Conquer is a fully portable version Command and Conquer Red Alert. The game comes with the demo files, read the README for detailed information on installing the full game." porter="kloptops and Snoopy" locat="VanillaRA.zip" runtype="rtr" genres="strategy"
 
@@ -418,7 +418,7 @@ Title="xkcd_Hoverboard ." Desc="Native port of xkcd 1608 Hoverboard game." porte
 
 Title="Yatka ." Desc="*To force an higher resolution add --scale2x or higher in the boot script* Clone of tetris with various modes and themes(two classic themes exclusive of this port)." porter="Tekkenfede" locat="Yatka.zip" runtype="rtr" genres="puzzle"
 
-Title="Zeroranger ." Desc="*Audio not works on lastest Jelos Releases* ZeroRanger is a vertically scrolling 2D shoot'em up with heavy emphasis on shooting, dodging and... mystery? To start the game copy the data.win/game.unx and all the ogg files inside the gamedata folder, then boot the game from the ports menu on your device." porter="Tekkenfede" locat="Zeroranger.zip" genres="action, other"
+Title="Zeroranger ." Desc="ZeroRanger is a vertically scrolling 2D shoot'em up with heavy emphasis on shooting, dodging and... mystery? To start the game copy the data.win/game.unx and all the ogg files inside the gamedata folder, then boot the game from the ports menu on your device." porter="Tekkenfede" locat="Zeroranger.zip" genres="action, other"
 
 Title="ZGloom ." Desc="ZGloom is a re-implementation of Amiga FPS Gloom, including support for Gloom 3, Gloom Deluxe and Zombie Massacre." porter="Bamboozler" locat="ZGloom.zip" runtype="rtr" genres="fps"
 
