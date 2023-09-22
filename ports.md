@@ -138,6 +138,8 @@ Title="Final_Quest ." Desc="Embark on an exciting journey in Final Quest: A Godo
 
 Title="Fire_and_Fondness_2 ." Desc="A puzzle game about rescuing your loved one from hazardous situations! Also, a send-up of daytime television." porter="Cebion" locat="fire_and_fondness2.zip" runtype="rtr" genres="puzzle"
 
+Title="Fire_Arrow ." Desc="Fire Arrow is a time attack (or 'Caravan', what used to be an important tradition in Japanese STGs in 90s) style shooter with a heavy emphasis on scoring, also known as *coffee break shmups*. Just copy data.win and ogg files inside gamedata. This version is NOT compatible with the one in the folder FAX,but the one you can find in the folder FA1." porter="Tekkenfede" locat="firearrow.zip" genres="arcade"
+
 Title="Flare_Engine ." Desc="Flare is an open source, 2D action RPG. Its game play can be likened to the games in the Diablo series.  The game files are already included and ready to go." porter="Cebion" locat="flare.zip" runtype="rtr" genres="action,rpg"
 
 Title="Free_Heroes_of_Might_and_Magic_II ." Desc="A a recreation of Heroes of Might and Magic 2 game engine by Ihar Hubchyk.  Just add the data and maps folders from your full version GOG HOMM2 to the ports/fheroes2 folder or just launch Fheroes2 to download the demo files." porter="romadu" locat="Fheroes2.zip" genres="strategy,rpg"
@@ -178,6 +180,8 @@ Title="Hijinx ." Desc="A game about platforming, curses, and turtles. Files are 
 
 Title="Hocoslamfy ." Desc="You are a small bee and you must fly to avoid the bamboo shoots.  Hocoslamfy files are already included and ready to go." porter="Cebion" locat="hocoslamfy.zip" runtype="rtr" genres="platformer"
 
+Title="Hunt_for_the_Shadow_Rider ." Desc="A rogue Shadow Rider has escaped to the year 2078. You are the only Hunter left who can take him down.  Hocoslamfy files are already included and ready to go." porter="Tekkenfede" locat="HFTSR.zip" runtype="rtr" genres="platformer, action"
+
 Title="Hurrican ." Desc="Turrican port by Thrimbor.  Just add the data and lang folders from here to the ports/hurrican folder or just launch Hurrican from the ports menu in Emulationstation and it will download the files and install them automatically." porter="romadu" locat="Hurrican.zip" genres="platformer"
 
 Title="Hydra_Castle_Labyrinth ." Desc="Hydra Castle Labyrinth is a platform game with some old school action. It's also reminiscent of games of the 16 bit era." porter="Christian_Haitian" locat="Hydra%20Castle%20Labyrinth.zip" runtype="rtr" genres="platformer"
@@ -204,7 +208,7 @@ Title="Maximilien_Adventure ." Desc="Maximilien, a young adventure, survive a te
 
 Title="Me_and_My_Shadow ." Desc="A puzzle/platform game in which you try to reach the exit by solving puzzles. Spikes, moving blocks, fragile blocks and much more stand between you and the exit. Record your moves and let your shadow mimic them to reach blocks you couldn't reach alone." porter="Bamboozler" locat="meandmyshadow.zip" runtype="rtr" genres="platformer,puzzle"
 
-Title="Megaman:Rock_N_Roll ." Desc="A mysterious robot force is invading the city and abducting Robot Masters. Protoman and Megaman both succumb to the terror leaving Roll alone and scared. Back at Dr. Light's lab Roll decides to go through the procedure her brother did to become a super fighting robot. Run Megaman.sh to play. Suggested to play on device with 2 gb of ram to lower a lot the possibility of slowdowns, but is has been defined playable also on lower specs device" porter="Tekkenfede" locat="Megaman.zip" runtype="rtr" genres="arcade"
+Title="Megaman:Rock_N_Roll ." Desc="A mysterious robot force is invading the city and abducting Robot Masters. Protoman and Megaman both succumb to the terror leaving Roll alone and scared. Back at Dr. Light's lab Roll decides to go through the procedure her brother did to become a super fighting robot. Run Megaman.sh to play. Suggested to play on device with 2 gb of ram to lower a lot the possibility of slowdowns, but it has been defined playable also on lower specs device" porter="Tekkenfede" locat="Megaman.zip" runtype="rtr" genres="arcade"
 
 Title="Meritous ." Desc="Action-adventure dungeon crawl game.  Meritous files are already included and ready to go." porter="Cebion" locat="Meritous.zip" runtype="rtr" genres="action,adventure"
 
@@ -284,7 +288,9 @@ Title="Pocket_Tactics ." Desc="After the collapse of human civilization, rogue w
 
 Title="Powder ." Desc="A roguelike is a dungeon crawler where no two games are the same. The maps are different, the items are different, there are no guaranteed win paths.  Powder files are already included and ready to go." porter="Cebion" locat="powder.zip" runtype="rtr" genres="rpg"
 
-Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip" runtype="rtr" genres="platformer"
+Title="Prehistorik_2 ." Desc="A caveman-era platform game using the Blues Brothers game engine developed by Titus Interactive.  Includes the demo files.  You can add your own full game Dos files to the ports/prehistorik2/gamedata folder." porter="Jetup" locat="Prehistorik%202.zip" genres="arcade"
+
+Title="Pure_Metal:Feature_1 ." Desc="Base has been attacked and you are the last hope of saving Pure Metal. Shoot down hoards of enemies and unforgiving bosses in classic shooter style. Touch controls feature smooth analog from the onscreen D-pad. Use the arrow keys and the z and x buttons to shoot the enemy with the keyboard. You have one life to make it through each level, but don't worry your ship can take 3 consecutive hits before being destroyed. Also your ship will regenerate to full power if you can manage to avoid enemy fire long enough. Bob and weave your way through the enemy fire and kill every thing in site. This game is designed to brutally come after you but pay attention and look for the patterns and avoid the onslaught of bullets.. Just copy the game.win or data.win inside the gamedata folder. Windows store version works too." porter="Tekkenfede" locat="Puremetal.zip" genres="arcade"
 
 Title="Quake_1 ." Desc="Quake 1 is one of the first fully 3D First-person shooter games released by id software.  Includes shareware pak file.  You can add your own full game pak files to the ports/quake/quakepaks/id1 folder." porter="Christian_Haitian" locat="Quake.zip" runtype="rtr" genres="fps"
 
@@ -354,6 +360,8 @@ Title="Space_Cadet_Pinball ." Desc="A reversed engineered version Space Cadet Pi
 
 Title="Spelunky ." Desc="Spelunky Classic HD.  A modified version of Derek Yu's game Spelunky Classic. Based on the source code published in Humble Weekly Bundle: Play and Create with GameMaker (not original 1.1 release)." porter="Christian_Haitian" locat="Spelunky.zip" runtype="rtr" genres="platformer"
 
+Title="Spooky_Ghosts_Dot_Com  ." Desc="Spooky Ghosts Dot Com is a small metroidvania about a ghost hunter named Ruby. One Halloween night a ghost hunting job comes in, but it turns out to not be a regular gig! Copy the file SpookyGhostsDotCom inside the game folder, if you have the steam version rename the file *SpookyGhostsDotCom-Steam*." porter="Tekkenfede" locat="Spooky.zip" genres="platformer, arcade"
+
 Title="Starboy ." Desc="During its journey StarBoy crashed and got lost in an unknown planet, help him return back to its spaceship! You can purchase StarBoy at: https://mrkdji.itch.io/starboy. Download and extract it, and place the starboy_linux.pck file in the gamedata directory. This has been tested with starboy_linux.zip, version 1.0.3" porter="tabreturn" locat="StarBoy.zip" genres="platformer"
 
 Title="Starcatcher ." Desc="Starcatcher is a platformer inspired by Kirby, Metroid, Gravitron Experiment. Your goal: Collect stars in outer space." porter="Cebion" locat="starcatcher.zip" runtype="rtr" genres="platformer"
@@ -361,6 +369,8 @@ Title="Starcatcher ." Desc="Starcatcher is a platformer inspired by Kirby, Metro
 Title="Stardew_Valley ." Desc="An open-ended country-life RPG!  You must have a copy of the compatibility version of Stardew Valley copied to the ports/stardewvalley/gamedata folder." porter="Johnny on Flame" locat="StardewValley.zip" mono="y" genres="simulation,rpg"
 
 Title_P="Steel_Assault ." Desc="Punch, whip, and zipline your way through a post-apocalyptic America in this 16-bit retro-style action platformer!  You must have a copy of Steel Assault for Linux copied to the ports/steelassault/gamedata folder." porter="Johnny on Flame" locat="SteelAssault.zip" mono="y" genres="action,platformer"
+
+Title="Super_Hydorah ." Desc="Super Hydorah is a nonlinear horizontal shoot' em up designed to offer a challenging experience, sublimating the richness of traditional shmup classics..  Copy the data.win file and the texts and music folders inside gamedata. Then Boot the game from Hydorah.sh." porter="Tekkenfede" locat="Hydorah.zip" genres="arcade"
 
 Title="Super_Mario_War ." Desc="Super Mario War is a fan-made multiplayer Super Mario Bros. style deathmatch game in which players try to beat one another in a variety of gameplay modes.  Great fun even in single player mode." porter="Christian_Haitian" locat="Super%20Mario%20War.zip" runtype="rtr" genres="platformer"
 
@@ -371,6 +381,8 @@ Title_P="Star_Wars_Jedi_Knight_II_-_Jedi_Outcast ." Desc="An open source port of
 Title="SuperTux ." Desc="SuperTux is a jump'n'run game with strong inspiration from the Super Mario Bros. games for the various Nintendo platforms.  !!!Warning!!! This is a 169MB package and will take a while to download and install." porter="Christian_Haitian" locat="SuperTux.zip" runtype="rtr" genres="platformer"
 
 Title="SuperTuxKart ." Desc="SuperTuxKart is a 3D open-source arcade racer with a variety characters, tracks, and modes to play. This port uses the low quality mobile assets. See the readme file for instructions on adding the full quality assets.  !!!Warning!!! This is a 123MB package and will take a while to download and install." porter="Bamboozler" locat="SuperTuxKart.zip" runtype="rtr" genres="racing"
+
+Title="Super_XYX ." Desc="*Tate mode unstable, alternative controls in the game folder* The year is 3999, humanity has long colonized itself across the galaxy, devouring new worlds for their resources, enjoying the interstellar life of luxury, more or less friendly interactions with other alien races. That was until an ancient threat has awakened from it's slumber....  Copy the data.win file and the texts and music folders inside gamedata. Then Boot the game." porter="Tekkenfede" locat="SuperXYX.zip" genres="arcade"
 
 Title="Tamatool ." Desc="Tamatool is a Tamagotchi P1 emulator. Tamatool requires a compatible Tamagotchi P1 ROM called rom.bin in its folder" porter="Bamboozler" locat="Tamatool.zip" genres="simulation"
 
@@ -389,6 +401,8 @@ Title="Tiny_Crate ." Desc="Tiny Crate is a cute little precision platformer with
 Title="Titan_Tactics ." Desc="A follow up to Pocket Tactics, Titan Tactics is inspired by the awesome tactic games of the 90s. Fight with your allies and uncover the mysteries of the kingdoms of Tyrmyr and Skathi!" porter="Cebion" locat="titan_tactics.zip" runtype="rtr" genres="strategy"
 
 Title="Tomb_Raider_1 ." Desc="An open source port of Tomb Raider 1 using OpenLara engine by xProger.  Just add your steam or gog Tomb Raider 1 files to the ports/tombraider1 folder." porter="Jetup" locat="Tomb%20Raider%201.zip" genres="action,adventure"
+
+Title="Ubermosh_Collection." Desc="Collection of all the 8 games of the saga.\nOmega and Vol7 suggested only with device with 2 gb or more of ram, but works also on lower specs devices, often with very long boot time (up to 3 min for these two for the first boot). Jelos could have weird visualization of some menu sometimes but the interaction works and the gameplay works as espected. Inside the game folders you will find 8 folders each with the name of a Ubermosh game. Place the data.win you have inside in the correct gamedata \"ie. Ubermosh black data.win in \"BLACK/gamedata\" porter="Tekkenfede" locat="UbermoshCollection.zip" genres="arcade, other"
 
 Title="Ultimate_Tapan_Kaikki ." Desc="A simple top-down shooter.  Just download and play." porter="Cebion" locat="ultimatetapankaikki.zip" runtype="rtr" genres="action"
 
