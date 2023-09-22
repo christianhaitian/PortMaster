@@ -28,6 +28,8 @@ Title="Banana_Duck ." Desc="Experience the sweet taste of pursuing bananas and a
 
 Title="Beat2x ." Desc="A DDR-style rythm game where the goal is to time the button presses to line up with the music beat." porter="Bamboozler" locat="Beat2x.zip" runtype="rtr" genres="rythm"
 
+Title="Beat_of_The_PixelHeat ." Desc="Beat of The Pixel Heat is a rhythm game in which you must control HEAT, an artificial intelligence responsible for defending cyberspace from a wave of viral elements that have invaded your home! Run PixelHeat.sh to play." porter="Tekkenfede" locat="PixelHeat.zip" runtype="rtr" genres="rythm"
+
 Title="Bermuda_Syndrome ." Desc="A reimplemntation of the Berumuda Syndrome engine.  You will need the original files of the PC release or PC demo copied to the ports/bermuda/DATA folder." porter="jetup" locat="Bermuda_Syndrome.zip" genres="action"
 
 Title_F="Billy_Frontier ." Desc="This is Pangea Software's Billy Frontier updated to run on modern operating systems. Use the touchscreen to navigate the UI and gameplay." porter="brooksytech" locat="billyfrontier.zip" runtype="rtr" genres="action,shooter"
@@ -63,6 +65,8 @@ Title="Cave_Story_(Evo) ." Desc="Cave Story using the Nxengine-evo engine from h
 Title="Celeste_Classic ." Desc="Celeste Classic is a C source port of the original celeste (Celeste classic)." porter="Bamboozler" locat="cceleste.zip" runtype="rtr" genres="platformer,puzzle"
 
 Title="Chasm ." Desc="Explore the depths below a remote mountain town in this procedurally-generated Adventure Platformer. Taking inspiration from hack 'n slash dungeon crawlers and Metroidvania-style platformers, Chasm will immerse you in a fantasy world full of exciting treasure, deadly enemies, and abundant secrets. You must copy a valid Linux build of the game to the 'chasm/gamedata' folder." porter="Johnny on Flame" locat="Chasm.zip" mono="y" genres="action,adventure,platformer"
+
+Title="Chip_n_Dale_Rescue_Rangers:Remastered ." Desc="Nutcase was kidnapped by the cat Fatso, and Chip and Dale went to save her. As they begin the operation, they discover that the enemy has plotted more serious difficulties for the entire world. Not only will you need to help Gaika, but also destroy the antagonist's further plans. In this remaster, the developer completely changed the textures and character animations. Ready to run, launch CHIPNDALE.sh." porter="Tekkenfede" locat="chip.zip" genres="arcade,platformer"
 
 Title="C-Dogs ." Desc="C-Dogs is a classic overhead run-and-gun game" porter="Christian_Haitian" locat="C-Dogs.zip" runtype="rtr" genres="action,shooter"
 
@@ -199,6 +203,8 @@ Title="Margot_Beatrice_Adventure ." Desc="The courageous princess Margot-Béatri
 Title="Maximilien_Adventure ." Desc="Maximilien, a young adventure, survive a terrible plane crash. With the help of some locals, he will needs to get through the jungle and find his brother and sister." porter="Cebion" locat="maximilien_adventure.zip" runtype="rtr" genres="platfomer,adventure"
 
 Title="Me_and_My_Shadow ." Desc="A puzzle/platform game in which you try to reach the exit by solving puzzles. Spikes, moving blocks, fragile blocks and much more stand between you and the exit. Record your moves and let your shadow mimic them to reach blocks you couldn't reach alone." porter="Bamboozler" locat="meandmyshadow.zip" runtype="rtr" genres="platformer,puzzle"
+
+Title="Megaman:Rock_N_Roll ." Desc="A mysterious robot force is invading the city and abducting Robot Masters. Protoman and Megaman both succumb to the terror leaving Roll alone and scared. Back at Dr. Light's lab Roll decides to go through the procedure her brother did to become a super fighting robot. Run Megaman.sh to play. Suggested to play on device with 2 gb of ram to lower a lot the possibility of slowdowns, but is has been defined playable also on lower specs device" porter="Tekkenfede" locat="Megaman.zip" runtype="rtr" genres="arcade"
 
 Title="Meritous ." Desc="Action-adventure dungeon crawl game.  Meritous files are already included and ready to go." porter="Cebion" locat="Meritous.zip" runtype="rtr" genres="action,adventure"
 
