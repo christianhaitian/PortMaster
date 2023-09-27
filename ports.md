@@ -118,6 +118,8 @@ Title="Eity ." Desc="Eity is a free rhythm game with cool music in a similar vai
 
 Title="Enigma ." Desc="Enigma is a puzzle game inspired by Oxyd on the Atari ST and Rock'n'Roll on the Amiga" porter="Bamboozler" locat="Enigma.zip" runtype="rtr" genres="puzzle"
 
+Title="Escape ." Desc="Escape is a fun puzzle game in the tradition of Adventures of Lolo or Chip's Challenge" porter="Cebion" locat="escape.zip" runtype="rtr" genres="puzzle"
+
 Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip" genres="fps,action"
 
 Title="Exult ." Desc="A port of Ultima 7.  You'll need A copy of the black gate and/or serpent isle added to ports/exult/data/blackgate and/or ports/exult/data/serpentisle." porter="nl255" locat="Exult.zip" genres="rpg"
