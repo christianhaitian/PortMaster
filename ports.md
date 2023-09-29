@@ -106,7 +106,7 @@ Title="Donut_Dodo ." Desc="If a long lost arcade game from 1983 resurfaced today
 
 Title_P="Doom_3 ." Desc="Doom 3 is a 2004 survival horror first-person shooter video game developed by id Software and published by Activision. You need to add your own full game pak files to the ports/doom3/base folder." porter="brooksytech" locat="doom3.zip" genres="fps,action"
 
-Title="DROID7 ." Desc="Jump your way up on a generated tower while a laser beam chases you from below. The higher you go, the faster it gets, and it isn't long before disappearing (and reappearing) platforms and spikes are introduced to make your life harder. You can purchase DROID7 at: https://juancolacelli.itch.io/droid7\n\nDownload the Windows version and extract it, and place the DROID7.pck file in the gamedata directory. This has been tested with Linux 64-bit, Dec 30 2022 release" porter="tabreturn" locat="DROID7.zip" genres="platformer"
+Title="DROID7 ." Desc="Jump your way up on a generated tower while a laser beam chases you from below. The higher you go, the faster it gets, and it isn't long before disappearing (and reappearing) platforms and spikes are introduced to make your life harder. You can purchase DROID7 at: https://juancolacelli.itch.io/droid7\n\nDownload the Windows version and extract it, and place the DROID7.pck file in the gamedata directory. This has been tested with Windows 64-bit, Dec 30 2022 release" porter="tabreturn" locat="DROID7.zip" genres="platformer"
 
 Title="Duke_Nukem_3D ." Desc="Duke Nukem 3D using the rednukem build open source port by Alexey Khokholov.  You'll need to add your own full version duke3d.grp and duke.rts Duke Nukem 3D Atomic files to the ports/rednukem/gamedata folder." porter="Romadu" locat="Duke%20Nukem%203D.zip" genres="fps,action"
 
@@ -117,6 +117,8 @@ Title="Echo_Chamber ." Desc="Wizard roguelike, Traverse a dungeon and add a new 
 Title="Eity ." Desc="Eity is a free rhythm game with cool music in a similar vain to DDR. " porter="Cebion" locat="eity.zip" runtype="rtr" genres="rhytm"
 
 Title="Enigma ." Desc="Enigma is a puzzle game inspired by Oxyd on the Atari ST and Rock'n'Roll on the Amiga" porter="Bamboozler" locat="Enigma.zip" runtype="rtr" genres="puzzle"
+
+Title="Escape ." Desc="Escape is a fun puzzle game in the tradition of Adventures of Lolo or Chip's Challenge" porter="Cebion" locat="escape.zip" runtype="rtr" genres="puzzle"
 
 Title="Exhumed ." Desc="A port of the PC version of Exhumed based on EDuke32.  You'll need to add your own full version STUFF.DAT, DEMO.VCR and BOOK.MOV files to the ports/Exhumed folder." porter="Romadu" locat="Exhumed.zip" genres="fps,action"
 
