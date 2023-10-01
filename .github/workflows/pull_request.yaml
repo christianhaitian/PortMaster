@@ -6,8 +6,9 @@ on:
 
   workflow_dispatch:
 
-concurrency: 
-  group: pr-check # only 1 check at a time
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: false #only 1 build at a time per PR
 
 jobs:
   build:
