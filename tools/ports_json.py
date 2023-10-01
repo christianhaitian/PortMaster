@@ -595,8 +595,8 @@ def port_info(file_name, ports_json, ports_status, extra_data):
         'date_updated': TODAY,
         }
 
-    # with open(file_name.name + '.md5', 'wt') as fh:
-    #     fh.write(file_md5)
+    with open(file_name.name + '.md5', 'wt') as fh:
+        fh.write(file_md5)
 
     if clean_name not in ports_status:
         ports_status[clean_name] = default_status
@@ -626,8 +626,8 @@ def util_info(file_name, util_json):
 
     file_md5 = hash_file(file_name)
 
-    # with open(file_name.name + '.md5', 'wt') as fh:
-    #     fh.write(file_md5)
+    with open(file_name.name + '.md5', 'wt') as fh:
+        fh.write(file_md5)
 
     if file_name.name.lower().endswith('.squashfs'):
         name = runtime_nicename(file_name.name)
