@@ -649,14 +649,13 @@ def joiner(*items):
 
 
 def main(args):
-    portmaster_path = Path('../PortMaster')
-    portmaster_images_path = Path('../PortMaster/images')
-    portmaster_hosting_path = Path('../PortMaster-Hosting')
+    portmaster_path = Path('.')
+    portmaster_images_path = Path('images')
 
     # (BASE_RELEASE_URL +  "ports_status.json")
     ports_status_file = Path('.') / "ports_status.json"
 
-    ports_new_json_file = Path('.') / "ports.json"
+    ports_json_file = Path('.') / "ports.json"
     status = {
         "new": 0,
         "unchanged": 0,
@@ -708,11 +707,9 @@ def main(args):
         images_json[port_name][image_type] = file_name.name
 
     for file_name in joiner(
-                portmaster_path.glob('*.zip'),
-                portmaster_path.glob('*.squashfs'),
-                portmaster_hosting_path.glob('*.zip'),
-                portmaster_hosting_path.glob('*.squashfs'),
-                ):
+            portmaster_path.glob('*.zip'),
+            portmaster_path.glob('*.squashfs'),
+            ):
 
         if file_name.name.lower().endswith('.squashfs') or file_name.name.lower() in ("portmaster.zip", "images.zip", "ports.md"):
             util_info(file_name, util_json)
@@ -804,7 +801,7 @@ def main(args):
     for util_name in sorted(util_json.keys(), key=lambda util_name: util_name.lower()):
         ports_json_output['utils'][util_name] = util_json[util_name]
 
-    with ports_new_json_file.open('w') as fh:
+    with ports_json_file.open('w') as fh:
         json.dump(ports_json_output, fh, indent=4)
 
     with ports_status_file.open('w') as fh:
