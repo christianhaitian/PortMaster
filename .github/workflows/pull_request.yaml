@@ -4,6 +4,12 @@ on:
   pull_request:
     branches: [ master ]
 
+  workflow_dispatch:
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: false #only 1 build at a time per PR
+
 jobs:
   build:
     runs-on: ubuntu-20.04
