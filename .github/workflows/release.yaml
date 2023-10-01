@@ -3,7 +3,9 @@ name: release
 on:
   push:
     paths-ignore:
+      - '.github/**'
       - 'README.md'
+      - '.gitignore'
     branches:
       - main
 
