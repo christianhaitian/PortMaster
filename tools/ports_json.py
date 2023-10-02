@@ -776,27 +776,27 @@ def main(args):
         "utils": {},
         }
 
-    # with open("ports.md", "w") as fh:
-    for port_name in sorted(ports_json.keys(), key=lambda port_name: ports_json[port_name]['attr']['title'].lower()):
-        extra_data = extra_info[port_name]
-        status['total'] += 1
-        status[extra_data['status']] += 1
+    with open("ports.md", "w") as fh:
+        for port_name in sorted(ports_json.keys(), key=lambda port_name: ports_json[port_name]['attr']['title'].lower()):
+            extra_data = extra_info[port_name]
+            status['total'] += 1
+            status[extra_data['status']] += 1
 
-        if len(extra_data['errors']) > 0 or len(extra_data['warnings']) > 0:
-            print(f"Bad port {port_name}")
+            if len(extra_data['errors']) > 0 or len(extra_data['warnings']) > 0:
+                print(f"Bad port {port_name}")
 
-            if len(extra_data['errors']):
-                print("- Errors:")
-                print("  " + f"\n  ".join(extra_data['errors']) + "\n")
+                if len(extra_data['errors']):
+                    print("- Errors:")
+                    print("  " + f"\n  ".join(extra_data['errors']) + "\n")
 
-            if len(extra_data['warnings']):
-                print("- Warnings:")
-                print("  " + f"\n  ".join(extra_data['warnings']) + "\n")
+                if len(extra_data['warnings']):
+                    print("- Warnings:")
+                    print("  " + f"\n  ".join(extra_data['warnings']) + "\n")
 
-        ports_json_output['ports'][port_name] = ports_json[port_name]
+            ports_json_output['ports'][port_name] = ports_json[port_name]
 
-            # print(port_info_to_portmd(ports_json[port_name], file_names[port_name]), file=fh)
-            # print("", file=fh)
+            print(port_info_to_portmd(ports_json[port_name], file_names[port_name]), file=fh)
+            print("", file=fh)
 
     for util_name in sorted(util_json.keys(), key=lambda util_name: util_name.lower()):
         ports_json_output['utils'][util_name] = util_json[util_name]
