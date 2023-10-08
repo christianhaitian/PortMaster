@@ -1,0 +1,67 @@
+name: Large File Check
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: large-file-check
+  cancel-in-progress: false #only 1 build at a time per PR
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+
+      - name: env - better defaulting of env vars;
+        id: env
+        run: |
+            LARGE_FILE_REPOSITORY="${{ secrets.LARGE_FILE_REPOSITORY }}"
+            if [[ -z "$LARGE_FILE_REPOSITORY" ]]; then
+              LARGE_FILE_REPOSITORY="PortsMaster/PortMaster-Hosting"
+            fi
+            echo "LARGE_FILE_REPOSITORY=$LARGE_FILE_REPOSITORY" >> $GITHUB_OUTPUT
+
+            LARGE_FILE_TAG="${{ secrets.LARGE_FILE_TAG }}"
+            if [[ -z "$LARGE_FILE_TAG" ]]; then
+              LARGE_FILE_TAG="large-files"
+            fi
+            echo "LARGE_FILE_TAG=$LARGE_FILE_TAG" >> $GITHUB_OUTPUT
+
+            RELEASE_REPO="${{ secrets.RELEASE_REPO }}"
+            if [[ -z "$RELEASE_REPO" ]]; then
+              RELEASE_REPO="PortMaster-Releases"
+            fi
+            echo "RELEASE_REPO=$RELEASE_REPO" >> $GITHUB_OUTPUT
+
+            RELEASE_ORG="${{ secrets.RELEASE_ORG }}"
+            if [[ -z "$RELEASE_ORG" ]]; then
+              RELEASE_ORG="PortsMaster"
+            fi
+            echo "RELEASE_ORG=$RELEASE_ORG" >> $GITHUB_OUTPUT
+
+      - uses: hmarr/debug-action@v2
+        name: "debug: ${{github.event_name}}"
+
+      - uses: actions/checkout@v2
+
+      - name: Remove Repo Ports
+        id: rm-ports
+        run: |
+          rm -f *.zip
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - uses: robinraju/release-downloader@v1.2
+        with:
+          repository: "${{ steps.env.outputs.LARGE_FILE_REPOSITORY}}"
+          tag: "${{steps.env.outputs.LARGE_FILE_TAG}}"
+          fileName: "*"
+
+      - name: Generate Port Files.
+        id: ports-info
+        run: |
+          python3 tools/ports_json.py --do-check
+
