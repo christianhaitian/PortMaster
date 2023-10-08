@@ -1,10 +1,11 @@
-name: release
+name: PortMaster Release
 
 on:
   push:
     paths-ignore:
       - '.github/**'
       - 'README.md'
+      - '.gitignore'
     branches:
       - main
 
@@ -49,9 +50,12 @@ jobs:
 
       - uses: hmarr/debug-action@v2
         name: "debug: ${{github.event_name}}"
-     
+
       - uses: actions/checkout@v2
- 
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
       - uses: robinraju/release-downloader@v1.2
         with:
           repository: "${{ steps.env.outputs.LARGE_FILE_REPOSITORY}}"
@@ -72,16 +76,10 @@ jobs:
           find images \( -iname '*.jpg' -o  -iname '*.png' \) -exec touch -d '2021-01-01 00:00:00' {} \;
           find images \( -iname '*.jpg' -o  -iname '*.png' \) -exec chmod 644 {} \;
           find images \( -iname '*.jpg' -o  -iname '*.png' \) | sort | TZ=UTC zip -qX images.zip -@
-      - name: Create md5 hashes
-        id: md5
+      - name: Generate Port Files.
+        id: ports-info
         run: |
-            for file in *.zip *.squashfs; do
-              if [ ! -f "$file" ]; then
-                continue
-              fi
-              echo "file: $file"
-              md5sum "$file" | cut -f1 -d' ' > "$file.md5"
-            done
+          python3 tools/ports_json.py
       - name: "Prepare Release"
         uses: ncipollo/release-action@v1
         with:
@@ -91,7 +89,7 @@ jobs:
           prerelease: false
           replacesArtifacts: false
           omitNameDuringUpdate: true
-          artifacts: "ports.md, *.zip, version, *.squashfs, *.md5"
+          artifacts: "ports.md, ports.json, ports_status.json, *.zip, version, *.squashfs, *.md5"
           token: ${{ secrets.PORTMASTER_RELEASE_TOKEN }}
           repo: ${{ steps.env.outputs.RELEASE_REPO }}
           owner: ${{ steps.env.outputs.RELEASE_ORG }}
