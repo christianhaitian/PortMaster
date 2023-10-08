@@ -79,7 +79,7 @@ jobs:
       - name: Generate Port Files.
         id: ports-info
         run: |
-          python3 tools/ports_json.py
+          python3 tools/ports_json.py "${{steps.date.outputs.date}}"
       - name: "Prepare Release"
         uses: ncipollo/release-action@v1
         with:

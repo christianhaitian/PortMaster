@@ -16,7 +16,10 @@ from pathlib import Path
 
 ################################################################################
 ## Stuff
-BASE_RELEASE_URL = "https://github.com/PortsMaster/PortMaster-Releases/releases/latest/download/"
+if len(sys.argv) > 1:
+    BASE_RELEASE_URL = f"https://github.com/PortsMaster/PortMaster-Releases/releases/download/{sys.argv[1]}/"
+else:
+    BASE_RELEASE_URL = "https://github.com/PortsMaster/PortMaster-Releases/releases/latest/download/"
 
 
 TODAY = str(datetime.datetime.today().date())
@@ -615,10 +618,10 @@ def port_info(file_name, ports_json, ports_status, extra_data):
         extra_data["status"] = "unchanged"
 
     if clean_name in ports_json:
-        ports_json[clean_name].update(ports_status[clean_name])
+        ports_json[clean_name]['status'] = ports_status[clean_name].copy()
 
-        ports_json[clean_name]['download_size'] = file_name.stat().st_size
-        ports_json[clean_name]['download_url'] = BASE_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", "."))
+        ports_json[clean_name]['status']['size'] = file_name.stat().st_size
+        ports_json[clean_name]['status']['url'] = BASE_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", "."))
 
 
 def util_info(file_name, util_json):
