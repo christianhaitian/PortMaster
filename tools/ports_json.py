@@ -620,10 +620,10 @@ def port_info(file_name, ports_json, ports_status, extra_data):
         extra_data["status"] = "unchanged"
 
     if clean_name in ports_json:
-        ports_json[clean_name]['status'] = ports_status[clean_name].copy()
+        ports_json[clean_name]['source'] = ports_status[clean_name].copy()
 
-        ports_json[clean_name]['status']['size'] = file_name.stat().st_size
-        ports_json[clean_name]['status']['url'] = CURRENT_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", "."))
+        ports_json[clean_name]['source']['size'] = file_name.stat().st_size
+        ports_json[clean_name]['source']['url'] = CURRENT_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", "."))
 
 
 def util_info(file_name, util_json):
@@ -643,8 +643,8 @@ def util_info(file_name, util_json):
     util_json[clean_name] = {
         "name": name,
         'md5': file_md5,
-        'download_size': file_name.stat().st_size,
-        'download_url': CURRENT_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", ".")),
+        'size': file_name.stat().st_size,
+        'url': CURRENT_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", ".")),
         }
 
 
