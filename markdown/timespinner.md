@@ -1,4 +1,4 @@
-## Credits
+## Notes
 
 Thanks to the [FNA-XNA](https://github.com/FNA-XNA/FNA) project for the runtime that's used to make this possible.
 Thanks to JohnnyonFlame for the port work that makes this possible.

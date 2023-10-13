@@ -1,4 +1,4 @@
-## Credits
+## Notes
 
 The following files are needed:
 -  avp_huds directory

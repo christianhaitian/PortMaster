@@ -1,4 +1,4 @@
-## Credits
+## Notes
 
 **This game is best played on devices with a 640x480 screen resolution or higher!**
 
