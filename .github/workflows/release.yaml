@@ -38,7 +38,7 @@ jobs:
 
             RUNTIME_REPOSITORY="${{ secrets.RUNTIME_REPOSITORY }}"
             if [[ -z "$RUNTIME_REPOSITORY" ]]; then
-              RUNTIME_REPOSITORY="PortsMaster/PortMaster-Runtimes"
+              RUNTIME_REPOSITORY="PortsMaster/PortMaster-Runtime"
             fi
             echo "RUNTIME_REPOSITORY=$RUNTIME_REPOSITORY" >> $GITHUB_OUTPUT
 
