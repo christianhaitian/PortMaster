@@ -17,3 +17,10 @@ Thanks to [Carl Reinke](https://github.com/carlreinke) for this game, [Yuji Oshi
 | Dpad| Up/Down/Left/Right |
 | Left/Right Joytick| Up/Down/Left/Right |
 
+## Compile
+<br/>
+
+```shell 
+git clone https://github.com/carlreinke/nanobounce.git
+make
+```
