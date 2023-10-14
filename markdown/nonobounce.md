@@ -22,5 +22,6 @@ Thanks to [Carl Reinke](https://github.com/carlreinke) for this game, [Yuji Oshi
 
 ```shell 
 git clone https://github.com/carlreinke/nanobounce.git
+cd nanobounce
 make
 ```
