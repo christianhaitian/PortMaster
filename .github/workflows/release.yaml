@@ -93,6 +93,7 @@ jobs:
       - name: Create runtimes zip
         id: runtimes-zip
         run: |
+          rm -f zulu*
           zip -9 -r ./runtimes.zip *.squashfs
 
       - name: Create images zip from images Folder
