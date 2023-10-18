@@ -1,7 +1,7 @@
 
 ## Notes
 
-Thanks to [Carl Reinke](https://github.com/carlreinke) for this game, [Yuji Oshimoto](http://www.04.jp.org/) for pixel fonts, [Jakob Svanholm (Mosaik)](http://www.mosaik.se/) and [Seth Peelle (BeaT)](https://www.beatfox.com/) for music.
+Thanks to [Dennis Payne](https://gitlab.com/dulsi/alchemyquest) and team for updating Open Alchemist to give us this version with updated graphics and enhancements.
 
 ## Controls
 
