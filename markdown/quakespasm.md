@@ -2,7 +2,7 @@
 
 Thanks to [Ozkan Sezer](https://github.com/sezero/quakespasm) for this awesome source port for Quake.
 
-Source: https://github.com/sezero/quakespasm
+Source: https://github.com/sezero/quakespasm, https://github.com/Slayer366/quakespasm-for-GL4ES
 
 It is recommended to use an RK3566 or faster CPU to run Arcane Dimensions or Dimension of the Machine.
 
