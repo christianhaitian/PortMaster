@@ -9,7 +9,7 @@ Thanks to [David Olofson](https://github.com/olofson/kobodeluxe) for this update
 |Dpad|Movement|
 |A/B/X/Y|Action/Shoot|
 |Select|Pause|
-|Start/|Back/Menu|
+|Start|Back/Menu|
 |Start+Select|Quit|
 
 
