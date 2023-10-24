@@ -12,52 +12,52 @@ To invert right joystick look, set mouse-look invert option in the game's option
 Game data files needed:
 
 Quake:
-quakespasm/id1/pak0.pak
-quakespasm/id1/pak1.pak
-quakespasm/id1/music/track02.ogg
-quakespasm/id1/music/track03.ogg
-quakespasm/id1/music/track04.ogg
-quakespasm/id1/music/track05.ogg
-quakespasm/id1/music/track06.ogg
-quakespasm/id1/music/track07.ogg
-quakespasm/id1/music/track08.ogg
-quakespasm/id1/music/track09.ogg
-quakespasm/id1/music/track10.ogg
-quakespasm/id1/music/track11.ogg
+- quakespasm/id1/pak0.pak
+- quakespasm/id1/pak1.pak
+- quakespasm/id1/music/track02.ogg
+- quakespasm/id1/music/track03.ogg
+- quakespasm/id1/music/track04.ogg
+- quakespasm/id1/music/track05.ogg
+- quakespasm/id1/music/track06.ogg
+- quakespasm/id1/music/track07.ogg
+- quakespasm/id1/music/track08.ogg
+- quakespasm/id1/music/track09.ogg
+- quakespasm/id1/music/track10.ogg
+- quakespasm/id1/music/track11.ogg
 
 Scourge of Armagon:
-quakespasm/hipnotic/pak0.pak
-quakespasm/hipnotic/music/track02.ogg
-quakespasm/hipnotic/music/track03.ogg
-quakespasm/hipnotic/music/track04.ogg
-quakespasm/hipnotic/music/track05.ogg
-quakespasm/hipnotic/music/track06.ogg
-quakespasm/hipnotic/music/track07.ogg
-quakespasm/hipnotic/music/track08.ogg
-quakespasm/hipnotic/music/track09.ogg
+- quakespasm/hipnotic/pak0.pak
+- quakespasm/hipnotic/music/track02.ogg
+- quakespasm/hipnotic/music/track03.ogg
+- quakespasm/hipnotic/music/track04.ogg
+- quakespasm/hipnotic/music/track05.ogg
+- quakespasm/hipnotic/music/track06.ogg
+- quakespasm/hipnotic/music/track07.ogg
+- quakespasm/hipnotic/music/track08.ogg
+- quakespasm/hipnotic/music/track09.ogg
 
 Dissolution of Eternity:
-quakespasm/rogue/pak0.pak
-quakespasm/rogue/music/track02.ogg
-quakespasm/rogue/music/track03.ogg
-quakespasm/rogue/music/track04.ogg
-quakespasm/rogue/music/track05.ogg
-quakespasm/rogue/music/track06.ogg
-quakespasm/rogue/music/track07.ogg
-quakespasm/rogue/music/track08.ogg
-quakespasm/rogue/music/track09.ogg
+- quakespasm/rogue/pak0.pak
+- quakespasm/rogue/music/track02.ogg
+- quakespasm/rogue/music/track03.ogg
+- quakespasm/rogue/music/track04.ogg
+- quakespasm/rogue/music/track05.ogg
+- quakespasm/rogue/music/track06.ogg
+- quakespasm/rogue/music/track07.ogg
+- quakespasm/rogue/music/track08.ogg
+- quakespasm/rogue/music/track09.ogg
 
 Dimension of the Past:
-quakespasm/dopa/pak0.pak
+- quakespasm/dopa/pak0.pak
 
 Arcane Dimensions:
-quakespasm/ad/pak0.pak
-quakespasm/ad/pak1.pak
-quakespasm/ad/pak2.pak
+- quakespasm/ad/pak0.pak
+- quakespasm/ad/pak1.pak
+- quakespasm/ad/pak2.pak
 
 Dimension of the Machine:
-quakespasm/QuakeEX.kpf
-quakespasm/mg1/pak0.pak
+- quakespasm/QuakeEX.kpf
+- quakespasm/mg1/pak0.pak
 
 ## Controls
 
@@ -81,5 +81,3 @@ quakespasm/mg1/pak0.pak
 |Right Analog|Look|
 |L3 (Left Thumb button)|Level Stats|
 |R3 (Right Thumb button)|Center View|
-
-
