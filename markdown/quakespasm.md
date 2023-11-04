@@ -8,6 +8,10 @@ It is recommended to use an RK3566 or faster CPU to run Arcane Dimensions or Dim
 
 To invert right joystick look, set mouse-look invert option in the game's options menu.
 
+Quakespasm supports mp3, ogg, flac, and other formats, too.
+
+Note for some JelOS users: If you don't have music after placing your ogg or mp3 files with JelOS, use flac instead.
+
 
 Game data files needed:
 
