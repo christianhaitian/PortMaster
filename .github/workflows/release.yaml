@@ -60,6 +60,12 @@ jobs:
             fi
             echo "RELEASE_ORG=$RELEASE_ORG" >> $GITHUB_OUTPUT
 
+            PMGUI_REPOSITORY="${{ secrets.PMGUI_REPOSITORY }}"
+            if [[ -z "$PMGUI_REPOSITORY" ]]; then
+              PMGUI_REPOSITORY="PortsMaster/PortMaster-GUI"
+            fi
+            echo "PMGUI_REPOSITORY=$PMGUI_REPOSITORY" >> $GITHUB_OUTPUT
+
       - uses: hmarr/debug-action@v2
         name: "debug: ${{github.event_name}}"
 
@@ -70,31 +76,36 @@ jobs:
 
       - uses: robinraju/release-downloader@v1.2
         with:
-          repository: "${{ steps.env.outputs.LARGE_FILE_REPOSITORY}}"
-          tag: "${{steps.env.outputs.LARGE_FILE_TAG}}"
+          repository: "${{ steps.env.outputs.LARGE_FILE_REPOSITORY }}"
+          tag: "${{ steps.env.outputs.LARGE_FILE_TAG }}"
           fileName: "*"
 
       - uses: robinraju/release-downloader@v1.2
         with:
-          repository: "${{ steps.env.outputs.RUNTIME_REPOSITORY}}"
-          tag: "${{steps.env.outputs.RUNTIME_TAG}}"
+          repository: "${{ steps.env.outputs.RUNTIME_REPOSITORY }}"
+          tag: "${{ steps.env.outputs.RUNTIME_TAG }}"
           fileName: "*"
+
+      - name: Remove Zulu JDK
+        id: runtimes-zip
+        run: |
+          rm -f zulu*
 
       - name: Get release name for artifacts
         id: date
         run: |
             echo "date=$(date +'%Y-%m-%d_%H%M')" >> $GITHUB_OUTPUT
 
-      - name: Create PortMaster zip from PortMaster Folder
-        id: portmaster-zip
+      - name: Get PMGUI_RELEASE_ID
+        id: releaseid
         run: |
-          zip -9 -r ./PortMaster.zip PortMaster/
+            echo "PMGUI_RELEASE_ID=$(cat PMGUI_RELEASE.txt)" >> $GITHUB_OUTPUT
 
-      - name: Create runtimes zip
-        id: runtimes-zip
-        run: |
-          rm -f zulu*
-          zip -9 -r ./runtimes.zip *.squashfs
+      - uses: robinraju/release-downloader@v1.2
+        with:
+          repository: "${{ steps.env.outputs.PMGUI_REPOSITORY }}"
+          tag: "${{ steps.releaseid.outputs.PMGUI_RELEASE_ID }}"
+          fileName: "*"
 
       - name: Create images zip from images Folder
         id: images-zip
