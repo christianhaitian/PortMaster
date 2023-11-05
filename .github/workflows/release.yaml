@@ -117,6 +117,8 @@ jobs:
       - name: Generate Port Files.
         id: ports-info
         run: |
+          rm -fv Install*PortMaster.sh
+          rm -fv *.md5
           python3 tools/ports_json.py "${{steps.date.outputs.date}}"
 
       - name: "Prepare Release"
