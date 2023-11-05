@@ -5,3 +5,8 @@ ports_status.json
 ports.md
 ports.json
 *.md5
+
+# This is now fetched from the PortMaster-GUI repo
+PortMaster/
+PortMaster.zip
+version
