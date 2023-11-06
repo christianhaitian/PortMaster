@@ -1,0 +1,156 @@
+--------------------------CorsixTH Hotkey Mappings File------------------------
+-- Lines starting with two dashes (like this one) are ignored.
+-- Text settings should have their values between double square braces, e.g.
+-- Number settings should not have anything around their value, and complex
+-- settings should be surrounded by curly brackets.
+--
+-- EXAMPLES
+--   setting = [[value]]
+--   setting = 42
+--   setting = { 42, [[value]] }
+
+-----------------------------------Global Keys---------------------------------
+-- These are global keys to be used at anytime while the application is open.
+--
+global_confirm = [[return]]
+global_confirm_alt = [[e]]
+global_cancel = [[escape]]
+global_cancel_alt = [[q]]
+global_fullscreen_toggle = {[[alt]],[[return]]}
+global_exitApp = {[[alt]],[[f4]]}
+global_resetApp = {[[shift]],[[f10]]}
+global_releaseMouse = {[[ctrl]],[[f10]]}
+global_connectDebugger = {[[ctrl]],[[c]]}
+global_showLuaConsole = [[f12]]
+global_runDebugScript = {[[shift]],[[d]]}
+global_screenshot = {[[ctrl]],[[s]]}
+global_stop_movie = [[escape]]
+global_window_close = [[escape]]
+global_stop_movie_alt =[[q]]
+global_window_close_alt =[[q]]
+
+-----------------------------------Scroll Keys---------------------------------
+-- These are the keys to be used to scroll the camera around in-game.
+--
+ingame_scroll_up = [[up]]
+ingame_scroll_down = [[down]]
+ingame_scroll_left = [[left]]
+ingame_scroll_right = [[right]]
+ingame_scroll_shift = [[shift]]
+
+--------------------------------------Zoom-------------------------------------
+-- These are keys used to zoom the camera in and out.
+--
+ingame_zoom_in = [[=]]
+ingame_zoom_in_more = {[[shift]],[[=]]}
+ingame_zoom_out = [[-]]
+ingame_zoom_out_more = {[[shift]],[[-]]}
+ingame_reset_zoom = [[0]]
+
+----------------------------------In-Game Menus--------------------------------
+-- These are quick keys to show the in-game menu bar and some other windows.
+--
+ingame_showmenubar = [[escape]]
+ingame_showCheatWindow = [[f11]]
+ingame_loadMenu = {[[shift]],[[l]]}
+ingame_saveMenu = {[[shift]],[[s]]}
+ingame_jukebox = [[j]]
+ingame_openFirstMessage = [[m]]
+
+-- These pause and control the speed of the game.
+--
+ingame_pause = [[p]]
+ingame_gamespeed_slowest = [[1]]
+ingame_gamespeed_slower = [[2]]
+ingame_gamespeed_normal = [[3]]
+ingame_gamespeed_max = [[4]]
+ingame_gamespeed_thensome = [[5]]
+ingame_gamespeed_speedup = [[z]]
+
+------------------------------In-Game Bottom Panel-----------------------------
+-- These open in-game panel windows like the town map or the build room dialog.
+--
+ingame_panel_bankManager = [[f1]]
+ingame_panel_bankStats = [[f2]]
+ingame_panel_staffManage = [[f3]]
+ingame_panel_townMap = [[f4]]
+ingame_panel_casebook = [[f5]]
+ingame_panel_research = [[f6]]
+ingame_panel_status = [[f7]]
+ingame_panel_charts = [[f8]]
+ingame_panel_policy = [[f9]]
+ingame_panel_map_alt = [[t]]
+ingame_panel_research_alt = [[r]]
+ingame_panel_casebook_alt = [[c]]
+ingame_panel_casebook_alt02 = {[[shift]],[[c]]}
+ingame_panel_buildRoom = [[f]]
+ingame_panel_furnishCorridor = [[g]]
+ingame_panel_editRoom = [[v]]
+ingame_panel_hireStaff = [[b]]
+
+----------------------------------Rotate Object--------------------------------
+-- This key rotates objects while they are being placed.
+-- 
+ingame_rotateobject = [[space]]
+
+-----------------------------------Quick Keys----------------------------------
+-- These are keys for quick saving and loading, and for quickly restarting and
+-- quitting the level.
+--
+ingame_quickSave = {[[alt]],[[shift]],[[s]]}
+ingame_quickLoad = {[[alt]],[[shift]],[[l]]}
+ingame_restartLevel = {[[shift]],[[r]]}
+ingame_quitLevel = {[[shift]],[[q]]}
+
+---------------------------------Set Transparent-------------------------------
+-- While held down any walls will be transparent, allowing you to see behind them.
+--
+ingame_setTransparent = [[x]]
+
+----------------------------Store and Recall Position--------------------------
+-- These keys store and recall camera positions. If you press the key(s) that
+-- correspond to "ingame_recallPosition_1" while looking over the
+-- operating room, for instance, and then you move the camera away from there,
+-- you can press "ingame_recallPosition_1" whenever you want to go back to
+-- the operating room instantly.
+--
+ingame_storePosition_1 = {[[alt]],[[1]]}
+ingame_storePosition_2 = {[[alt]],[[2]]}
+ingame_storePosition_3 = {[[alt]],[[3]]}
+ingame_storePosition_4 = {[[alt]],[[4]]}
+ingame_storePosition_5 = {[[alt]],[[5]]}
+ingame_storePosition_6 = {[[alt]],[[6]]}
+ingame_storePosition_7 = {[[alt]],[[7]]}
+ingame_storePosition_8 = {[[alt]],[[8]]}
+ingame_storePosition_9 = {[[alt]],[[9]]}
+ingame_storePosition_0 = {[[alt]],[[0]]}
+ingame_recallPosition_1 = {[[ctrl]],[[1]]}
+ingame_recallPosition_2 = {[[ctrl]],[[2]]}
+ingame_recallPosition_3 = {[[ctrl]],[[3]]}
+ingame_recallPosition_4 = {[[ctrl]],[[4]]}
+ingame_recallPosition_5 = {[[ctrl]],[[5]]}
+ingame_recallPosition_6 = {[[ctrl]],[[6]]}
+ingame_recallPosition_7 = {[[ctrl]],[[7]]}
+ingame_recallPosition_8 = {[[ctrl]],[[8]]}
+ingame_recallPosition_9 = {[[ctrl]],[[9]]}
+ingame_recallPosition_0 = {[[ctrl]],[[0]]}
+
+---------------------------------Toggle Various--------------------------------
+-- These toggle various things. The names tell all.
+--
+ingame_toggleAnnouncements = {[[alt]],[[a]]}
+ingame_toggleSounds = {[[alt]],[[s]]}
+ingame_toggleMusic = {[[alt]],[[m]]}
+ingame_toggleAdvisor = {[[shift]],[[a]]}
+ingame_toggleInfo = [[i]]
+
+------------------------------------Dump Log-----------------------------------
+-- These keys dump logs. And strings, if too much fiber was taken.
+--
+ingame_poopLog = {[[ctrl]],[[d]]}
+ingame_poopStrings = {[[ctrl]],[[t]]}
+
+--------------------------------Patient, Go Home-------------------------------
+-- This sends a patient home. Also a good anime episode name.
+--
+ingame_patient_gohome = [[h]]
