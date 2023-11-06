@@ -4,11 +4,8 @@
 #
 ![image](https://img.itch.zone/aW1nLzEyNTI5MzAyLnBuZw==/original/DDDupz.png)
 #
-**This Game iS openSouce and you can made mods for it 
+**This game is open soruce you can made mods for it 
 check our [itch.io page](https://juhosprite.itch.io/little-runmo)**
-
-
-
 
 
 
