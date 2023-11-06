@@ -20,11 +20,13 @@ else
   GPTOKEYB_CONFIG="$GAMEDIR/corsixth.gptk.rightanalog"
 fi
 
+export TEXTINPUTINTERACTIVE="Y"
+export TEXTINPUTNOAUTOCAPITALS="Y"
 cd $GAMEDIR
 
 $ESUDO chmod 666 /dev/tty1
 $ESUDO chmod 666 /dev/uinput
-$GPTOKEYB "corsix-th" -c "$GPTOKEYB_CONFIG" &
+$GPTOKEYB "corsix-th" $HOTKEY textinput -c "$GPTOKEYB_CONFIG" &
 LD_LIBRARY_PATH="$GAMEDIR/libs" SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig" ./corsix-th --interpreter="$GAMEDIR/CorsixTH.lua" 2>&1 | tee $GAMEDIR/log.txt
 $ESUDO kill -9 $(pidof gptokeyb)
 $ESUDO systemctl restart oga_events &
