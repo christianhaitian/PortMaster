@@ -24,5 +24,6 @@ check our [itch.io page](https://juhosprite.itch.io/little-runmo)**
 |Left Analog|movements|
 |Dpad|movements|
 |R1|Camera|
+|Start|Pause Game|
 
 
