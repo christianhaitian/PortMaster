@@ -1,5 +1,7 @@
 ## Notes
 
+To open the mod menu press L3
+
  You must have a copy of the Sonic CD Classic Android APK then do the following:
 
 1. Using 7Zip, open the apk and extract Androind/obb/comm.sega.soniccd.classic/patch49.com.sega.soniccd.classic.obb.
