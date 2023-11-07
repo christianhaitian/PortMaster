@@ -1,6 +1,7 @@
 ## Notes
 
 To open the mod menu press L3
+Insert the folders of your mods inside the mods folder to make them appear in the mod menu.
 
  You must have a copy of the Sonic CD Classic Android APK then do the following:
 
