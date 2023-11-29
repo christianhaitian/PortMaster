@@ -7,8 +7,7 @@ Thanks to JohnnyonFlame for the port work that makes this possible.
 
 You must have a copy of the [compatibility version](https://www.stardewvalley.net/compatibility/) of Stardew Valley. 
 
-Steam or GOG versions should work. If purchasing the game, have in mind that there is no GOG compatibility version for linux, as that requires using GOG Galaxy, which doesn't support linux at all. 
+Steam or GOG versions are supported
+Both the Windows or Linux compatibility version should work fine. 
 
-Windows compatibility version works fine. Copy data into the ports/stardewvalley/gamedata folder
-
-
+Copy data into the ports/stardewvalley/gamedata folder
