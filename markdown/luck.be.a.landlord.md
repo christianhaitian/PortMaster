@@ -2,7 +2,7 @@
 
 Your landlord is knocking on your door. You have one coin left to your name. You insert the coin into your slot machine ... and ... JACKPOT! Luck be a Landlord, tonight! Luck be a Landlord is a roguelike deck-builder about using a slot machine to earn rent money and defeat capitalism. This game does not contain any real-world currency gambling or microtransactions.
 
-You'll need to purchase the game from https://store.steampowered.com/app/1404850/Luck_be_a_Landlord. You'll need a specific release, which you can obtain using a tool like DepotDownloader (https://github.com/SteamRE/DepotDownloader). There are also GUIs for DepotDownloader, like https://github.com/mmvanheusden/SteamDepotDownloaderGUI. The command may vary depending on your system, but the `-app`, `-depot`, and `manifest` digits must match those below:
+You'll need to purchase the game from https://store.steampowered.com/app/1404850/Luck_be_a_Landlord. You'll need a specific release, which you can obtain using a tool like DepotDownloader (https://github.com/SteamRE/DepotDownloader). There are also GUIs for DepotDownloader, like https://depotdownloader.00pium.net. The command may vary depending on your system, but the `-app`, `-depot`, and `manifest` digits must match those below:
 
 `./DepotDownloader -app 1404850 -depot 1404853 -manifest 5385995170406685945 -username <STEAM_USERNAME> -password <STEAM_PASSWORD>`
 
