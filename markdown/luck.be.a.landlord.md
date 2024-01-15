@@ -7,6 +7,7 @@ You'll need to purchase the game from https://store.steampowered.com/app/1404850
 `./DepotDownloader -app 1404850 -depot 1404853 -manifest 5385995170406685945 -username <STEAM_USERNAME> -password <STEAM_PASSWORD>`
 
 Once you've grabbed this, locate the *Luck be a Landlord.pck* file and place this in the port's *gamedata* folder.
+
 ## Controls
 
 | Button | Action |
