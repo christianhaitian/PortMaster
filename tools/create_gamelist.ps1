@@ -53,6 +53,10 @@ if (!$pm -or !$pmmv) {
     return
 }
 
+# Converting to a hashtable
+Write-host "Building gamelist.xml"
+$Alldata = ($pm + $pmmv) | group -Property filename -AsHashTable
+
 # Adding the filename and the image
 Write-host "Copying screenshots to the SD card"
 $pm | % {
@@ -65,11 +69,6 @@ $pmmv | % {
     $_ | add-member -TypeName NoteProperty -MemberType NoteProperty -Name screen -Value ("./images/" + $_.attr.image.screenshot)
     copy  ($Drive + "tools/PortMaster/config/images_pmmv/" + $_.attr.image.screenshot) ($Drive + "ports\images\")
 }
-
-
-# Converting to a hashtable
-Write-host "Building gamelist.xml"
-$Alldata = ($pm + $pmmv) | group -Property filename -AsHashTable
 
 $Gamelist = foreach ($Game in $Games) {
     $filename = $game.name
