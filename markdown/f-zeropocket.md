@@ -15,7 +15,3 @@ MadShmupper
 Tekkenfede  
 Testers and Devs from the PortMaster Discord  
 (Linky439)[https://linky439.itch.io/f-zero-pocket] for the amazing game!
-
-
-
-
