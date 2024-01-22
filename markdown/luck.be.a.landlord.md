@@ -10,22 +10,21 @@ Once you've grabbed this, locate the *Luck be a Landlord.pck* file and place thi
 
 ## Controls
 
-| Button | Action |
-|--|--| 
-|D-PAD|Directional navigation|
-
-A|Confirm/select|
-B|Deny/cancel|
-X|Inspect|
-Y|Spin|
-SELECT|Options|
-START|Inventory|
-L1|Use green|
-L2|Skip|
-R1|Use grey|
-R2|Fast-forward|
-L3|Enable/disable item|
-L/R STICK|Scroll up/down|
+| Button    | Action                 |
+| --------- | -----------------------|
+| D-PAD     | Directional navigation |
+| A         | Confirm/select         |
+| B         | Deny/cancel            |
+| X         | Inspect                |
+| Y         | Spin                   |
+| SELECT    | Options                |
+| START     | Inventory              |
+| L1        | Use green              |
+| L2        | Skip                   |
+| R1        | Use grey               |
+| R2        | Fast-forward           |
+| L3        | Enable/disable item    |
+| L/R STICK | Scroll up/down         |
 
 
 ## Compile
