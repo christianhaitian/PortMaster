@@ -1,17 +1,6 @@
+## Notes
+<br/>
 
-**Controls**
+Thanks to [EXL](https://github.com/EXL/F1-Race) for making this game available, Bamboozler for packaging for Portmaster and to the Portmaster testing team.
+<br/>
 
-Select = Esc/Exit
-Start + Select = Exit
-
-Dpad and left stick = movement
-
-A = Jump/Fly
-X = Switch MIDI
-Y = Toggle mute
-
-**Developer Notes:**
-
-Build instructions:
-
-make build-linux

@@ -48,6 +48,7 @@ PORT_INFO_ATTR_ATTRS = {
     'porter': [],
     'image': None,
     'rtr': False,
+    'exp': False,
     'runtime': None,
     'reqs': [],
     }
@@ -716,7 +717,7 @@ def main(args):
             portmaster_path.glob('*.squashfs'),
             ):
 
-        if file_name.name.lower().endswith('.squashfs') or file_name.name.lower() in ("portmaster.zip", "images.zip", "ports.md"):
+        if file_name.name.lower().endswith('.squashfs') or file_name.name.lower() in ("portmaster.zip", "images.zip", "runtimes.zip", "ports.md"):
             util_info(file_name, util_json)
             continue
 
