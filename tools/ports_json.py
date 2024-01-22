@@ -18,6 +18,11 @@ from pathlib import Path
 ## Stuff
 BASE_RELEASE_URL = "https://github.com/PortsMaster/PortMaster-Releases/releases/latest/download/"
 
+if len(sys.argv) > 1 and sys.argv[1] != '--do-check':
+    CURRENT_RELEASE_URL = f"https://github.com/PortsMaster/PortMaster-Releases/releases/download/{sys.argv[1]}/"
+else:
+    CURRENT_RELEASE_URL = BASE_RELEASE_URL
+
 
 TODAY = str(datetime.datetime.today().date())
 ################################################################################
@@ -43,6 +48,7 @@ PORT_INFO_ATTR_ATTRS = {
     'porter': [],
     'image': None,
     'rtr': False,
+    'exp': False,
     'runtime': None,
     'reqs': [],
     }
@@ -615,10 +621,10 @@ def port_info(file_name, ports_json, ports_status, extra_data):
         extra_data["status"] = "unchanged"
 
     if clean_name in ports_json:
-        ports_json[clean_name].update(ports_status[clean_name])
+        ports_json[clean_name]['source'] = ports_status[clean_name].copy()
 
-        ports_json[clean_name]['download_size'] = file_name.stat().st_size
-        ports_json[clean_name]['download_url'] = BASE_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", "."))
+        ports_json[clean_name]['source']['size'] = file_name.stat().st_size
+        ports_json[clean_name]['source']['url'] = CURRENT_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", "."))
 
 
 def util_info(file_name, util_json):
@@ -638,8 +644,8 @@ def util_info(file_name, util_json):
     util_json[clean_name] = {
         "name": name,
         'md5': file_md5,
-        'download_size': file_name.stat().st_size,
-        'download_url': BASE_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", ".")),
+        'size': file_name.stat().st_size,
+        'url': CURRENT_RELEASE_URL + (file_name.name.replace(" ", ".").replace("..", ".")),
         }
 
 
@@ -711,7 +717,7 @@ def main(args):
             portmaster_path.glob('*.squashfs'),
             ):
 
-        if file_name.name.lower().endswith('.squashfs') or file_name.name.lower() in ("portmaster.zip", "images.zip", "ports.md"):
+        if file_name.name.lower().endswith('.squashfs') or file_name.name.lower() in ("portmaster.zip", "images.zip", "runtimes.zip", "ports.md"):
             util_info(file_name, util_json)
             continue
 
